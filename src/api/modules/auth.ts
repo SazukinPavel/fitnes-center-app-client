@@ -1,5 +1,4 @@
 import BaseApiModule from "@/types/BaseApiModule";
-import { AxiosInstance } from "axios";
 import LoginDto from "@/types/dto/auth/LoginDto";
 import AuthResponseDto from "@/types/dto/auth/AuthResponseDto";
 import Api from "@/api/api";
