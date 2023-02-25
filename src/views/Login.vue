@@ -32,9 +32,14 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import LoginDto from "@/types/dto/auth/LoginDto";
+import { useStore } from "vuex";
+
+const store = useStore();
 
 const requiredRule = [(val: string) => !!val || "Поле обязательно!"];
 const loginDto = ref<LoginDto>({ login: "", password: "" });
 
-const login = () => {};
+const login = () => {
+  store.dispatch("auth/login", loginDto.value);
+};
 </script>

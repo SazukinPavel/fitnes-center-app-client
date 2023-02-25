@@ -1,10 +1,10 @@
 <template>
-  <div class="a">client</div>
+  <div class="a">admin</div>
 </template>
 
 <script>
 export default {
-  name: "Client.view",
+  name: "Admin",
 };
 </script>
 
