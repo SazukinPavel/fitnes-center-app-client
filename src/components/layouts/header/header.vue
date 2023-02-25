@@ -9,25 +9,20 @@
   </v-toolbar>
 </template>
 
-<script>
+<script setup lang="ts">
 import authorizedHeader from "./authorizedHeader.vue";
 import basedHeader from "./basedHeader.vue";
+import { computed } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
-export default {
-  name: "app-header",
-  components: { authorizedHeader, basedHeader },
-  computed: {
-    isLogedIn() {
-      return false;
-    },
-    isBackButtonShow() {
-      return this.$store.getters["app/isBackButtonShow"];
-    },
-  },
-  methods: {
-    back() {
-      this.$router.go(-1);
-    },
-  },
+const store = useStore();
+const router = useRouter();
+
+const back = () => {
+  router.go(-1);
 };
+
+const isBackButtonShow = computed(() => store.getters["app/isBackButtonShow"]);
+const isLogedIn = computed(() => store.getters["auth/isLogedIn"]);
 </script>

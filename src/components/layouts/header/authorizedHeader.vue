@@ -4,19 +4,17 @@
       style="width: 150px; cursor: pointer"
       class="mt-3 white--text text-sm-h6"
     >
-      {{ "Logout" }}
-      <v-icon color="white">mdi-logout</v-icon>
+      Logout
+      <v-icon color="white" icon="mdi-logout"></v-icon>
     </p>
   </v-container>
 </template>
 
-<script>
-export default {
-  name: "auth-header",
-  computed: {
-    isLogoutButtonShow() {
-      return this.$store.getters["auth/isAuth"];
-    },
-  },
-};
+<script setup lang="ts">
+import { useStore } from "vuex";
+import { computed } from "vue";
+
+const store = useStore();
+
+const isLogoutButtonShow = computed(() => store.getters["auth/isLogedIn"]);
 </script>
