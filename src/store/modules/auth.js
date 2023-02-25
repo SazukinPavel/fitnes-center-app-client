@@ -1,4 +1,5 @@
 import CookiesService from "@/services/CookiesService";
+import api from "@/api";
 
 export default {
   namespaced: true,
@@ -10,6 +11,9 @@ export default {
     setUser(state, user) {
       state.user = user;
     },
+    setIsLogedIn(state, val) {
+      state.isLogedIn = val;
+    },
     logout(state) {
       CookiesService.resetToken();
       state.isLogedIn = false;
@@ -19,23 +23,33 @@ export default {
     },
   },
   actions: {
-    async login({ dispatch }, { email, password, saveLong }) {
-      const token = (
-        await crmApi.accounts.getUserToken({ login: email, password })
-      ).token;
-      CookiesService.setToken(token, saveLong);
+    async login({ dispatch }, loginDto) {
+      const data = await api.auth.login(loginDto);
+      CookiesService.setToken(data.data.token);
+
       await dispatch("init");
     },
-    async init({ dispatch, commit }) {
+    async init({ commit }) {
       const tokenCookie = CookiesService.getToken();
 
       if (tokenCookie === "") {
         throw new Error("Token is empty!");
       }
 
-      commit("applyToken", tokenCookie);
-      await dispatch("fetchCrmMe");
-      commit("setRole", 1);
+      try {
+        commit("applyToken", tokenCookie);
+
+        const me = await api.auth.me();
+
+        CookiesService.setToken(me.data.token);
+        commit("applyToken", me.data.token);
+
+        commit("setUser", me.data.user);
+        commit("setIsLogedIn", true);
+      } catch {
+        commit("setIsLogedIn", false);
+        CookiesService.resetToken();
+      }
     },
   },
   getters: {
@@ -46,7 +60,7 @@ export default {
       return state.user;
     },
     role(state) {
-      return state.user.role;
+      return state.user?.role;
     },
   },
 };
