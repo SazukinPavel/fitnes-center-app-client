@@ -91,16 +91,17 @@
             <v-data-table
               v-model="selectedManagers"
               show-select
+              show-expand
               :loading="isManagerLoading"
               :items="managers"
               :headers="managersHeaders"
             >
-              <template v-slot:[`item.description`]="{ item }">
-                <span>{{
-                  item.description.length > 40
-                    ? item.description.slice(0, 40)
-                    : item.description
-                }}</span>
+              <template v-slot:[`expanded-row`]="{ columns, item }">
+                <tr>
+                  <td :colspan="columns.length">
+                    <span>{{ item.raw.description }}</span>
+                  </td>
+                </tr>
               </template>
             </v-data-table>
           </v-window-item>
@@ -168,7 +169,15 @@
               :loading="isDietsLoading"
               :items="diets"
               :headers="dietsHeaders"
+              show-expand
             >
+              <template v-slot:[`expanded-row`]="{ columns, item }">
+                <tr>
+                  <td :colspan="columns.length">
+                    <span>{{ item.raw.description }}</span>
+                  </td>
+                </tr>
+              </template>
             </v-data-table>
           </v-window-item>
           <v-window-item style="min-height: 50vh" value="exercises">
@@ -233,12 +242,20 @@
               >
             </div>
             <v-data-table
+              show-expand
               v-model="selectedExercisesInfo"
               show-select
               :loading="isExerciseInfoLoading"
               :items="exercisesInfo"
               :headers="exercisesInfoHeaders"
             >
+              <template v-slot:[`expanded-row`]="{ columns, item }">
+                <tr>
+                  <td :colspan="columns.length">
+                    <span>{{ item.raw.description }}</span>
+                  </td>
+                </tr>
+              </template>
             </v-data-table>
           </v-window-item>
         </v-window>
@@ -295,15 +312,9 @@ const managersHeaders: any = [
   { title: "Описание", value: "description" },
 ];
 
-const dietsHeaders: any = [
-  { title: "Имя", value: "name" },
-  { title: "Описание", value: "description" },
-];
+const dietsHeaders: any = [{ title: "Имя", value: "name" }];
 
-const exercisesInfoHeaders: any = [
-  { title: "Имя", value: "name" },
-  { title: "Описание", value: "description" },
-];
+const exercisesInfoHeaders: any = [{ title: "Имя", value: "name" }];
 
 const requiredRule: any = [(val: string) => !!val || "Поле обязательно!"];
 
