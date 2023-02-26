@@ -3,6 +3,7 @@
     <p
       style="width: 150px; cursor: pointer"
       class="mt-3 white--text text-sm-h6"
+      @click="logout"
     >
       Logout
       <v-icon color="white" icon="mdi-logout"></v-icon>
@@ -15,6 +16,10 @@ import { useStore } from "vuex";
 import { computed } from "vue";
 
 const store = useStore();
+
+const logout = () => {
+  store.commit("auth/logout");
+};
 
 const isLogoutButtonShow = computed(() => store.getters["auth/isLogedIn"]);
 </script>

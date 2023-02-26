@@ -9,5 +9,7 @@ export default interface Manager {
 
   login: string;
 
+  description: string;
+
   password: string;
 }

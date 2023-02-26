@@ -4,6 +4,7 @@ import * as directives from "vuetify/directives";
 import "vuetify/styles";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 import "@mdi/font/css/materialdesignicons.css";
+import { VDataTable } from "vuetify/labs/VDataTable";
 
 const myCustomLightTheme = {
   dark: false,
@@ -21,7 +22,15 @@ const myCustomLightTheme = {
 };
 
 const vuetify = createVuetify({
-  components,
+  components: {
+    ...components,
+    VDataTable,
+  },
+  defaults: {
+    VDataTable: {
+      noDataText: "Данных нет",
+    },
+  },
   directives,
   theme: {
     defaultTheme: "myCustomLightTheme",
