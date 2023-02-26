@@ -7,17 +7,17 @@ export default {
     isLoading: false,
     isAddLoading: false,
     isDeleteLoading: false,
-    exercisesInfos: [],
+    exercises: [],
   },
   mutations: {
-    setExercisesInfo(state, exercisesInfos) {
-      state.exercisesInfos = exercisesInfos;
+    setExercises(state, exercises) {
+      state.exercises = exercises;
     },
-    pushExerciseInfo(state, diet) {
-      state.exercisesInfos.push(diet);
+    pushExercise(state, exercise) {
+      state.exercises.push(exercise);
     },
-    deleteExerciseInfo(state, id) {
-      state.exercisesInfos = state.exercisesInfos.filter((m) => m.id !== id);
+    deleteExercise(state, id) {
+      state.exercises = state.exercises.filter((m) => m.id !== id);
     },
     setIsFetched(state, val) {
       state.isFetched = val;
@@ -40,9 +40,9 @@ export default {
 
       commit("setIsLoading", true);
       try {
-        const exercisesInfos = await api.exercisesInfo.list();
+        const exercises = await api.exercises.list();
 
-        commit("setExercisesInfo", exercisesInfos.data);
+        commit("setExercises", exercises.data);
         commit("setIsFetched", true);
       } finally {
         commit("setIsLoading", false);
@@ -52,24 +52,24 @@ export default {
       commit("setIsFetched", false);
       dispatch("fetch");
     },
-    async add({ commit }, addExerciseInfoDto) {
+    async add({ commit }, addExerciseDto) {
       commit("setIsAddLoading", true);
-      let diet = addExerciseInfoDto;
+      let exercise = addExerciseDto;
       try {
-        const res = await api.exercisesInfo.add(addExerciseInfoDto);
-        diet = res.data;
+        const res = await api.exercises.add(addExerciseDto);
+        exercise = res.data;
       } finally {
         commit("setIsAddLoading", false);
-        commit("pushExerciseInfo", diet);
+        commit("pushExercise", exercise);
       }
     },
-    async deletediets({ commit }, exercisesInfos) {
+    async deleteExercises({ commit }, exercises) {
       commit("setIsDeleteLoading", true);
       try {
         await Promise.all(
-          exercisesInfos.forEach(async (id) => {
-            await api.exercisesInfo.drop(id);
-            commit("deleteExerciseInfo", id);
+          exercises.forEach(async (id) => {
+            await api.exercises.drop(id);
+            commit("deleteExercise", id);
           })
         );
       } finally {
@@ -90,8 +90,8 @@ export default {
     isDeleteLoading(state) {
       return state.isDeleteLoading;
     },
-    exercisesInfos(state) {
-      return state.exercisesInfos;
+    exercises(state) {
+      return state.exercises;
     },
   },
 };

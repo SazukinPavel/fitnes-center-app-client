@@ -4,7 +4,9 @@ import app from "@/store/modules/app";
 import auth from "@/store/modules/auth";
 import managers from "@/store/modules/managers";
 import diets from "@/store/modules/diets";
-import exerciseInfo from "@/store/modules/exercise-info.ts";
+import exerciseInfo from "@/store/modules/exercise-info";
+import clients from "@/store/modules/clients";
+import exercises from "@/store/modules/exercises";
 
 export default createStore({
   modules: {
@@ -14,5 +16,7 @@ export default createStore({
     managers,
     diets,
     exerciseInfo,
+    clients,
+    exercises,
   },
 });

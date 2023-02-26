@@ -7,17 +7,17 @@ export default {
     isLoading: false,
     isAddLoading: false,
     isDeleteLoading: false,
-    exercisesInfos: [],
+    clients: [],
   },
   mutations: {
-    setExercisesInfo(state, exercisesInfos) {
-      state.exercisesInfos = exercisesInfos;
+    setClients(state, clients) {
+      state.clients = clients;
     },
-    pushExerciseInfo(state, diet) {
-      state.exercisesInfos.push(diet);
+    pushClient(state, client) {
+      state.clients.push(client);
     },
-    deleteExerciseInfo(state, id) {
-      state.exercisesInfos = state.exercisesInfos.filter((m) => m.id !== id);
+    deleteClient(state, id) {
+      state.clients = state.clients.filter((m) => m.id !== id);
     },
     setIsFetched(state, val) {
       state.isFetched = val;
@@ -40,9 +40,9 @@ export default {
 
       commit("setIsLoading", true);
       try {
-        const exercisesInfos = await api.exercisesInfo.list();
+        const clients = await api.clients.list();
 
-        commit("setExercisesInfo", exercisesInfos.data);
+        commit("setClients", clients.data);
         commit("setIsFetched", true);
       } finally {
         commit("setIsLoading", false);
@@ -52,24 +52,24 @@ export default {
       commit("setIsFetched", false);
       dispatch("fetch");
     },
-    async add({ commit }, addExerciseInfoDto) {
+    async add({ commit }, addClientDto) {
       commit("setIsAddLoading", true);
-      let diet = addExerciseInfoDto;
+      let client = addClientDto;
       try {
-        const res = await api.exercisesInfo.add(addExerciseInfoDto);
-        diet = res.data;
+        const res = await api.clients.add(addClientDto);
+        client = res.data;
       } finally {
         commit("setIsAddLoading", false);
-        commit("pushExerciseInfo", diet);
+        commit("pushClient", client);
       }
     },
-    async deletediets({ commit }, exercisesInfos) {
+    async deleteClients({ commit }, clients) {
       commit("setIsDeleteLoading", true);
       try {
         await Promise.all(
-          exercisesInfos.forEach(async (id) => {
-            await api.exercisesInfo.drop(id);
-            commit("deleteExerciseInfo", id);
+          clients.forEach(async (id) => {
+            await api.clients.drop(id);
+            commit("deleteClient", id);
           })
         );
       } finally {
@@ -90,8 +90,8 @@ export default {
     isDeleteLoading(state) {
       return state.isDeleteLoading;
     },
-    exercisesInfos(state) {
-      return state.exercisesInfos;
+    clients(state) {
+      return state.clients;
     },
   },
 };
