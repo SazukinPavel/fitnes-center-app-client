@@ -17,6 +17,7 @@ export default {
     logout(state) {
       CookiesService.resetToken();
       state.isLogedIn = false;
+      state.user = null;
     },
     applyToken(_, token) {
       api.applyToken(token);
