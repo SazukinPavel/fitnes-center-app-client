@@ -12,77 +12,83 @@
               <v-btn @click="refreshClients" class="mx-5" color="primary"
                 >Обновить</v-btn
               >
+              <v-btn class="mx-5" color="primary">
+                Добавить
+                <v-dialog
+                  activator="parent"
+                  v-model="addClientDialog"
+                  width="auto"
+                >
+                  <v-card class="px-15 py-10">
+                    <v-card-title>Новый клиент</v-card-title>
+                    <v-form ref="clientForm">
+                      <v-text-field
+                        class="my-2"
+                        :rules="requiredRule"
+                        variant="outlined"
+                        label="Логин"
+                        color="primary"
+                        v-model="addClientDto.login"
+                      />
+                      <v-text-field
+                        class="my-2"
+                        :rules="requiredRule"
+                        variant="outlined"
+                        label="Фио"
+                        v-model="addClientDto.fio"
+                      />
+                      <v-text-field
+                        class="my-2"
+                        :rules="requiredRule"
+                        variant="outlined"
+                        label="Пароль"
+                        v-model="addClientDto.password"
+                      />
+                      <v-text-field
+                        class="my-2"
+                        variant="outlined"
+                        color="primary"
+                        type="number"
+                        label="Возвраст"
+                        v-model="addClientDto.age"
+                      />
+                      <v-text-field
+                        class="my-2"
+                        variant="outlined"
+                        color="primary"
+                        type="number"
+                        label="Рост"
+                        v-model="addClientDto.height"
+                      />
+                      <v-text-field
+                        class="my-2"
+                        :rules="requiredRule"
+                        type="number"
+                        variant="outlined"
+                        color="primary"
+                        label="Вес"
+                        v-model="addClientDto.weight"
+                      />
+                    </v-form>
 
-              <v-dialog v-model="addClientDialog" width="auto">
-                <v-card class="px-15 py-10">
-                  <v-card-title>Новый клиент</v-card-title>
-                  <v-form ref="clientForm">
-                    <v-text-field
-                      class="my-2"
-                      :rules="requiredRule"
-                      variant="outlined"
-                      label="Логин"
-                      color="primary"
-                      v-model="addClientDto.login"
-                    />
-                    <v-text-field
-                      class="my-2"
-                      :rules="requiredRule"
-                      variant="outlined"
-                      label="Фио"
-                      v-model="addClientDto.fio"
-                    />
-                    <v-text-field
-                      class="my-2"
-                      :rules="requiredRule"
-                      variant="outlined"
-                      label="Пароль"
-                      v-model="addClientDto.password"
-                    />
-                    <v-text-field
-                      class="my-2"
-                      variant="outlined"
-                      color="primary"
-                      type="number"
-                      label="Возвраст"
-                      v-model="addClientDto.age"
-                    />
-                    <v-text-field
-                      class="my-2"
-                      variant="outlined"
-                      color="primary"
-                      type="number"
-                      label="Рост"
-                      v-model="addClientDto.height"
-                    />
-                    <v-text-field
-                      class="my-2"
-                      :rules="requiredRule"
-                      type="number"
-                      variant="outlined"
-                      color="primary"
-                      label="Вес"
-                      v-model="addClientDto.weight"
-                    />
-                  </v-form>
-
-                  <v-card-actions class="d-flex justify-center">
-                    <v-btn
-                      variant="outlined"
-                      color="primary"
-                      @click="addClientDialog = false"
-                      >Закрыть</v-btn
-                    >
-                    <v-btn
-                      variant="outlined"
-                      class="mx-5"
-                      color="primary"
-                      @click="addClient"
-                      >Добавить</v-btn
-                    >
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
+                    <v-card-actions class="d-flex justify-center">
+                      <v-btn
+                        variant="outlined"
+                        color="primary"
+                        @click="addClientDialog = false"
+                        >Закрыть</v-btn
+                      >
+                      <v-btn
+                        variant="outlined"
+                        class="mx-5"
+                        color="primary"
+                        @click="addClient"
+                        >Добавить</v-btn
+                      >
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-btn>
               <v-btn
                 :loading="isClientsDeleteLoading"
                 color="primary"
