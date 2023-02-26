@@ -95,6 +95,13 @@
               :items="managers"
               :headers="managersHeaders"
             >
+              <template v-slot:[`item.description`]="{ item }">
+                <span>{{
+                  item.description.length > 40
+                    ? item.description.slice(0, 40)
+                    : item.description
+                }}</span>
+              </template>
             </v-data-table>
           </v-window-item>
           <v-window-item style="min-height: 50vh" value="diets">
@@ -180,7 +187,7 @@
                   width="auto"
                 >
                   <v-card class="px-15 py-10">
-                    <v-card-title>Новое питание:</v-card-title>
+                    <v-card-title>Новое занятие:</v-card-title>
                     <v-form ref="exerciseInfoForm">
                       <v-text-field
                         class="my-2"
