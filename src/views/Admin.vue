@@ -309,7 +309,6 @@ const managersHeaders: any = [
   { title: "Логин", value: "login" },
   { title: "Фио", value: "fio" },
   { title: "Возвраст", value: "age" },
-  { title: "Описание", value: "description" },
 ];
 
 const dietsHeaders: any = [{ title: "Имя", value: "name" }];

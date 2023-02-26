@@ -42,10 +42,16 @@ const requiredRule = [(val: string) => !!val || "Поле обязательно
 const loginDto = ref<LoginDto>({ login: "", password: "" });
 
 const login = async () => {
-  if (!(await loginForm.value?.validate()).valid) {
-    return;
-  }
+  try {
+    if (!(await loginForm.value?.validate()).valid) {
+      return;
+    }
 
-  store.dispatch("auth/login", loginDto.value);
+    await store.dispatch("auth/login", loginDto.value);
+  } catch {
+    store.commit("snackbar/showSnackbarError", {
+      message: "Такого пользователя нет",
+    });
+  }
 };
 </script>
