@@ -5,7 +5,7 @@
       class="mt-3 white--text text-sm-h6"
       @click="logout"
     >
-      Logout
+      Выйти
       <v-icon color="white" icon="mdi-logout"></v-icon>
     </p>
   </v-container>

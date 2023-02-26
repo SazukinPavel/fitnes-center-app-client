@@ -5,8 +5,6 @@ import ExerciseInfo from "@/types/ExerciseInfo";
 export interface Exercise {
   id: string;
 
-  description: string;
-
   date: Date;
 
   client: Client;
