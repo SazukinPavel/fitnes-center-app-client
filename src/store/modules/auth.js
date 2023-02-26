@@ -26,6 +26,7 @@ export default {
   actions: {
     async login({ dispatch }, loginDto) {
       const data = await api.auth.login(loginDto);
+      console.log(data);
       CookiesService.setToken(data.data.token);
 
       await dispatch("init");
@@ -50,6 +51,7 @@ export default {
       } catch {
         commit("setIsLogedIn", false);
         CookiesService.resetToken();
+        throw new Error();
       }
     },
   },

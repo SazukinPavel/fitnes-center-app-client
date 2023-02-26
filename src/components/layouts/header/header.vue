@@ -1,6 +1,8 @@
 <template>
   <v-toolbar max-height="60px" class="px-5 align-center" color="primary">
-    <v-btn v-if="isBackButtonShow" color="background" @click="back">back</v-btn>
+    <v-btn v-if="isBackButtonShow" color="white" variant="text" @click="back"
+      >back</v-btn
+    >
     <v-spacer></v-spacer>
     <v-toolbar-items class="mr-5">
       <based-header />

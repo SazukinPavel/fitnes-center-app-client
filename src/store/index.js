@@ -10,7 +10,6 @@ import exercises from "@/store/modules/exercises";
 
 export default createStore({
   modules: {
-    snackbar,
     app,
     auth,
     managers,
@@ -18,5 +17,6 @@ export default createStore({
     exerciseInfo,
     clients,
     exercises,
+    snackbar,
   },
 });
