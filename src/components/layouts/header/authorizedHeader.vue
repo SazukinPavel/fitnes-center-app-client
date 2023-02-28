@@ -19,6 +19,8 @@ const store = useStore();
 
 const logout = () => {
   store.commit("auth/logout");
+  sessionStorage.clear();
+  store.reset()
 };
 
 const isLogoutButtonShow = computed(() => store.getters["auth/isLogedIn"]);
