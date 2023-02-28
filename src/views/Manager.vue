@@ -229,7 +229,7 @@
               :headers="exerciseHeaders"
             >
               <template v-slot:[`item.date`]="{ item }">
-                {{ moment(item.date).format("YYYY-MM-DD HH:mm:ss") }}
+                {{ moment(item.raw.date).utc().format("YYYY-MM-DD HH:mm") }}
               </template>
             </v-data-table>
           </v-window-item>
