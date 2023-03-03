@@ -3,25 +3,25 @@
     <v-container fluid>
       <v-row justify="center" align="center">
         <v-form style="width: 500px; margin-top: 20vh" ref="loginForm">
-          <v-card-title class="text-center text-h4 mb-5">Login</v-card-title>
+          <v-card-title class="text-center text-h4 mb-5">Вход</v-card-title>
           <v-text-field
             class="my-5"
             color="primary"
             :rules="requiredRule"
             variant="outlined"
-            label="Login:"
+            label="Логин:"
             v-model="loginDto.login"
           />
           <v-text-field
             class="my-5"
-            label="Password:"
+            label="Пароль:"
             color="primary"
             :rules="requiredRule"
             variant="outlined"
             v-model="loginDto.password"
           />
           <div class="d-flex justify-end">
-            <v-btn color="primary" @click="login">Login</v-btn>
+            <v-btn color="primary" @click="login">Войти</v-btn>
           </div>
         </v-form>
       </v-row>

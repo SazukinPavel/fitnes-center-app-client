@@ -152,6 +152,9 @@
               <v-btn @click="refreshExercises" class="mx-5" color="primary"
                 >Обновить</v-btn
               >
+              <v-btn @click="download" class="mx-5" color="primary"
+                >Отчёты
+              </v-btn>
               <v-btn
                 :loading="isExerciseAddLoading"
                 class="mx-5"
@@ -163,7 +166,7 @@
                   width="auto"
                 >
                   <v-card class="px-15 py-10">
-                    <v-card-title>Новое питание:</v-card-title>
+                    <v-card-title>Новое занятие:</v-card-title>
                     <v-form ref="exerciseForm">
                       <v-text-field
                         class="my-2"
@@ -247,7 +250,7 @@ import AddClientDto from "@/types/dto/clients/AddClientDto";
 import moment from "moment";
 import SetDietDto from "@/types/dto/clients/SetDietDto";
 import api from "@/api";
-// import api from "@/api";
+import XlsxService from "@/services/XslxService";
 
 const store = useStore();
 
@@ -410,6 +413,10 @@ const isExerciseAddLoading = computed(
   () => store.getters["clients/isAddLoading"]
 );
 const isExerciseLoading = computed(() => store.getters["clients/isLoading"]);
+
+const download = () => {
+  XlsxService.downloadXlsx(exercises.value);
+};
 </script>
 
 <style scoped></style>
