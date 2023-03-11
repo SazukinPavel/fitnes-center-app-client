@@ -250,7 +250,7 @@ import AddClientDto from "@/types/dto/clients/AddClientDto";
 import moment from "moment";
 import SetDietDto from "@/types/dto/clients/SetDietDto";
 import api from "@/api";
-import XlsxService from "@/services/XslxService";
+import XlsxService from "@/services/XlsxService";
 
 const store = useStore();
 
