@@ -5,6 +5,8 @@
     :headers="exerciseHeaders"
     :loading="loading"
     :items="items"
+    @refresh="emit('refresh')"
+    show-refresh-button
   >
     <template v-slot:[`item.date`]="{ item }">
       {{ moment(item.raw.date).utc().format("YYYY-MM-DD HH:mm") }}
@@ -25,7 +27,7 @@ const props = defineProps({
 
 const { items, loading } = toRefs(props);
 
-const emit = defineEmits(["update:selected"]);
+const emit = defineEmits(["update:selected", "refresh"]);
 
 const exerciseHeaders: any = [
   { title: "Дата", value: "date", key: "date" },

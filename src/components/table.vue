@@ -10,6 +10,17 @@
     <template v-for="(_, slotName) in $slots" v-slot:[slotName]="data">
       <slot :name="slotName" v-bind="data" />
     </template>
+    <template v-slot:[`footer.prepend`]>
+      <v-btn
+        v-if="showRefreshButton"
+        @click="emit('refresh')"
+        color="primary"
+        density="comfortable"
+        class="mx-5"
+        append-icon="mdi-refresh"
+        >Обновить</v-btn
+      >
+    </template>
   </v-data-table>
 </template>
 
@@ -22,9 +33,11 @@ const props = defineProps({
   selected: { type: Array, required: true },
   showSelect: { type: Boolean, default: true },
   loading: { type: Boolean, default: false },
+  showRefreshButton: { type: Boolean, default: false },
 });
 
-const { items, headers, loading, showSelect, selected } = toRefs(props);
+const { items, headers, loading, showSelect, selected, showRefreshButton } =
+  toRefs(props);
 
-const emit = defineEmits(["update:selected"]);
+const emit = defineEmits(["update:selected", "refresh"]);
 </script>
