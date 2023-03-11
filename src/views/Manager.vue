@@ -9,9 +9,6 @@
         <v-window v-model="tab">
           <v-window-item style="min-height: 50vh" value="clients">
             <div class="d-flex jsutify-start my-7">
-              <v-btn @click="refreshClients" class="mx-5" color="primary"
-                >Обновить</v-btn
-              >
               <v-btn class="mx-5" color="primary">
                 Добавить
                 <v-dialog
@@ -103,15 +100,12 @@
                 >Сменить диету</v-btn
               >
             </div>
-            <v-data-table
-              v-model="selectedClients"
-              show-select
+            <clients-table
+              @refresh="refreshClients"
+              v-model:selected="selectedClients"
               :loading="isClientsLoading"
               :items="clients"
-              :headers="clientsHeaders"
-            >
-            </v-data-table>
-
+            />
             <v-btn variant="flat">
               <v-dialog activator="parent" width="auto" v-model="setDietDialog">
                 <v-card class="pa-15">
@@ -149,9 +143,6 @@
           </v-window-item>
           <v-window-item style="min-height: 50vh" value="exercises">
             <div class="d-flex jsutify-start my-7">
-              <v-btn @click="refreshExercises" class="mx-5" color="primary"
-                >Обновить</v-btn
-              >
               <v-btn @click="download" class="mx-5" color="primary"
                 >Отчёты
               </v-btn>
@@ -224,17 +215,13 @@
                 >Удалить</v-btn
               >
             </div>
-            <v-data-table
-              v-model="selectedExercises"
+            <exercises-table
+              @refresh="refreshExercises"
+              v-model:selected="selectedExercises"
               show-select
               :loading="isExerciseLoading"
               :items="exercises"
-              :headers="exerciseHeaders"
-            >
-              <template v-slot:[`item.date`]="{ item }">
-                {{ moment(item.raw.date).utc().format("YYYY-MM-DD HH:mm") }}
-              </template>
-            </v-data-table>
+            />
           </v-window-item>
         </v-window>
       </v-card-text>
@@ -247,10 +234,11 @@ import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import AddExerciseDto from "@/types/dto/exercises/AddExerciseDto";
 import AddClientDto from "@/types/dto/clients/AddClientDto";
-import moment from "moment";
 import SetDietDto from "@/types/dto/clients/SetDietDto";
 import api from "@/api";
 import XlsxService from "@/services/XlsxService";
+import ExercisesTable from "@/components/tables/ExercisesTable.vue";
+import ClientsTable from "@/components/tables/ClientsTable.vue";
 
 const store = useStore();
 
@@ -285,21 +273,6 @@ const setDietDto = ref<SetDietDto>({
   dietId: "",
   clientId: "",
 });
-
-const clientsHeaders: any = [
-  { title: "Логин", value: "login" },
-  { title: "Фио", value: "fio" },
-  { title: "Возвраст", value: "age" },
-  { title: "Вес", value: "weight" },
-  { title: "Рост", value: "height" },
-  { title: "Питание", value: "diet.name" },
-];
-
-const exerciseHeaders: any = [
-  { title: "Дата", value: "date", key: "date" },
-  { title: "Клиент", value: "client.fio" },
-  { title: "Тип тренировки", value: "exerciseInfo.name" },
-];
 
 const requiredRule: any = [(val: string) => !!val || "Поле обязательно!"];
 
@@ -385,6 +358,7 @@ const refreshExercises = () => {
 };
 
 const deleteExercises = () => {
+  console.log(selectedExercises.value);
   store.dispatch("exercises/deleteExercises", selectedExercises.value);
 };
 
