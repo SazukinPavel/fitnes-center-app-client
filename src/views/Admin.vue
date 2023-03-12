@@ -10,9 +10,6 @@
         <v-window v-model="tab">
           <v-window-item style="min-height: 50vh" value="trainers">
             <div class="d-flex jsutify-start my-7">
-              <v-btn @click="refreshManagers" class="mx-5" color="primary"
-                >Обновить</v-btn
-              >
               <v-btn :loading="isManagerAddLoading" class="mx-5" color="primary"
                 >Добавить
                 <v-dialog
@@ -88,28 +85,15 @@
                 >Удалить</v-btn
               >
             </div>
-            <v-data-table
-              v-model="selectedManagers"
-              show-select
-              show-expand
+            <trainers-table
+              v-model:selected="selectedManagers"
               :loading="isManagerLoading"
               :items="managers"
-              :headers="managersHeaders"
-            >
-              <template v-slot:[`expanded-row`]="{ columns, item }">
-                <tr>
-                  <td :colspan="columns.length">
-                    <span>{{ item.raw.description }}</span>
-                  </td>
-                </tr>
-              </template>
-            </v-data-table>
+              @refresh="refreshManagers"
+            />
           </v-window-item>
           <v-window-item style="min-height: 50vh" value="diets">
             <div class="d-flex jsutify-start my-7">
-              <v-btn @click="refreshDiets" class="mx-5" color="primary"
-                >Обновить</v-btn
-              >
               <v-btn :loading="isDietsAddLoading" class="mx-5" color="primary"
                 >Добавить
                 <v-dialog
@@ -163,13 +147,11 @@
                 >Удалить</v-btn
               >
             </div>
-            <v-data-table
-              v-model="selectedDiets"
-              show-select
+            <diets-type-table
+              @refresh="refreshDiets"
+              v-model:selected="selectedDiets"
               :loading="isDietsLoading"
               :items="diets"
-              :headers="dietsHeaders"
-              show-expand
             >
               <template v-slot:[`expanded-row`]="{ columns, item }">
                 <tr>
@@ -178,13 +160,10 @@
                   </td>
                 </tr>
               </template>
-            </v-data-table>
+            </diets-type-table>
           </v-window-item>
           <v-window-item style="min-height: 50vh" value="exercises">
             <div class="d-flex jsutify-start my-7">
-              <v-btn @click="refreshExerciseInfo" class="mx-5" color="primary"
-                >Обновить</v-btn
-              >
               <v-btn
                 :loading="isExerciseInfoAddLoading"
                 class="mx-5"
@@ -241,22 +220,12 @@
                 >Удалить</v-btn
               >
             </div>
-            <v-data-table
-              show-expand
-              v-model="selectedExercisesInfo"
-              show-select
+            <exercises-type-table
+              @refresh="refreshExercisesType"
+              v-model:selected="selectedExercisesInfo"
               :loading="isExerciseInfoLoading"
               :items="exercisesInfo"
-              :headers="exercisesInfoHeaders"
-            >
-              <template v-slot:[`expanded-row`]="{ columns, item }">
-                <tr>
-                  <td :colspan="columns.length">
-                    <span>{{ item.raw.description }}</span>
-                  </td>
-                </tr>
-              </template>
-            </v-data-table>
+            />
           </v-window-item>
         </v-window>
       </v-card-text>
@@ -273,6 +242,9 @@ import AddDietDto from "@/types/dto/diets/AddDietDto";
 import Diet from "@/types/Diet";
 import AddExerciseInfoDto from "@/types/dto/exerciseInfo/AddExerciseInfoDto";
 import ExerciseInfo from "@/types/ExerciseInfo";
+import TrainersTable from "@/components/tables/TrainersTable.vue";
+import ExercisesTypeTable from "@/components/tables/ExercisesTypeTable.vue";
+import DietsTypeTable from "@/components/tables/DietsTypeTable.vue";
 
 const store = useStore();
 
@@ -304,16 +276,6 @@ const addExerciseInfoDto = ref<AddExerciseInfoDto>({
   name: "",
   description: "",
 });
-
-const managersHeaders: any = [
-  { title: "Логин", value: "login" },
-  { title: "Фио", value: "fio" },
-  { title: "Возвраст", value: "age" },
-];
-
-const dietsHeaders: any = [{ title: "Имя", value: "name" }];
-
-const exercisesInfoHeaders: any = [{ title: "Имя", value: "name" }];
 
 const requiredRule: any = [(val: string) => !!val || "Поле обязательно!"];
 
@@ -382,7 +344,7 @@ const refreshDiets = () => {
   store.dispatch("diets/refresh");
 };
 
-const refreshExerciseInfo = () => {
+const refreshExercisesType = () => {
   store.dispatch("exerciseInfo/fetch");
 };
 
