@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <app-header />
     <app-main>
       <router-view />
     </app-main>
@@ -8,7 +7,6 @@
 </template>
 
 <script setup lang="ts">
-import appHeader from "@/components/layouts/header/header.vue";
 import appMain from "@/components/layouts/main.vue";
 import { computed, ComputedRef, onMounted, watch } from "vue";
 import { useStore } from "vuex";
@@ -22,7 +20,7 @@ const route = useRoute();
 onMounted(async () => {
   switch (role.value) {
     case "admin": {
-      router.replace({ name: "Admin" });
+      router.replace({ name: "Trainers" });
       break;
     }
     case "manager": {
@@ -52,7 +50,7 @@ const setupRouter = () => {
     route.matched.some((el: any) => !el.meta.isAdminRoute) &&
     role.value === "admin"
   ) {
-    router.replace({ name: "Admin" });
+    router.replace({ name: "Trainers" });
   } else if (
     route.matched.some((el: any) => !el.meta.isManagerRoute) &&
     role.value === "manager"
@@ -101,7 +99,7 @@ watch(
   () => {
     switch (role.value) {
       case "admin": {
-        router.replace({ name: "Admin" });
+        router.replace({ name: "Trainers" });
         break;
       }
       case "manager": {
