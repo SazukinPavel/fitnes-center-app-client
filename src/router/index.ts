@@ -2,9 +2,11 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import Login from "@/views/Login.vue";
 import Client from "@/views/Client.vue";
 import Manager from "@/views/Manager.vue";
-import Admin from "@/views/Admin.vue";
 import TrainerPage from "@/views/TrainerPage.vue";
 import DietPage from "@/views/DietPage.vue";
+import Diets from "@/views/Diets.vue";
+import ExerciseTypes from "@/views/ExerciseTypes.vue";
+import Trainers from "@/views/Trainers.vue";
 
 const routes = [
   { path: "/login", name: "Login", component: Login },
@@ -21,9 +23,21 @@ const routes = [
     meta: { isManagerRoute: true },
   },
   {
-    path: "/admin",
-    name: "Admin",
-    component: Admin,
+    path: "/admin/trainers",
+    name: "Trainers",
+    component: Trainers,
+    meta: { isAdminRoute: true },
+  },
+  {
+    path: "/admin/exercises",
+    name: "Exercise types",
+    component: ExerciseTypes,
+    meta: { isAdminRoute: true },
+  },
+  {
+    path: "/admin/diets",
+    name: "Diets",
+    component: Diets,
     meta: { isAdminRoute: true },
   },
   {
