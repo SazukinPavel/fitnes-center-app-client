@@ -1,5 +1,6 @@
 <template>
   <v-main>
+    <right-menu/>
     <v-layout>
       <v-row>
         <v-container class="mt-5">
@@ -11,11 +12,7 @@
   </v-main>
 </template>
 
-<script>
+<script lang="ts" setup>
 import snackbar from "../snackbar.vue";
-
-export default {
-  name: "app-main",
-  components: { snackbar },
-};
+import rightMenu from "./menu/Menu.vue";
 </script>
