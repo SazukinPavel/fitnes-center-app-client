@@ -6,6 +6,7 @@
     :headers="headers"
     :loading="loading"
     :show-select="showSelect"
+    :show-expand="showExpand"
   >
     <template v-for="(_, slotName) in $slots" v-slot:[slotName]="data">
       <slot :name="slotName" v-bind="data" />
@@ -32,6 +33,7 @@ const props = defineProps({
   headers: { type: Array, required: true },
   selected: { type: Array, required: true },
   showSelect: { type: Boolean, default: true },
+  showExpand: { type: Boolean, default: false },
   loading: { type: Boolean, default: false },
   showRefreshButton: { type: Boolean, default: false },
 });
