@@ -25,11 +25,11 @@
     <v-list variant="flat" density="compact" nav>
       <v-list-item
         v-for="item in items"
-        :key="item.value"
+        :key="item.routeName"
         :prepend-icon="item.icon"
         :title="item.title"
-        :value="item.value"
-        @click="router.push({ name: item.value })"
+        :value="item.routeName"
+        @click="router.push({ name: item.routeName })"
         active-color="primary"
       />
       <v-list-item
@@ -48,6 +48,7 @@
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import MenuItem from "@/types/MenuItem";
 
 const store = useStore();
 const router = useRouter();
@@ -64,29 +65,36 @@ const logout = () => {
   store.reset();
 };
 
-const items = computed(() => {
+const items = computed<MenuItem[]>(() => {
   if (user.value.type == "admin") {
     return [
       {
         title: "Тренера",
         icon: "mdi-account-group-outline",
-        value: "Trainers",
+        routeName: "Trainers",
       },
       {
         title: "Занятия",
         icon: "mdi-dumbbell",
-        value: "Exercise types",
+        routeName: "Exercise types",
       },
-      { title: "Диеты", icon: "mdi-food-fork-drink", value: "Diets" },
+      { title: "Диеты", icon: "mdi-food-fork-drink", routeName: "Diets" },
     ];
-  } else {
+  } else if (user.value.type == "manager") {
     return [
       {
         title: "Клиенты",
         icon: "mdi-account-group-outline",
-        value: "ManagerClients",
+        routeName: "ManagerClients",
       },
-      { title: "Занятия", icon: "mdi-dumbbell", value: "ManagerExercises" },
+      { title: "Занятия", icon: "mdi-dumbbell", routeName: "ManagerExercises" },
+    ];
+  } else {
+    return [
+      { icon: "mdi-account", routeName: "ClientInfo", title: "Клиент" },
+      { icon: "mdi-dumbbell", routeName: "ClientExercises", title: "Занятия" },
+      { icon: "mdi-kabaddi", routeName: "TrainerPage", title: "Тренер" },
+      { icon: "mdi-food-fork-drink", routeName: "DietPage", title: "Диета" },
     ];
   }
 });
