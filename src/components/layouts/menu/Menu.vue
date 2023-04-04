@@ -1,7 +1,6 @@
 <template>
   <v-navigation-drawer
     v-if="isLogedIn"
-    color="primary"
     v-model="drawer"
     :rail="rail"
     permanent
@@ -23,7 +22,7 @@
 
     <v-divider></v-divider>
 
-    <v-list density="compact" nav>
+    <v-list variant="flat" density="compact" nav>
       <v-list-item
         v-for="item in items"
         :key="item.value"
@@ -31,12 +30,14 @@
         :title="item.title"
         :value="item.value"
         @click="router.push({ name: item.value })"
+        active-color="primary"
       />
       <v-list-item
         v-once
+        active-color="primary"
         @click="logout"
         prepend-icon="mdi-logout"
-        title="logout"
+        title="Выйти"
         value="logout"
       />
     </v-list>
@@ -52,15 +53,6 @@ const store = useStore();
 const router = useRouter();
 
 const drawer = ref(true);
-const items = ref([
-  { title: "Trainers", icon: "mdi-account-group-outline", value: "Trainers" },
-  {
-    title: "Exercises",
-    icon: "mdi-dumbbell",
-    value: "Exercise types",
-  },
-  { title: "Diets", icon: "mdi-food-fork-drink", value: "Diets" },
-]);
 const rail = ref(true);
 
 const user = computed(() => store.getters["auth/user"]);
@@ -71,6 +63,33 @@ const logout = () => {
   sessionStorage.clear();
   store.reset();
 };
+
+const items = computed(() => {
+  if (user.value.type == "admin") {
+    return [
+      {
+        title: "Тренера",
+        icon: "mdi-account-group-outline",
+        value: "Trainers",
+      },
+      {
+        title: "Занятия",
+        icon: "mdi-dumbbell",
+        value: "Exercise types",
+      },
+      { title: "Диеты", icon: "mdi-food-fork-drink", value: "Diets" },
+    ];
+  } else {
+    return [
+      {
+        title: "Клиенты",
+        icon: "mdi-account-group-outline",
+        value: "ManagerClients",
+      },
+      { title: "Занятия", icon: "mdi-dumbbell", value: "ManagerExercises" },
+    ];
+  }
+});
 </script>
 
 <style scoped></style>
