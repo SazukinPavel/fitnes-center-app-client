@@ -7,6 +7,8 @@ import DietPage from "@/views/DietPage.vue";
 import Diets from "@/views/Diets.vue";
 import ExerciseTypes from "@/views/ExerciseTypes.vue";
 import Trainers from "@/views/Trainers.vue";
+import ManagerClients from "@/views/ManagerClients.vue";
+import ManagerExercises from "@/views/ManagerExercises.vue";
 
 const routes = [
   { path: "/login", name: "Login", component: Login },
@@ -15,12 +17,6 @@ const routes = [
     name: "Client",
     component: Client,
     meta: { isClientRoute: true },
-  },
-  {
-    path: "/manager",
-    name: "Manager",
-    component: Manager,
-    meta: { isManagerRoute: true },
   },
   {
     path: "/admin/trainers",
@@ -39,6 +35,18 @@ const routes = [
     name: "Diets",
     component: Diets,
     meta: { isAdminRoute: true },
+  },
+  {
+    path: "/manager/clients",
+    name: "ManagerClients",
+    component: ManagerClients,
+    meta: { isManagerRoute: true },
+  },
+  {
+    path: "/manager/exercises",
+    name: "ManagerExercises",
+    component: ManagerExercises,
+    meta: { isManagerRoute: true },
   },
   {
     path: "/trainer",
