@@ -9,15 +9,10 @@ import ExerciseTypes from "@/views/ExerciseTypes.vue";
 import Trainers from "@/views/Trainers.vue";
 import ManagerClients from "@/views/ManagerClients.vue";
 import ManagerExercises from "@/views/ManagerExercises.vue";
+import ClientsExercises from "@/views/ClientsExercises.vue";
 
 const routes = [
   { path: "/login", name: "Login", component: Login },
-  {
-    path: "/client",
-    name: "Client",
-    component: Client,
-    meta: { isClientRoute: true },
-  },
   {
     path: "/admin/trainers",
     name: "Trainers",
@@ -49,14 +44,26 @@ const routes = [
     meta: { isManagerRoute: true },
   },
   {
-    path: "/trainer",
-    name: "Trainer page",
+    path: "/client",
+    name: "ClientInfo",
+    component: Client,
+    meta: { isClientRoute: true },
+  },
+  {
+    path: "/client/exercises",
+    name: "ClientExercises",
+    component: ClientsExercises,
+    meta: { isClientRoute: true },
+  },
+  {
+    path: "/client/trainer",
+    name: "TrainerPage",
     component: TrainerPage,
     meta: { isClientRoute: true },
   },
   {
-    path: "/diet",
-    name: "Diet page",
+    path: "/client/diet",
+    name: "DietPage",
     component: DietPage,
     meta: { isClientRoute: true },
   },
