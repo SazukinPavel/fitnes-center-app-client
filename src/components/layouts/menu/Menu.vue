@@ -10,6 +10,8 @@
       prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
       :title="user?.login"
       nav
+      :active="isProfilePage"
+      @click="goTo({ name: profilePageName })"
     >
       <template v-slot:append>
         <v-btn
@@ -28,8 +30,9 @@
         :key="item.routeName"
         :prepend-icon="item.icon"
         :title="item.title"
+        :active="isActiveMenuItem(item)"
         :value="item.routeName"
-        @click="router.push({ name: item.routeName })"
+        @click="goTo({ name: item.routeName })"
         active-color="primary"
       />
       <v-list-item
@@ -47,16 +50,19 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import MenuItem from "@/types/MenuItem";
+import useGoTo from "@/hooks/useGoTo";
 
 const store = useStore();
-const router = useRouter();
+const route = useRoute();
+const goTo = useGoTo();
 
 const drawer = ref(true);
 const rail = ref(true);
 
 const user = computed(() => store.getters["auth/user"]);
+const role = computed(() => store.getters["auth/role"]);
 const isLogedIn = computed(() => store.getters["auth/isLogedIn"]);
 
 const logout = () => {
@@ -65,8 +71,23 @@ const logout = () => {
   store.reset();
 };
 
+const profilePageName = computed<string>(() => {
+  if (role.value === "manager") {
+    return "Manager profile page";
+  }
+  return "Client profile page";
+});
+
+const isProfilePage = computed<boolean>(() => {
+  return route.name === profilePageName.value;
+});
+
+const isActiveMenuItem = (menuItem: MenuItem): boolean => {
+  return route.name === menuItem.routeName;
+};
+
 const items = computed<MenuItem[]>(() => {
-  if (user.value.type == "admin") {
+  if (role.value == "admin") {
     return [
       {
         title: "Тренера",
@@ -80,7 +101,7 @@ const items = computed<MenuItem[]>(() => {
       },
       { title: "Диеты", icon: "mdi-food-fork-drink", routeName: "Diets" },
     ];
-  } else if (user.value.type == "manager") {
+  } else if (role.value == "manager") {
     return [
       {
         title: "Клиенты",
