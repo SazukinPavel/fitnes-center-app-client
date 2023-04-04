@@ -24,7 +24,7 @@ onMounted(async () => {
       break;
     }
     case "manager": {
-      router.replace({ name: "Manager" });
+      router.replace({ name: "ManagerClients" });
       break;
     }
     case "client": {
@@ -55,7 +55,7 @@ const setupRouter = () => {
     route.matched.some((el: any) => !el.meta.isManagerRoute) &&
     role.value === "manager"
   ) {
-    router.replace({ name: "Manager" });
+    router.replace({ name: "ManagerClients" });
   } else if (isLogedIn.value && role.value === "client") {
     router.replace({ name: "Client" });
   }
