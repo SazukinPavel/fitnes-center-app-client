@@ -18,24 +18,7 @@ const router = useRouter();
 const route = useRoute();
 
 onMounted(async () => {
-  switch (role.value) {
-    case "admin": {
-      router.replace({ name: "Trainers" });
-      break;
-    }
-    case "manager": {
-      router.replace({ name: "ManagerClients" });
-      break;
-    }
-    case "client": {
-      router.replace({ name: "Client" });
-      break;
-    }
-    default: {
-      router.push({ name: "Login" });
-      break;
-    }
-  }
+  router.replace({ name: redirectRouteName.value });
   try {
     await authorize();
   } catch {
@@ -94,28 +77,26 @@ const redirectToLogin = () => {
 const isLogedIn = computed(() => store.getters["auth/isLogedIn"]);
 const role: ComputedRef<Role> = computed(() => store.getters["auth/role"]);
 
-watch(
-  () => role.value,
-  () => {
-    switch (role.value) {
-      case "admin": {
-        router.replace({ name: "Trainers" });
-        break;
-      }
-      case "manager": {
-        router.replace({ name: "ManagerClients" });
-        break;
-      }
-      case "client": {
-        router.replace({ name: "ClientInfo" });
-        break;
-      }
-      default: {
-        router.push({ name: "Login" });
-        break;
-      }
+const redirectRouteName = computed<string>(() => {
+  switch (role.value) {
+    case "admin": {
+      return "Trainers";
+    }
+    case "manager": {
+      return "ManagerClients";
+    }
+    case "client": {
+      return "ClientInfo";
+    }
+    default: {
+      return "Login";
     }
   }
+});
+
+watch(
+  () => role.value,
+  () => router.push({ name: redirectRouteName.value })
 );
 // const isLogedInPage = computed(() => route.name === "Login");
 </script>
