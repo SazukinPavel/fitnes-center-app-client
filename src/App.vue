@@ -57,7 +57,7 @@ const setupRouter = () => {
   ) {
     router.replace({ name: "ManagerClients" });
   } else if (isLogedIn.value && role.value === "client") {
-    router.replace({ name: "Client" });
+    router.replace({ name: "ClientInfo" });
   }
   router.beforeEach((to: any, from: any, next: any) => {
     if (!isLogedIn.value && to.path !== "/login") {
@@ -103,11 +103,11 @@ watch(
         break;
       }
       case "manager": {
-        router.replace({ name: "Manager" });
+        router.replace({ name: "ManagerClients" });
         break;
       }
       case "client": {
-        router.replace({ name: "Client" });
+        router.replace({ name: "ClientInfo" });
         break;
       }
       default: {
