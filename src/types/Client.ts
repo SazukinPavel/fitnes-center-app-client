@@ -3,23 +3,23 @@ import { Exercise } from "@/types/Exercise";
 import Diet from "@/types/Diet";
 
 export default interface Client {
-  weight: string;
+  weight?: string;
 
-  height: number;
+  height?: number;
 
-  age: number;
+  age?: number;
 
-  owner: Manager;
+  owner?: Manager;
 
-  diet: Diet;
+  diet?: Diet;
 
-  exercises: Exercise[];
+  exercises?: Exercise[];
 
-  id: string;
+  id?: string;
 
-  fio: string;
+  fio?: string;
 
-  login: string;
+  login?: string;
 
-  password: string;
+  password?: string;
 }

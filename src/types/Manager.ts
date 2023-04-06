@@ -1,15 +1,16 @@
 import Role from "@/types/Role";
 
 export default interface Manager {
-  id: string;
+  id?: string;
 
-  readonly role: Role;
+  readonly role?: Role;
 
-  fio: string;
+  fio?: string;
 
-  login: string;
+  login?: string;
 
-  description: string;
+  description?: string;
 
-  password: string;
+  password?: string;
+  age?:number
 }

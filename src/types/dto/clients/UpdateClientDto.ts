@@ -1,14 +1,14 @@
 export default interface UpdateClientDto {
-  id: string;
+  id?: string;
 
-  fio: string;
+  fio?: string;
 
-  password: string;
+  password?: string;
 
-  login: string;
-  weight: string;
+  login?: string;
+  weight?: string;
 
-  height: number;
+  height?: number;
 
-  age: number;
+  age?: number;
 }

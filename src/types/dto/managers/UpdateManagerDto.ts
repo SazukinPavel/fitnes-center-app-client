@@ -1,11 +1,11 @@
 export default interface UpdateManagerDto {
-  id: string;
+  id?: string;
 
-  fio: string;
+  fio?: string;
 
-  login: string;
+  login?: string;
 
-  password: string;
+  description?: string;
 
-  age: number;
+  age?: number;
 }
