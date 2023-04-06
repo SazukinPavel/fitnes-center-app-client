@@ -73,9 +73,9 @@ const logout = () => {
 
 const profilePageName = computed<string>(() => {
   if (role.value === "manager") {
-    return "Manager profile page";
+    return "ManagerProfile";
   }
-  return "Client profile page";
+  return "ClientProfile";
 });
 
 const isProfilePage = computed<boolean>(() => {
