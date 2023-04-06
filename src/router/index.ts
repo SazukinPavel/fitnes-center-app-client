@@ -1,22 +1,21 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Login from "@/views/Login.vue";
 import Client from "@/views/Client.vue";
-import Manager from "@/views/Manager.vue";
-import TrainerPage from "@/views/TrainerPage.vue";
 import DietPage from "@/views/DietPage.vue";
 import Diets from "@/views/Diets.vue";
 import ExerciseTypes from "@/views/ExerciseTypes.vue";
-import Trainers from "@/views/Trainers.vue";
 import ManagerClients from "@/views/ManagerClients.vue";
 import ManagerExercises from "@/views/ManagerExercises.vue";
 import ClientsExercises from "@/views/ClientsExercises.vue";
+import Managers from "@/views/Managers.vue";
+import ManagerPage from "@/views/ManagerPage.vue";
 
 const routes = [
   { path: "/login", name: "Login", component: Login },
   {
     path: "/admin/trainers",
-    name: "Trainers",
-    component: Trainers,
+    name: "Managers",
+    component: Managers,
     meta: { isAdminRoute: true },
   },
   {
@@ -57,8 +56,8 @@ const routes = [
   },
   {
     path: "/client/trainer",
-    name: "TrainerPage",
-    component: TrainerPage,
+    name: "ManagersPage",
+    component: ManagerPage,
     meta: { isClientRoute: true },
   },
   {

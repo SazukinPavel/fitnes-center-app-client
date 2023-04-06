@@ -92,7 +92,7 @@ const items = computed<MenuItem[]>(() => {
       {
         title: "Тренера",
         icon: "mdi-account-group-outline",
-        routeName: "Trainers",
+        routeName: "Managers",
       },
       {
         title: "Занятия",
@@ -114,7 +114,7 @@ const items = computed<MenuItem[]>(() => {
     return [
       { icon: "mdi-account", routeName: "ClientInfo", title: "Клиент" },
       { icon: "mdi-dumbbell", routeName: "ClientExercises", title: "Занятия" },
-      { icon: "mdi-kabaddi", routeName: "TrainerPage", title: "Тренер" },
+      { icon: "mdi-kabaddi", routeName: "ManagerPage", title: "Тренер" },
       { icon: "mdi-food-fork-drink", routeName: "DietPage", title: "Диета" },
     ];
   }
