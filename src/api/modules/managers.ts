@@ -20,6 +20,10 @@ export default class ManagersModule extends BaseApiModule {
     return this.put("", updateManagerDto);
   }
 
+  find(id: string) {
+    return this.get<Manager>(id);
+  }
+
   drop(id: string) {
     return this.delete(id);
   }

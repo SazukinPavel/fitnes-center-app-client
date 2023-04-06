@@ -25,6 +25,9 @@ export default class ClientsModule extends BaseApiModule {
     return this.delete(id);
   }
 
+  find(id: string) {
+    return this.get<Client>(id);
+  }
   setDiet(setDietDto: SetDietDto) {
     return this.patch("", setDietDto);
   }
