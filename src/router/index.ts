@@ -9,6 +9,8 @@ import ManagerExercises from "@/views/ManagerExercises.vue";
 import ClientsExercises from "@/views/ClientsExercises.vue";
 import Managers from "@/views/Managers.vue";
 import ManagerPage from "@/views/ManagerPage.vue";
+import ManagerProfile from "@/views/ManagerProfile.vue";
+import ClientProfile from "@/views/ClientProfile.vue";
 
 const routes = [
   { path: "/login", name: "Login", component: Login },
@@ -31,6 +33,12 @@ const routes = [
     meta: { isAdminRoute: true },
   },
   {
+    path: "/manager/profile",
+    name: "ManagerProfile",
+    component: ManagerProfile,
+    meta: { isManagerRoute: true },
+  },
+  {
     path: "/manager/clients",
     name: "ManagerClients",
     component: ManagerClients,
@@ -46,6 +54,12 @@ const routes = [
     path: "/client",
     name: "ClientInfo",
     component: Client,
+    meta: { isClientRoute: true },
+  },
+  {
+    path: "/client/profile",
+    name: "ClientProfile",
+    component: ClientProfile,
     meta: { isClientRoute: true },
   },
   {
