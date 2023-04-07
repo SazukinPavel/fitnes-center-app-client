@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <app-main>
+    <app-main v-if="!isAuthorizeLoading">
       <router-view />
     </app-main>
   </v-app>
@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import appMain from "@/components/layouts/main.vue";
-import { computed, ComputedRef, onMounted, watch } from "vue";
+import { computed, ComputedRef, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import Role from "@/types/Role";
@@ -17,12 +17,15 @@ const store = useStore();
 const router = useRouter();
 const route = useRoute();
 
+const isAuthorizeLoading = ref(true);
+
 onMounted(async () => {
-  router.replace({ name: redirectRouteName.value });
   try {
     await authorize();
   } catch {
     redirectToLogin();
+  } finally {
+    isAuthorizeLoading.value = false;
   }
 
   setupRouter();
@@ -39,19 +42,23 @@ const setupRouter = () => {
     role.value === "manager"
   ) {
     router.replace({ name: "ManagerClients" });
-  } else if (isLogedIn.value && role.value === "client") {
+  } else if (
+    isLogedIn.value &&
+    role.value === "client" &&
+    route.matched.some((el: any) => !el.meta.isClientRoute)
+  ) {
     router.replace({ name: "ClientInfo" });
   }
   router.beforeEach((to: any, from: any, next: any) => {
     if (!isLogedIn.value && to.path !== "/login") {
       redirectToLogin();
     } else if (
-      (!to.matched.some((el: any) => el.meta.isAdminRoute) &&
-        role.value === "admin") ||
-      (!to.matched.some((el: any) => el.meta.isManagerRoute) &&
-        role.value === "manager") ||
-      (!to.matched.some((el: any) => el.meta.isClientRoute) &&
-        role.value === "client")
+      (role.value === "admin" &&
+        to.matched.some((el: any) => !el.meta.isAdminRoute)) ||
+      (role.value === "manager" &&
+        to.matched.some((el: any) => !el.meta.isManagerRoute)) ||
+      (role.value === "client" &&
+        to.matched.some((el: any) => !el.meta.isClientRoute))
     ) {
       next(from);
     } else {
@@ -96,7 +103,11 @@ const redirectRouteName = computed<string>(() => {
 
 watch(
   () => role.value,
-  () => router.push({ name: redirectRouteName.value })
+  () => {
+    if (!isAuthorizeLoading.value) {
+      router.push({ name: redirectRouteName.value });
+    }
+  }
 );
 // const isLogedInPage = computed(() => route.name === "Login");
 </script>
