@@ -67,11 +67,12 @@ const user = computed<Client>(() => store.getters["auth/fullUser"]);
 
 const update = async () => {
   isUpdateLoading.value = true;
+    console.log(localUser.value)
   const dto: UpdateClientDto = {
     fio: localUser.value.fio,
     id: localUser.value.id,
-    height: localUser.value.height,
-    weight: localUser.value.weight,
+    height: +(localUser.value.height || 0),
+    weight: +(localUser.value.weight || 0),
   };
 
   try {

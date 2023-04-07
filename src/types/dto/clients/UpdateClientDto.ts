@@ -6,7 +6,7 @@ export default interface UpdateClientDto {
   password?: string;
 
   login?: string;
-  weight?: string;
+  weight?: number;
 
   height?: number;
 
