@@ -5,7 +5,7 @@
       <v-dialog v-model="addExerciseTypeDialog" activator="parent" width="auto">
         <v-card class="px-15 py-10">
           <v-card-title>Новое занятие:</v-card-title>
-          <v-form ref="exerciseInfoForm">
+          <v-form ref="exerciseTypeForm">
             <v-text-field
               class="my-2"
               :rules="requiredRule"
@@ -76,7 +76,7 @@ const addExerciseTypeDto = ref<AddExerciseInfoDto>({
 const requiredRule: any = [(val: string) => !!val || "Поле обязательно!"];
 
 const addExerciseInfo = async () => {
-  if (!(await exerciseTypeForm.value?.validate()).valid) {
+  if (!(await exerciseTypeForm.value?.validate())) {
     return;
   }
 

@@ -32,7 +32,7 @@
               :rules="requiredRule"
               label="Клиент"
               item-value="id"
-              item-title="fio"
+              item-title="auth.fio"
               :items="clients"
               v-model="addExerciseDto.clientId"
             />
