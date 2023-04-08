@@ -36,7 +36,7 @@ const setupRouter = () => {
     route.matched.some((el: any) => !el.meta.isAdminRoute) &&
     role.value === "admin"
   ) {
-    router.replace({ name: "Trainers" });
+    router.replace({ name: "Managers" });
   } else if (
     route.matched.some((el: any) => !el.meta.isManagerRoute) &&
     role.value === "manager"
@@ -87,7 +87,7 @@ const role: ComputedRef<Role> = computed(() => store.getters["auth/role"]);
 const redirectRouteName = computed<string>(() => {
   switch (role.value) {
     case "admin": {
-      return "Trainers";
+      return "Managers";
     }
     case "manager": {
       return "ManagerClients";
