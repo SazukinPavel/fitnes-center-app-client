@@ -1,13 +1,13 @@
 <template>
   <my-table
-      :selected="selected"
-      @update:selected="emit('update:selected', $event)"
-      :headers="trainersHeaders"
-      :loading="loading"
-      :items="items"
-      @refresh="emit('refresh')"
-      show-refresh-button
-      show-expand
+    :selected="selected"
+    @update:selected="emit('update:selected', $event)"
+    :headers="trainersHeaders"
+    :loading="loading"
+    :items="items"
+    @refresh="emit('refresh')"
+    show-refresh-button
+    show-expand
   >
     <template v-slot:[`expanded-row`]="{ columns, item }">
       <tr>
@@ -34,8 +34,8 @@ const { items, loading } = toRefs(props);
 const emit = defineEmits(["update:selected", "refresh"]);
 
 const trainersHeaders: any = [
-  { title: "Логин", value: "login" },
-  { title: "Фио", value: "fio" },
+  { title: "Логин", value: "auth.login" },
+  { title: "Фио", value: "auth.fio" },
   { title: "Возвраст", value: "age" },
 ];
 </script>

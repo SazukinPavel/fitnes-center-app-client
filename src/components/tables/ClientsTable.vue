@@ -25,8 +25,8 @@ const { items, loading } = toRefs(props);
 const emit = defineEmits(["update:selected", "refresh"]);
 
 const clientsHeaders: any = [
-  { title: "Логин", value: "login" },
-  { title: "Фио", value: "fio" },
+  { title: "Логин", value: "auth.login" },
+  { title: "Фио", value: "auth.fio" },
   { title: "Возвраст", value: "age" },
   { title: "Вес", value: "weight" },
   { title: "Рост", value: "height" },
