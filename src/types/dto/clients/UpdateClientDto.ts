@@ -3,12 +3,9 @@ export default interface UpdateClientDto {
 
   fio?: string;
 
-  password?: string;
-
-  login?: string;
   weight?: number;
 
   height?: number;
 
-  age?: number;
+  authId?: string;
 }

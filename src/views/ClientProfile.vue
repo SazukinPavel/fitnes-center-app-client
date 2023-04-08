@@ -1,10 +1,6 @@
 <template>
-  <v-card
-    variant="flat"
-    :loading="isUserLoading"
-    class="d-flex jsutify-start my-7"
-  >
-    <v-container class="profile">
+  <v-card variant="flat" class="d-flex jsutify-start my-7">
+    <v-container v-if="localUser.auth?.login" class="profile">
       <v-text-field
         class="readonly"
         variant="outlined"
@@ -59,7 +55,6 @@ import Client from "@/types/Client";
 
 const store = useStore();
 
-const isUserLoading = ref(false);
 const isUpdateLoading = ref(false);
 const localUser = ref<Client>({});
 
@@ -67,12 +62,12 @@ const user = computed<Client>(() => store.getters["auth/user"]);
 
 const update = async () => {
   isUpdateLoading.value = true;
-  console.log(localUser.value);
   const dto: UpdateClientDto = {
     fio: localUser.value.auth?.fio,
     id: localUser.value.id,
     height: +(localUser.value.height || 0),
     weight: +(localUser.value.weight || 0),
+    authId: localUser.value.auth?.id.toString(),
   };
 
   try {
@@ -89,12 +84,7 @@ const update = async () => {
   }
 };
 
-onMounted(async () => {
-  isUpdateLoading.value = true;
-  if (user.value == null) {
-    await store.dispatch("auth/fetchUser");
-  }
-  isUpdateLoading.value = false;
+onMounted(() => {
   localUser.value = user.value;
 });
 </script>
