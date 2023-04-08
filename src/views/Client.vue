@@ -4,7 +4,7 @@
       <v-col cols="8">
         <v-card class="my-2">
           <v-card-title class="text-center text-black"
-            >{{ client.fio }}
+            >{{ client.auth.fio }}
           </v-card-title>
           <v-card-title class="text-center text-black"
             >Рост: {{ client.height }}

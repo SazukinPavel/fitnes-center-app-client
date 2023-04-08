@@ -1,8 +1,5 @@
-import Role from '../types/Role';
+import Admin from "@/types/Admin";
+import Manager from "@/types/Manager";
+import Client from "@/types/Client";
 
-export interface User {
-    id: string;
-    readonly role: Role;
-    fio: string;
-    login: string;
-}
+export type User = Admin | Manager | Client;

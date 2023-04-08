@@ -6,7 +6,6 @@ export default {
   state: {
     isLogedIn: false,
     user: null,
-    fullUser: null,
   },
   mutations: {
     setUser(state, user) {
@@ -23,9 +22,6 @@ export default {
     applyToken(_, token) {
       api.applyToken(token);
     },
-    setFullUser(state, fullUser) {
-      state.fullUser = fullUser;
-    },
   },
   actions: {
     async login({ dispatch }, loginDto) {
@@ -34,7 +30,7 @@ export default {
 
       await dispatch("init");
     },
-    async init({ commit, dispatch }) {
+    async init({ commit }) {
       const tokenCookie = CookiesService.getToken();
 
       if (tokenCookie === "") {
@@ -50,32 +46,12 @@ export default {
         commit("applyToken", me.data.token);
 
         commit("setUser", me.data.user);
-        dispatch("fetchUser");
         commit("setIsLogedIn", true);
       } catch {
         commit("setIsLogedIn", false);
         CookiesService.resetToken();
         throw new Error();
       }
-    },
-    async fetchUser({ state, commit }) {
-      let fullUser = {};
-      const id = state.user.id;
-      switch (state.user.role) {
-        case "client": {
-          fullUser = await api.clients.find(id);
-          break;
-        }
-        case "manager": {
-          fullUser = await api.managers.find(id);
-          break;
-        }
-        default: {
-          return;
-        }
-      }
-
-      commit("setFullUser", fullUser.data);
     },
   },
   getters: {
@@ -87,9 +63,6 @@ export default {
     },
     role(state) {
       return state.user?.role;
-    },
-    fullUser(state) {
-      return state.fullUser;
     },
   },
 };

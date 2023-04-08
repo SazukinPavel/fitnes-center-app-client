@@ -1,6 +1,7 @@
 import Manager from "@/types/Manager";
 import { Exercise } from "@/types/Exercise";
 import Diet from "@/types/Diet";
+import Auth from "@/types/Auth";
 
 export default interface Client {
   weight?: string;
@@ -17,9 +18,5 @@ export default interface Client {
 
   id?: string;
 
-  fio?: string;
-
-  login?: string;
-
-  password?: string;
+  auth?: Auth;
 }

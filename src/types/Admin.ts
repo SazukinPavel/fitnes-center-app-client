@@ -1,13 +1,7 @@
-import Role from "@/types/Role";
+import Auth from "@/types/Auth";
 
 export default interface Admin {
   id: string;
 
-  readonly role: Role;
-
-  fio: string;
-
-  login: string;
-
-  password: string;
+  auth?: Auth;
 }

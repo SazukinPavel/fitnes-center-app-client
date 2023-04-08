@@ -1,16 +1,8 @@
-import Role from "@/types/Role";
+import Auth from "@/types/Auth";
 
 export default interface Manager {
   id?: string;
-
-  readonly role?: Role;
-
-  fio?: string;
-
-  login?: string;
-
+  auth?: Auth;
   description?: string;
-
-  password?: string;
-  age?:number
+  age?: number;
 }

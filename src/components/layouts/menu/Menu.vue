@@ -8,8 +8,9 @@
   >
     <v-list-item
       prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
-      :title="user?.login"
+      :title="user?.auth?.login"
       nav
+      active-color="primary"
       :active="isProfilePage"
       @click="goTo({ name: profilePageName })"
     >

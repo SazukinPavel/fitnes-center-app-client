@@ -10,12 +10,12 @@
         variant="outlined"
         label="Логин"
         readonly
-        v-model="localUser.login"
+        v-model="localUser.auth.login"
       ></v-text-field>
       <v-text-field
         variant="outlined"
         label="ФИО"
-        v-model="localUser.fio"
+        v-model="localUser.auth.fio"
       ></v-text-field>
       <v-text-field
         variant="outlined"
@@ -56,12 +56,12 @@ const isUserLoading = ref(false);
 const isUpdateLoading = ref(false);
 const localUser = ref<Manager>({});
 
-const user = computed<Manager>(() => store.getters["auth/fullUser"]);
+const user = computed<Manager>(() => store.getters["auth/user"]);
 
 const update = async () => {
   isUpdateLoading.value = true;
   const dto: UpdateManagerDto = {
-    fio: localUser.value.fio,
+    fio: localUser.value.auth?.fio,
     description: localUser.value.description,
     id: localUser.value.id,
   };
@@ -81,6 +81,8 @@ const update = async () => {
 };
 
 onMounted(async () => {
+  console.log(user.value);
+
   isUpdateLoading.value = true;
   if (user.value == null) {
     await store.dispatch("auth/fetchUser");

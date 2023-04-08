@@ -54,7 +54,7 @@ class XlsxService {
 
     exercises.forEach((exercise) => {
       mat.push([
-        exercise.client.fio,
+        exercise.client.auth?.fio,
         exercise.date,
         exercise.exerciseInfo.name,
       ]);
