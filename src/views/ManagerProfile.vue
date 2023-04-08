@@ -1,10 +1,10 @@
 <template>
   <v-card
     variant="flat"
-    :loading="isUserLoading"
+    :loading="isUserLoading || !localUser.auth?.login"
     class="d-flex jsutify-start my-7"
   >
-    <v-container class="profile">
+    <v-container v-if="localUser.auth?.login" class="profile">
       <v-text-field
         class="readonly"
         variant="outlined"
@@ -64,6 +64,7 @@ const update = async () => {
     fio: localUser.value.auth?.fio,
     description: localUser.value.description,
     id: localUser.value.id,
+    authId: localUser.value.auth?.id.toString(),
   };
 
   try {
@@ -81,13 +82,6 @@ const update = async () => {
 };
 
 onMounted(async () => {
-  console.log(user.value);
-
-  isUpdateLoading.value = true;
-  if (user.value == null) {
-    await store.dispatch("auth/fetchUser");
-  }
-  isUpdateLoading.value = false;
   localUser.value = user.value;
 });
 </script>

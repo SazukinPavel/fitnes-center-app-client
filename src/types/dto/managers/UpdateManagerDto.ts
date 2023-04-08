@@ -3,9 +3,7 @@ export default interface UpdateManagerDto {
 
   fio?: string;
 
-  login?: string;
-
   description?: string;
 
-  age?: number;
+  authId?: string;
 }
