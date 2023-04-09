@@ -2,7 +2,7 @@
   <v-card
     variant="flat"
     :loading="isUserLoading || !localUser.auth?.login"
-    class="d-flex jsutify-start my-7"
+    class="d-flex jsutify-start"
   >
     <v-container v-if="localUser.auth?.login" class="profile">
       <v-text-field
@@ -29,11 +29,15 @@
         v-model="localUser.description"
       ></v-textarea>
       <div class="buttons d-flex justify-end">
-        <v-btn class="mr-5" color="primary" @click="changePassDialog = true"
+        <v-btn
+          size="small"
+          class="mr-5"
+          color="primary"
+          @click="changePassDialog = true"
           >Сменить пароль</v-btn
         >
-        <v-btn class="mr-5" color="primary">Востановить пароль</v-btn>
         <v-btn
+          size="small"
           :loading="isUpdateLoading"
           class="mr-5"
           color="primary"
