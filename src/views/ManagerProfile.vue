@@ -29,7 +29,9 @@
         v-model="localUser.description"
       ></v-textarea>
       <div class="buttons d-flex justify-end">
-        <v-btn class="mr-5" color="primary">Сменить пароль</v-btn>
+        <v-btn class="mr-5" color="primary" @click="changePassDialog = true"
+          >Сменить пароль</v-btn
+        >
         <v-btn class="mr-5" color="primary">Востановить пароль</v-btn>
         <v-btn
           :loading="isUpdateLoading"
@@ -41,6 +43,7 @@
       </div>
     </v-container>
   </v-card>
+  <change-password v-model="changePassDialog" />
 </template>
 
 <script setup lang="ts">
@@ -49,12 +52,14 @@ import { useStore } from "vuex";
 import Manager from "@/types/Manager";
 import api from "@/api";
 import UpdateManagerDto from "@/types/dto/managers/UpdateManagerDto";
+import ChangePassword from "@/components/changePassword.vue";
 
 const store = useStore();
 
 const isUserLoading = ref(false);
 const isUpdateLoading = ref(false);
 const localUser = ref<Manager>({});
+const changePassDialog = ref(false);
 
 const user = computed<Manager>(() => store.getters["auth/user"]);
 

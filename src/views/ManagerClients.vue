@@ -162,7 +162,7 @@ const setDietDto = ref<SetDietDto>({
 });
 
 const addClient = async () => {
-  if (!(await clientForm.value?.validate()).valid) {
+  if (!(await clientForm.value?.validate())) {
     return;
   }
 
