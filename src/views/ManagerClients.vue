@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex justify-end mt-3">
     <v-btn
-      size="x-small"
+      size="small"
       :loading="isClientAddLoading"
       class="mx-5"
       color="primary"
@@ -83,21 +83,12 @@
   <v-card :loading="isClientsLoading" variant="plain">
     <client-card v-for="client in clients" :key="client.id" :client="client" />
   </v-card>
-
-  <!--  <clients-table-->
-  <!--    @refresh="refreshClients"-->
-  <!--    v-model:selected="selectedClients"-->
-  <!--    :loading="isClientsLoading"-->
-  <!--    :items="clients"-->
-  <!--  />-->
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
-// import ClientsTable from "@/components/tables/ClientsTable.vue";
 import ClientCard from "@/components/clientCard.vue";
-// import SetDietDto from "@/types/dto/clients/SetDietDto";
 import AddClientDto from "@/types/dto/clients/AddClientDto";
 
 const store = useStore();
@@ -105,8 +96,6 @@ const requiredRule: any = [(val: string) => !!val || "Поле обязател�
 
 const clientForm = ref<any | null>(null);
 const addClientDialog = ref(false);
-// const clientId = ref<string | null>(null);
-// const setDietDialog = ref(false);
 
 const addClientDto = ref<AddClientDto>({
   password: "",
@@ -136,17 +125,6 @@ const addClient = async () => {
     addClientDialog.value = false;
   }
 };
-
-// const setDietClick = () => {
-//   if (Object.keys(selectedClients.value).length) {
-//     clientId.value = selectedClients.value[0];
-//     setDietDialog.value = true;
-//   }
-// };
-
-// const refreshClients = () => {
-//   store.dispatch("clients/refresh");
-// };
 
 onMounted(() => {
   store.dispatch("clients/fetch");

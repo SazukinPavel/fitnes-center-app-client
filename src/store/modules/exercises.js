@@ -63,15 +63,11 @@ export default {
         commit("pushExercise", exercise);
       }
     },
-    async deleteExercises({ commit }, exercises) {
+    async deleteExercise({ commit }, id) {
       commit("setIsDeleteLoading", true);
       try {
-        await Promise.all(
-          exercises.forEach(async (id) => {
-            await api.exercises.drop(id);
-            commit("deleteExercise", id);
-          })
-        );
+        await api.exercises.drop(id);
+        commit("deleteExercise", id);
       } finally {
         commit("setIsDeleteLoading", false);
       }

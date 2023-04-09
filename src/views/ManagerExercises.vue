@@ -1,15 +1,20 @@
 <template>
-  <div class="d-flex jsutify-start my-7">
-    <v-btn @click="download" class="mx-5" color="primary">Отчёты </v-btn>
-    <v-btn :loading="isExerciseAddLoading" class="mx-5" color="primary"
-      >Добавить
+  <div class="d-flex justify-end">
+    <v-btn
+      :loading="isExerciseAddLoading"
+      class="mx-5"
+      color="primary"
+      icon
+      size="small"
+    >
+      <v-icon>mdi-plus</v-icon>
       <v-dialog v-model="addExerciseDialog" activator="parent" width="auto">
         <v-card class="px-15 py-10">
           <v-card-title>Новое занятие:</v-card-title>
           <v-form ref="exerciseForm">
             <v-text-field
               class="my-2"
-              :rules="requiredRule"
+              :rules="[requiredRule]"
               variant="outlined"
               label="Дата"
               type="datetime-local"
@@ -19,7 +24,7 @@
             <v-select
               variant="outlined"
               color="primary"
-              :rules="requiredRule"
+              :rules="[requiredRule]"
               label="Тип тренировки"
               item-value="id"
               item-title="name"
@@ -29,7 +34,7 @@
             <v-select
               variant="outlined"
               color="primary"
-              :rules="requiredRule"
+              :rules="[requiredRule]"
               label="Клиент"
               item-value="id"
               item-title="auth.fio"
@@ -56,33 +61,31 @@
         </v-card>
       </v-dialog>
     </v-btn>
-    <v-btn
-      :loading="isExerciseDeleteLoading"
-      color="primary"
-      @click="deleteExercises"
-      >Удалить</v-btn
-    >
   </div>
-  <exercises-table
-    @refresh="refreshExercises"
-    v-model:selected="selectedExercises"
-    show-select
-    :loading="isExerciseLoading"
-    :items="exercises"
-  />
+  <v-card :loading="isExerciseLoading" variant="plain">
+    <exercise-card
+      v-for="exercise in exercises"
+      :key="exercise.id"
+      :exercise="exercise"
+      :client="getClient(exercise.client.id)"
+    />
+  </v-card>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import AddExerciseDto from "@/types/dto/exercises/AddExerciseDto";
-import XlsxService from "@/services/XlsxService";
 import { useStore } from "vuex";
-import ExercisesTable from "@/components/tables/ExercisesTable.vue";
+import ExerciseCard from "@/components/exerciseCard.vue";
+import Client from "@/types/Client";
+import { Exercise } from "@/types/Exercise";
+import ExerciseInfo from "@/types/ExerciseInfo";
+import useValidators from "@/hooks/useValidators";
 
 const store = useStore();
-const requiredRule: any = [(val: string) => !!val || "Поле обязательно!"];
 
-const selectedExercises = ref<string[]>([]);
+const { requiredRule } = useValidators();
+
 const exerciseForm = ref<any | null>(null);
 
 const addExerciseDialog = ref(false);
@@ -99,6 +102,10 @@ onMounted(() => {
   store.dispatch("clients/fetch");
   store.dispatch("exerciseInfo/fetch");
 });
+
+const getClient = (id?: string) => {
+  return clients.value.find((c) => c.id == id);
+};
 
 const addExercise = async () => {
   if (!(await exerciseForm.value?.validate()).valid) {
@@ -123,27 +130,18 @@ const refreshExercises = () => {
   store.dispatch("exercises/refresh");
 };
 
-const deleteExercises = () => {
-  store.dispatch("exercises/deleteExercises", selectedExercises.value);
-};
-
-const exercises = computed(() => store.getters["exercises/exercises"]);
-const clients = computed(() => store.getters["clients/clients"]);
-const exercisesInfo = computed(
+const exercises = computed<Exercise[]>(
+  () => store.getters["exercises/exercises"]
+);
+const clients = computed<Client[]>(() => store.getters["clients/clients"]);
+const exercisesInfo = computed<ExerciseInfo[]>(
   () => store.getters["exerciseInfo/exercisesInfos"]
 );
 
-const isExerciseDeleteLoading = computed(
-  () => store.getters["exercises/isDeleteLoading"]
-);
 const isExerciseAddLoading = computed(
   () => store.getters["clients/isAddLoading"]
 );
 const isExerciseLoading = computed(() => store.getters["clients/isLoading"]);
-
-const download = () => {
-  XlsxService.downloadXlsx(exercises.value);
-};
 </script>
 
 <style scoped></style>
