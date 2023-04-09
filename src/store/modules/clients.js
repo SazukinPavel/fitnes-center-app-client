@@ -76,6 +76,15 @@ export default {
         commit("setIsDeleteLoading", false);
       }
     },
+    async deleteClient({ commit }, id) {
+      commit("setIsDeleteLoading", true);
+      try {
+        await api.clients.drop(id);
+        commit("deleteClient", id);
+      } finally {
+        commit("setIsDeleteLoading", false);
+      }
+    },
   },
   getters: {
     isFetched(state) {
