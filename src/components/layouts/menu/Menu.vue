@@ -3,7 +3,6 @@
     v-if="isLogedIn"
     v-model="drawer"
     :rail="rail"
-    permanent
     @click="rail = false"
   >
     <v-list-item
@@ -113,7 +112,6 @@ const items = computed<MenuItem[]>(() => {
     ];
   } else {
     return [
-      { icon: "mdi-account", routeName: "ClientInfo", title: "Клиент" },
       { icon: "mdi-dumbbell", routeName: "ClientExercises", title: "Занятия" },
       { icon: "mdi-kabaddi", routeName: "ManagerPage", title: "Тренер" },
       { icon: "mdi-food-fork-drink", routeName: "DietPage", title: "Диета" },

@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Login from "@/views/Login.vue";
-import Client from "@/views/Client.vue";
 import DietPage from "@/views/DietPage.vue";
 import Diets from "@/views/Diets.vue";
 import ExerciseTypes from "@/views/ExerciseTypes.vue";
@@ -49,12 +48,6 @@ const routes = [
     name: "ManagerExercises",
     component: ManagerExercises,
     meta: { isManagerRoute: true },
-  },
-  {
-    path: "/client",
-    name: "ClientInfo",
-    component: Client,
-    meta: { isClientRoute: true },
   },
   {
     path: "/client/profile",

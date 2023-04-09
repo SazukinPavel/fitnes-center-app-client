@@ -47,7 +47,7 @@ const setupRouter = () => {
     role.value === "client" &&
     route.matched.some((el: any) => !el.meta.isClientRoute)
   ) {
-    router.replace({ name: "ClientInfo" });
+    router.replace({ name: "ClientExercises" });
   }
   router.beforeEach((to: any, from: any, next: any) => {
     if (!isLogedIn.value && to.path !== "/login") {
@@ -93,7 +93,7 @@ const redirectRouteName = computed<string>(() => {
       return "ManagerClients";
     }
     case "client": {
-      return "ClientInfo";
+      return "ClientExercises";
     }
     default: {
       return "Login";

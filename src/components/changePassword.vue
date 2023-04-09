@@ -42,7 +42,6 @@
             <v-btn
               @click="emit('update:modelValue', false)"
               class="mx-3"
-              color="primary"
               :disabled="isPasswordChangeLoading"
               >Закрыть</v-btn
             >
@@ -50,7 +49,6 @@
               :loading="isPasswordChangeLoading"
               @click="change"
               class="mx-3"
-              color="primary"
               >Изменить</v-btn
             >
           </v-row>
@@ -86,7 +84,6 @@ const { modelValue } = toRefs(props);
 const newPasswordRules = ref([requiredRule.value, passwordLengthRule.value]);
 const oldPasswordRules = ref([requiredRule.value]);
 const newPasswordRepeatRules = ref([
-  requiredRule.value,
   (val: string) => val === newPassword.value || "Пароли должны совпадать.",
 ]);
 
