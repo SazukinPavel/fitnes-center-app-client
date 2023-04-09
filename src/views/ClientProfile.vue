@@ -32,7 +32,12 @@
         v-model.number="localUser.height"
       ></v-text-field>
       <div class="buttons d-flex justify-end">
-        <v-btn class="mr-5" color="primary">Сменить пароль</v-btn>
+        <v-btn
+          @click="isChangePasswordDialog = true"
+          class="mr-5"
+          color="primary"
+          >Сменить пароль</v-btn
+        >
         <v-btn class="mr-5" color="primary">Востановить пароль</v-btn>
         <v-btn
           :loading="isUpdateLoading"
@@ -44,6 +49,7 @@
       </div>
     </v-container>
   </v-card>
+  <change-password v-model="isChangePasswordDialog" />
 </template>
 
 <script setup lang="ts">
@@ -52,11 +58,13 @@ import { useStore } from "vuex";
 import api from "@/api";
 import UpdateClientDto from "@/types/dto/clients/UpdateClientDto";
 import Client from "@/types/Client";
+import ChangePassword from "@/components/changePassword.vue";
 
 const store = useStore();
 
 const isUpdateLoading = ref(false);
 const localUser = ref<Client>({});
+const isChangePasswordDialog = ref(false);
 
 const user = computed<Client>(() => store.getters["auth/user"]);
 
