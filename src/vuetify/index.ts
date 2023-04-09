@@ -30,6 +30,8 @@ const vuetify = createVuetify({
     VDataTable: {
       noDataText: "Данных нет",
     },
+    VBtn: { color: "primary" },
+    VTextField: { color: "primary", variant: "outlined" },
   },
   directives,
   theme: {
