@@ -1,8 +1,13 @@
 <template>
   <v-card class="ma-0 pa-0" variant="plain" :loading="isExerciseTypeLoading">
-    <div class="d-flex jsutify-start my-7">
-      <v-btn :loading="isExerciseTypeAddLoading" class="mx-5" color="primary"
-        >Добавить
+    <div class="d-flex justify-end">
+      <v-btn
+        :loading="isExerciseTypeAddLoading"
+        color="primary"
+        icon
+        size="small"
+      >
+        <v-icon>mdi-plus</v-icon>
         <v-dialog
           v-model="addExerciseTypeDialog"
           activator="parent"

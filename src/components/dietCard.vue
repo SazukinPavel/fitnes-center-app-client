@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-actions class="d-flex justify-end">
+    <v-card-actions v-if="props.delete" class="d-flex justify-end">
       <v-btn size="small" icon @click="deleteDiet" :loading="isDeleteLoading"
         ><v-icon>mdi-delete</v-icon></v-btn
       >
@@ -25,6 +25,7 @@ const store = useStore();
 
 const props = defineProps({
   diet: { type: Object as PropType<Diet>, required: true },
+  delete: { type: Boolean, default: false },
 });
 
 const isDeleteLoading = ref(false);

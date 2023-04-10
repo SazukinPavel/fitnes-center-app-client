@@ -50,7 +50,7 @@
       </v-btn>
     </div>
     <div>
-      <diet-card v-for="diet in diets" :diet="diet" :key="diet.id" />
+      <diet-card delete v-for="diet in diets" :diet="diet" :key="diet.id" />
     </div>
   </v-card>
 </template>
