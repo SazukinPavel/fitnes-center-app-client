@@ -110,6 +110,14 @@ const items = computed<MenuItem[]>(() => {
         icon: "mdi-account-group-outline",
         routeName: "ManagerClients",
       },
+      {
+        title: "Типы занятий",
+        icon: "mdi-dumbbell",
+        routeName: "ManagersExercisesTypes",
+      },
+
+      { title: "Диеты", icon: "mdi-dumbbell", routeName: "ManagerDiets" },
+
       { title: "Занятия", icon: "mdi-dumbbell", routeName: "ManagerExercises" },
     ];
   } else {

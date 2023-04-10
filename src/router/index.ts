@@ -10,6 +10,8 @@ import Managers from "@/views/Managers.vue";
 import ManagerPage from "@/views/ManagerPage.vue";
 import ManagerProfile from "@/views/ManagerProfile.vue";
 import ClientProfile from "@/views/ClientProfile.vue";
+import ManagersExercisesTypes from "@/views/ManagersExercisesTypes.vue";
+import ManagerDiets from "@/views/ManagerDiets.vue";
 
 const routes = [
   { path: "/login", name: "Login", component: Login },
@@ -47,6 +49,18 @@ const routes = [
     path: "/manager/exercises",
     name: "ManagerExercises",
     component: ManagerExercises,
+    meta: { isManagerRoute: true },
+  },
+  {
+    path: "/manager/exercise-infos",
+    name: "ManagersExercisesTypes",
+    component: ManagersExercisesTypes,
+    meta: { isManagerRoute: true },
+  },
+  {
+    path: "/manager/diets",
+    name: "ManagerDiets",
+    component: ManagerDiets,
     meta: { isManagerRoute: true },
   },
   {
