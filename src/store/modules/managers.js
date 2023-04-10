@@ -76,6 +76,10 @@ export default {
         commit("setIsDeleteLoading", false);
       }
     },
+    async delete({ commit }, id) {
+      await api.managers.drop(id);
+      commit("deleteManager", id);
+    },
   },
   getters: {
     isFetched(state) {
