@@ -43,7 +43,6 @@ const deleteDiet = async () => {
   } finally {
     isDeleteLoading.value = false;
   }
-  store.dispatch("diets/deleteDiet", props.diet?.id);
 };
 </script>
 
