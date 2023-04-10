@@ -8,7 +8,7 @@
           <v-form ref="managerForm">
             <v-text-field
               class="my-2"
-              :rules="requiredRule"
+              :rules="[requiredRule]"
               variant="outlined"
               label="Логин"
               color="primary"
@@ -16,7 +16,7 @@
             />
             <v-text-field
               class="my-2"
-              :rules="requiredRule"
+              :rules="[requiredRule]"
               variant="outlined"
               label="Фио"
               v-model="addManagerDto.fio"
@@ -32,13 +32,13 @@
               class="my-2"
               variant="outlined"
               color="primary"
-              type="number"
-              label="Возвраст"
-              v-model="addManagerDto.age"
+              type="date"
+              label="Дата рождения"
+              v-model="addManagerDto.birthDate"
             />
             <v-text-field
               class="my-2"
-              :rules="requiredRule"
+              :rules="[requiredRule]"
               variant="outlined"
               color="primary"
               label="Пароль"
@@ -85,19 +85,20 @@ import { useStore } from "vuex";
 import AddManagerDto from "@/types/dto/managers/AddManagerDto";
 import Manager from "@/types/Manager";
 import TrainersTable from "@/components/tables/TrainersTable.vue";
+import useValidators from "@/hooks/useValidators";
 
 const store = useStore();
+const { requiredRule } = useValidators();
 const selectedManagers = ref<Manager[]>([]);
 const managerForm = ref<any | null>(null);
 const addManagerDialog = ref(false);
 const addManagerDto = ref<AddManagerDto>({
-  age: 18,
+  birthDate: new Date(),
   fio: "",
   description: "",
   login: "",
   password: "",
 });
-const requiredRule: any = [(val: string) => !!val || "Поле обязательно!"];
 
 onMounted(() => {
   store.dispatch("managers/fetch");

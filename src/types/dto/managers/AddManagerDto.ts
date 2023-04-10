@@ -5,7 +5,7 @@ export default interface AddManagerDto {
 
   password: string;
 
-  age: number;
+  birthDate: Date;
 
   description: string;
 }

@@ -8,8 +8,6 @@ export default interface Client {
 
   height?: number;
 
-  age?: number;
-
   owner?: Manager;
 
   diet?: Diet;

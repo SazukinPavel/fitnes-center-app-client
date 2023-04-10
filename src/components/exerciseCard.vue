@@ -11,12 +11,7 @@
       </v-btn>
     </v-card-actions>
     <v-card-title>{{ props.exercise.exerciseInfo.name }}</v-card-title>
-    <v-card-title
-      >Дата:
-      {{
-        moment(props.exercise.date).utc().format("YYYY-MM-DD HH:mm")
-      }}</v-card-title
-    >
+    <v-card-title>Дата: {{ formatDateTime(props.exercise.date) }}</v-card-title>
     <v-card-title>Клиент: {{ props.client?.auth?.fio }}</v-card-title>
   </v-card>
 </template>
@@ -26,7 +21,7 @@ import { defineProps, PropType, ref } from "vue";
 import { Exercise } from "@/types/Exercise";
 import { useStore } from "vuex";
 import Client from "@/types/Client";
-import moment from "moment/moment";
+import useFormmaters from "@/hooks/useFormaters";
 
 const props = defineProps({
   exercise: { type: Object as PropType<Exercise>, required: true },
@@ -34,6 +29,7 @@ const props = defineProps({
 });
 
 const store = useStore();
+const { formatDateTime } = useFormmaters();
 
 const isDeleteLoading = ref(false);
 

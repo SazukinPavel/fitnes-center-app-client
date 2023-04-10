@@ -14,7 +14,7 @@
           <v-form ref="clientForm">
             <v-text-field
               class="my-2"
-              :rules="requiredRule"
+              :rules="[requiredRule]"
               variant="outlined"
               label="Логин"
               color="primary"
@@ -22,14 +22,14 @@
             />
             <v-text-field
               class="my-2"
-              :rules="requiredRule"
+              :rules="[requiredRule]"
               variant="outlined"
               label="Фио"
               v-model="addClientDto.fio"
             />
             <v-text-field
               class="my-2"
-              :rules="requiredRule"
+              :rules="[requiredRule]"
               variant="outlined"
               label="Пароль"
               v-model="addClientDto.password"
@@ -38,9 +38,9 @@
               class="my-2"
               variant="outlined"
               color="primary"
-              type="number"
+              type="date"
               label="Возвраст"
-              v-model="addClientDto.age"
+              v-model="addClientDto.birthDate"
             />
             <v-text-field
               class="my-2"
@@ -52,7 +52,7 @@
             />
             <v-text-field
               class="my-2"
-              :rules="requiredRule"
+              :rules="[requiredRule]"
               type="number"
               variant="outlined"
               color="primary"
@@ -90,16 +90,18 @@ import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import ClientCard from "@/components/clientCard.vue";
 import AddClientDto from "@/types/dto/clients/AddClientDto";
+import useValidators from "@/hooks/useValidators";
+
+const { requiredRule } = useValidators();
 
 const store = useStore();
-const requiredRule: any = [(val: string) => !!val || "Поле обязательно!"];
 
 const clientForm = ref<any | null>(null);
 const addClientDialog = ref(false);
 
 const addClientDto = ref<AddClientDto>({
   password: "",
-  age: 18,
+  birthDate: new Date(),
   fio: "",
   height: 180,
   login: "",
@@ -116,7 +118,7 @@ const addClient = async () => {
   } finally {
     addClientDto.value = {
       password: "",
-      age: 18,
+      birthDate: new Date(),
       fio: "",
       height: 180,
       login: "",

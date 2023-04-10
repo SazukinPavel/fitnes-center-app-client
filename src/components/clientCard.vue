@@ -60,7 +60,10 @@
           <v-card variant="plain">
             <v-card-title>Вес: {{ props.client?.weight }}</v-card-title>
             <v-card-title>Рост: {{ props.client?.height }}</v-card-title>
-            <v-card-title>Дата рождения: {{ props.client?.age }}</v-card-title>
+            <v-card-title
+              >Дата рождения:
+              {{ formatDate(props.client.auth.birthDate) }}</v-card-title
+            >
           </v-card>
         </v-expansion-panel-text>
       </v-expansion-panel>
@@ -74,6 +77,7 @@ import { useStore } from "vuex";
 import SetDietDto from "@/types/dto/clients/SetDietDto";
 import api from "@/api";
 import useValidators from "@/hooks/useValidators";
+import useFormaters from "@/hooks/useFormaters";
 
 const store = useStore();
 
@@ -82,6 +86,7 @@ const props = defineProps({
 });
 
 const { requiredRule } = useValidators();
+const { formatDate } = useFormaters();
 
 const isDeleteLoading = ref(false);
 const setDietDialog = ref(false);
@@ -116,7 +121,7 @@ const setDiet = async () => {
   try {
     await api.clients.setDiet({
       ...setDietDto.value,
-      clientId: props.client?.id,
+      clientId: props.client?.id || "",
     });
   } finally {
     setDietDto.value = {
