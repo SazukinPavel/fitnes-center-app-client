@@ -76,6 +76,10 @@ export default {
         commit("setIsDeleteLoading", false);
       }
     },
+    async delete({ commit }, id) {
+      await api.exercisesInfo.drop(id);
+      commit("deleteExerciseInfo", id);
+    },
   },
   getters: {
     isFetched(state) {
