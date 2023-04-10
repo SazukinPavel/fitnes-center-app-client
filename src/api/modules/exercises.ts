@@ -2,6 +2,7 @@ import BaseApiModule from "@/types/BaseApiModule";
 import Api from "@/api/api";
 import ExerciseInfo from "@/types/ExerciseInfo";
 import AddExerciseDto from "@/types/dto/exercises/AddExerciseDto";
+import UpdateIsPayedDto from "@/types/dto/exercises/UpdateIsPayedDto";
 
 export default class ExercisesModule extends BaseApiModule {
   constructor(api: Api) {
@@ -17,5 +18,9 @@ export default class ExercisesModule extends BaseApiModule {
 
   drop(id: string) {
     return this.delete(id);
+  }
+
+  updateIsPayed(dto: UpdateIsPayedDto) {
+    return this.patch("is-payed", dto);
   }
 }

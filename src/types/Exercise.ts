@@ -12,4 +12,6 @@ export interface Exercise {
   manager: Manager;
 
   exerciseInfo: ExerciseInfo;
+
+  isPayed: boolean;
 }

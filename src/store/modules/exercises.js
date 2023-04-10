@@ -1,4 +1,5 @@
 import api from "@/api";
+import { Vue } from "vue-class-component";
 
 export default {
   namespaced: true,
@@ -30,6 +31,14 @@ export default {
     },
     setIsDeleteLoading(state, val) {
       state.isDeleteLoading = val;
+    },
+    updateExerciseIsPayed(state, { id, isPayed }) {
+      state.exercises = state.exercises.map((e) => {
+        if (id === e.id) {
+          e.isPayed = isPayed;
+        }
+        return e;
+      });
     },
   },
   actions: {
@@ -64,13 +73,12 @@ export default {
       }
     },
     async deleteExercise({ commit }, id) {
-      commit("setIsDeleteLoading", true);
-      try {
-        await api.exercises.drop(id);
-        commit("deleteExercise", id);
-      } finally {
-        commit("setIsDeleteLoading", false);
-      }
+      await api.exercises.drop(id);
+      commit("deleteExercise", id);
+    },
+    async changeIsPayed({ commit }, dto) {
+      await api.exercises.updateIsPayed(dto);
+      commit("updateExerciseIsPayed", dto);
     },
   },
   getters: {
