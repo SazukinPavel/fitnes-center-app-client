@@ -76,6 +76,15 @@ export default {
         commit("setIsDeleteLoading", false);
       }
     },
+    async deleteDiet({ commit }, id) {
+      commit("setIsDeleteLoading", true);
+      try {
+        await api.diets.drop(id);
+        commit("deleteDiet", id);
+      } finally {
+        commit("setIsDeleteLoading", false);
+      }
+    },
   },
   getters: {
     isFetched(state) {
