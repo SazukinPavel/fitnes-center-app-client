@@ -1,5 +1,6 @@
 <template>
-  <div class="d-flex justify-end mt-3">
+  <div class="d-flex justify-end align-center">
+    <search class="ml-5" v-model="searchParam" />
     <v-btn
       size="small"
       :loading="isClientAddLoading"
@@ -81,7 +82,11 @@
     </v-btn>
   </div>
   <v-card :loading="isClientsLoading" variant="plain">
-    <client-card v-for="client in clients" :key="client.id" :client="client" />
+    <client-card
+      v-for="client in filtredClients"
+      :key="client.id"
+      :client="client"
+    />
   </v-card>
 </template>
 
@@ -91,6 +96,8 @@ import { useStore } from "vuex";
 import ClientCard from "@/components/clientCard.vue";
 import AddClientDto from "@/types/dto/clients/AddClientDto";
 import useValidators from "@/hooks/useValidators";
+import Search from "@/components/search.vue";
+import Client from "@/types/Client";
 
 const { requiredRule } = useValidators();
 
@@ -98,6 +105,8 @@ const store = useStore();
 
 const clientForm = ref<any | null>(null);
 const addClientDialog = ref(false);
+
+const searchParam = ref("");
 
 const addClientDto = ref<AddClientDto>({
   password: "",
@@ -137,6 +146,16 @@ const isClientAddLoading = computed(
   () => store.getters["clients/isAddLoading"]
 );
 const isClientsLoading = computed(() => store.getters["clients/isLoading"]);
-const clients = computed(() => store.getters["clients/clients"]);
+const clients = computed<Client[]>(() => store.getters["clients/clients"]);
+const filtredClients = computed<Client[]>(() => {
+  if (!searchParam.value) {
+    return clients.value;
+  }
+  return clients.value.filter(
+    (c) =>
+      c.auth?.fio.toLowerCase().startsWith(searchParam.value.toLowerCase()) ||
+      c.auth?.login.toLowerCase().startsWith(searchParam.value.toLowerCase())
+  );
+});
 // const diets = computed(() => store.getters["diets/diets"]);
 </script>

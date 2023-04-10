@@ -1,6 +1,7 @@
 <template>
   <v-card class="ma-0 pa-0" variant="plain" :loading="isDietsLoading">
-    <div class="d-flex justify-end">
+    <div class="d-flex justify-end align-center">
+      <search class="ml-5" v-model="searchParam" />
       <v-btn
         :loading="isDietsAddLoading"
         color="primary"
@@ -50,7 +51,12 @@
       </v-btn>
     </div>
     <div>
-      <diet-card delete v-for="diet in diets" :diet="diet" :key="diet.id" />
+      <diet-card
+        delete
+        v-for="diet in filtredDiets"
+        :diet="diet"
+        :key="diet.id"
+      />
     </div>
   </v-card>
 </template>
@@ -62,6 +68,7 @@ import AddDietDto from "@/types/dto/diets/AddDietDto";
 import { useStore } from "vuex";
 import useValidators from "@/hooks/useValidators";
 import DietCard from "@/components/dietCard.vue";
+import Search from "@/components/search.vue";
 
 const store = useStore();
 const { requiredRule } = useValidators();
@@ -72,6 +79,8 @@ const addDietDto = ref<AddDietDto>({
   name: "",
   description: "",
 });
+
+const searchParam = ref("");
 
 const addDiet = async () => {
   if (!(await dietForm.value?.validate()).valid) {
@@ -94,6 +103,15 @@ onMounted(() => {
 });
 
 const diets = computed<Diet[]>(() => store.getters["diets/diets"]);
+const filtredDiets = computed<Diet[]>(() => {
+  if (!searchParam.value) {
+    return diets.value;
+  }
+
+  return diets.value.filter((d) =>
+    d.name.toLowerCase().startsWith(searchParam.value.toLowerCase())
+  );
+});
 const isDietsAddLoading = computed(() => store.getters["diets/isAddLoading"]);
 const isDietsLoading = computed(() => store.getters["diets/isLoading"]);
 </script>

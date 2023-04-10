@@ -1,6 +1,7 @@
 <template>
   <v-card class="ma-0 pa-0" variant="plain" :loading="isExerciseTypeLoading">
-    <div class="d-flex justify-end">
+    <div class="d-flex justify-end align-center">
+      <search class="ml-5" v-model="searchParam" />
       <v-btn
         :loading="isExerciseTypeAddLoading"
         color="primary"
@@ -55,9 +56,9 @@
     </div>
     <div>
       <exercise-info-card
-        v-for="exerciseInfo in exercisesInfo"
+        v-for="exerciseInfo in filtredExercisesInfo"
         :exercise-info="exerciseInfo"
-        :key="exerciseInfo.id"
+        :key="exerciseInfo?.id"
         delete
       />
     </div>
@@ -71,6 +72,7 @@ import AddExerciseInfoDto from "@/types/dto/exerciseInfo/AddExerciseInfoDto";
 import { useStore } from "vuex";
 import useValidators from "@/hooks/useValidators";
 import ExerciseInfoCard from "@/components/exerciseInfoCard.vue";
+import Search from "@/components/search.vue";
 
 const store = useStore();
 
@@ -80,6 +82,8 @@ const addExerciseTypeDto = ref<AddExerciseInfoDto>({
   name: "",
   description: "",
 });
+
+const searchParam = ref("");
 
 const { requiredRule } = useValidators();
 
@@ -106,6 +110,15 @@ onMounted(() => {
 const exercisesInfo = computed<ExerciseInfo[]>(
   () => store.getters["exerciseInfo/exercisesInfos"]
 );
+
+const filtredExercisesInfo = computed<ExerciseInfo[]>(() => {
+  if (!searchParam.value) {
+    return exercisesInfo.value;
+  }
+  return exercisesInfo.value.filter((e) =>
+    e.name.toLowerCase().startsWith(searchParam.value.toLowerCase())
+  );
+});
 const isExerciseTypeAddLoading = computed(
   () => store.getters["exerciseInfo/isAddLoading"]
 );

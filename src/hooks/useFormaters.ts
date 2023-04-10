@@ -1,6 +1,6 @@
 import moment from "moment";
 
-export default function useValidators() {
+export default function useFormaters() {
   const formatDate = (date: any) => {
     return moment(date).format("YYYY-MM-DD");
   };

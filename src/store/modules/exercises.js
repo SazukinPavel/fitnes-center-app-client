@@ -1,5 +1,4 @@
 import api from "@/api";
-import { Vue } from "vue-class-component";
 
 export default {
   namespaced: true,

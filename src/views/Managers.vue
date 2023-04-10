@@ -1,6 +1,7 @@
 <template>
   <v-card class="ma-0 pa-0" variant="plain" :loading="isManagerLoading">
-    <div class="d-flex justify-end">
+    <div class="d-flex justify-space-between align-center">
+      <search class="ml-5" v-model="searchParam" />
       <v-btn
         :loading="isManagerAddLoading"
         class="mx-5"
@@ -74,7 +75,7 @@
     </div>
     <div>
       <manager-card
-        v-for="manager in managers"
+        v-for="manager in filtredManagers"
         :manager="manager"
         :key="manager.id"
       />
@@ -89,6 +90,7 @@ import AddManagerDto from "@/types/dto/managers/AddManagerDto";
 import Manager from "@/types/Manager";
 import useValidators from "@/hooks/useValidators";
 import ManagerCard from "@/components/managerCard.vue";
+import Search from "@/components/search.vue";
 
 const store = useStore();
 const { requiredRule } = useValidators();
@@ -101,6 +103,8 @@ const addManagerDto = ref<AddManagerDto>({
   login: "",
   password: "",
 });
+
+const searchParam = ref("");
 
 onMounted(() => {
   store.dispatch("managers/fetch");
@@ -125,6 +129,18 @@ const addManager = async () => {
   }
 };
 const managers = computed<Manager[]>(() => store.getters["managers/managers"]);
+const filtredManagers = computed<Manager[]>(() => {
+  if (!searchParam.value) {
+    return managers.value;
+  }
+
+  return managers.value.filter(
+    (m) =>
+      m.auth?.login.toLowerCase().startsWith(searchParam.value.toLowerCase()) ||
+      m.auth?.fio.startsWith(searchParam.value.toLowerCase()) ||
+      m.id?.toLowerCase().startsWith(searchParam.value.toLowerCase())
+  );
+});
 
 const isManagerAddLoading = computed(
   () => store.getters["managers/isAddLoading"]
