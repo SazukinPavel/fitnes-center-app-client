@@ -1,7 +1,12 @@
 <template>
   <v-card class="ma-0 pa-0" variant="plain" :loading="isDietsLoading">
-    <v-card-actions class="d-flex justify-end">
-      <v-btn :loading="isDietsAddLoading" class="mx-5" color="primary" icon
+    <div class="d-flex justify-end">
+      <v-btn
+        :loading="isDietsAddLoading"
+        color="primary"
+        icon
+        size="small"
+        class="mx-5"
         ><v-icon>mdi-plus</v-icon>
         <v-dialog v-model="addDietDialog" activator="parent" width="auto">
           <v-card class="px-15 py-10">
@@ -43,7 +48,7 @@
           </v-card>
         </v-dialog>
       </v-btn>
-    </v-card-actions>
+    </div>
     <div>
       <diet-card v-for="diet in diets" :diet="diet" :key="diet.id" />
     </div>
