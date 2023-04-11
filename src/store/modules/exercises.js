@@ -33,7 +33,7 @@ export default {
     },
     updateExerciseIsPayed(state, { id, isPayed }) {
       state.exercises = state.exercises.map((e) => {
-        if (id === e.id) {
+        if (id == e.id) {
           e.isPayed = isPayed;
         }
         return e;

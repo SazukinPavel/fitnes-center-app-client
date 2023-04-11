@@ -16,8 +16,8 @@
     <v-card-actions>
       <v-switch
         :label="props.exercise?.isPayed ? 'Оплачено' : 'Не оплачено'"
-        :value="props.exercise?.isPayed"
-        @change="changeIsPayed"
+        :model-value="props.exercise?.isPayed"
+        @update:modelValue="changeIsPayed"
       />
     </v-card-actions>
   </v-card>
@@ -61,8 +61,8 @@ const changeIsPayed = async (val: boolean) => {
   isPayedLoading.value = true;
   try {
     await store.dispatch("exercises/changeIsPayed", {
-      id: props.exercise?.id,
-      isPayed: val,
+      id: props.exercise.id.toString(),
+      isPayed: !!val,
     });
   } catch {
     store.commit("snackbar/showSnackbarError", {
