@@ -1,14 +1,7 @@
 <template>
   <div class="d-flex justify-end align-center">
     <search class="ml-5" v-model="searchParam" />
-    <v-btn
-      size="small"
-      :loading="isClientAddLoading"
-      class="mx-5"
-      color="primary"
-      icon
-    >
-      <v-icon>mdi-plus</v-icon>
+    <add-btn :loading="isClientAddLoading">
       <v-dialog activator="parent" v-model="addClientDialog" width="auto">
         <v-card class="px-15 py-10">
           <v-card-title>Новый клиент</v-card-title>
@@ -79,7 +72,7 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-    </v-btn>
+    </add-btn>
   </div>
   <v-card :loading="isClientsLoading" variant="plain">
     <client-card
@@ -98,6 +91,7 @@ import AddClientDto from "@/types/dto/clients/AddClientDto";
 import useValidators from "@/hooks/useValidators";
 import Search from "@/components/search.vue";
 import Client from "@/types/Client";
+import AddBtn from "@/components/ui/addBtn.vue";
 
 const { requiredRule } = useValidators();
 

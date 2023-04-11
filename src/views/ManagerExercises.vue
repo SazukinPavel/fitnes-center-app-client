@@ -1,13 +1,6 @@
 <template>
   <div class="d-flex justify-end">
-    <v-btn
-      :loading="isExerciseAddLoading"
-      class="mx-5"
-      color="primary"
-      icon
-      size="small"
-    >
-      <v-icon>mdi-plus</v-icon>
+    <add-btn :loading="isExerciseAddLoading">
       <v-dialog v-model="addExerciseDialog" activator="parent" width="auto">
         <v-card class="px-15 py-10">
           <v-card-title>Новое занятие:</v-card-title>
@@ -60,7 +53,7 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-    </v-btn>
+    </add-btn>
   </div>
   <v-card :loading="isExerciseLoading" variant="plain">
     <exercise-card
@@ -81,6 +74,7 @@ import Client from "@/types/Client";
 import { Exercise } from "@/types/Exercise";
 import ExerciseInfo from "@/types/ExerciseInfo";
 import useValidators from "@/hooks/useValidators";
+import AddBtn from "@/components/ui/addBtn.vue";
 
 const store = useStore();
 

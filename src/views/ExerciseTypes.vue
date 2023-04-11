@@ -2,13 +2,7 @@
   <v-card class="ma-0 pa-0" variant="plain" :loading="isExerciseTypeLoading">
     <div class="d-flex justify-end align-center">
       <search class="ml-5" v-model="searchParam" />
-      <v-btn
-        :loading="isExerciseTypeAddLoading"
-        color="primary"
-        icon
-        size="small"
-      >
-        <v-icon>mdi-plus</v-icon>
+      <add-btn :loading="isExerciseTypeAddLoading">
         <v-dialog
           v-model="addExerciseTypeDialog"
           activator="parent"
@@ -52,7 +46,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-      </v-btn>
+      </add-btn>
     </div>
     <div>
       <exercise-info-card
@@ -73,6 +67,7 @@ import { useStore } from "vuex";
 import useValidators from "@/hooks/useValidators";
 import ExerciseInfoCard from "@/components/exerciseInfoCard.vue";
 import Search from "@/components/search.vue";
+import AddBtn from "@/components/ui/addBtn.vue";
 
 const store = useStore();
 

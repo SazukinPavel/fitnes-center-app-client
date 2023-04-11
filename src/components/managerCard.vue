@@ -22,7 +22,10 @@
               >Дата рождения:
               {{ formatDate(props.manager.auth.birthDate) }}</v-card-title
             >
-            <v-card-text>Описание: {{ props.manager.description }}</v-card-text>
+            <v-card-title>Описание:</v-card-title>
+            <v-card-text>
+              {{ props.manager.description }}
+            </v-card-text>
           </v-card>
         </v-expansion-panel-text>
       </v-expansion-panel>

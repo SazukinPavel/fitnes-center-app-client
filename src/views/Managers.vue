@@ -2,14 +2,7 @@
   <v-card class="ma-0 pa-0" variant="plain" :loading="isManagerLoading">
     <div class="d-flex justify-space-between align-center">
       <search class="ml-5" v-model="searchParam" />
-      <v-btn
-        :loading="isManagerAddLoading"
-        class="mx-5"
-        color="primary"
-        icon
-        size="small"
-      >
-        <v-icon>mdi-plus</v-icon>
+      <add-btn :loading="isManagerAddLoading">
         <v-dialog v-model="addManagerDialog" activator="parent" width="auto">
           <v-card class="px-15 py-10">
             <v-card-title>Новый менеджер</v-card-title>
@@ -71,7 +64,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-      </v-btn>
+      </add-btn>
     </div>
     <div>
       <manager-card
@@ -91,6 +84,7 @@ import Manager from "@/types/Manager";
 import useValidators from "@/hooks/useValidators";
 import ManagerCard from "@/components/managerCard.vue";
 import Search from "@/components/search.vue";
+import AddBtn from "@/components/ui/addBtn.vue";
 
 const store = useStore();
 const { requiredRule } = useValidators();

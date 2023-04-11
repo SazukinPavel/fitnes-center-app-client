@@ -2,13 +2,7 @@
   <v-card class="ma-0 pa-0" variant="plain" :loading="isDietsLoading">
     <div class="d-flex justify-end align-center">
       <search class="ml-5" v-model="searchParam" />
-      <v-btn
-        :loading="isDietsAddLoading"
-        color="primary"
-        icon
-        size="small"
-        class="mx-5"
-        ><v-icon>mdi-plus</v-icon>
+      <add-btn :loading="isDietsAddLoading">
         <v-dialog v-model="addDietDialog" activator="parent" width="auto">
           <v-card class="px-15 py-10">
             <v-card-title>Новое питание:</v-card-title>
@@ -48,7 +42,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-      </v-btn>
+      </add-btn>
     </div>
     <div>
       <diet-card
@@ -69,6 +63,7 @@ import { useStore } from "vuex";
 import useValidators from "@/hooks/useValidators";
 import DietCard from "@/components/dietCard.vue";
 import Search from "@/components/search.vue";
+import AddBtn from "@/components/ui/addBtn.vue";
 
 const store = useStore();
 const { requiredRule } = useValidators();
