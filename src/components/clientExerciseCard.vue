@@ -1,12 +1,14 @@
 <template>
   <v-card class="ma-4">
-    <v-card-title>{{ props.exercise.exerciseInfo.name }}</v-card-title>
-    <v-card-title>Дата: {{ formatDateTime(props.exercise.date) }}</v-card-title>
-    <v-card-title>Тренер: {{ props.manager.auth.fio }}</v-card-title>
+    <v-card-title>{{ props.exercise.exerciseInfo?.name }}</v-card-title>
+    <v-card-title
+      >Дата: {{ formatDateTime(props.exercise?.date) }}</v-card-title
+    >
+    <v-card-title>Тренер: {{ props.manager.auth?.fio }}</v-card-title>
     <v-expansion-panels>
       <v-expansion-panel title="Описание">
         <v-expansion-panel-text>
-          {{ props.exercise.exerciseInfo.description }}
+          {{ props.exercise.exerciseInfo?.description }}
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>
