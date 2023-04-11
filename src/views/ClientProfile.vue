@@ -1,5 +1,5 @@
 <template>
-  <v-card variant="flat" class="d-flex jsutify-start my-7">
+  <v-card variant="flat" class="d-flex jsutify-start">
     <v-container v-if="localUser.auth?.login" class="profile">
       <v-text-field
         class="readonly"
@@ -11,23 +11,26 @@
       <v-text-field
         variant="outlined"
         label="ФИО"
+        append-inner-icon="mdi-pencil"
         v-model="localUser.auth.fio"
       ></v-text-field>
       <v-text-field
         variant="outlined"
         label="Дата рождения"
         readonly
-        v-model="localUser.age"
+        :model-value="formatDate(localUser.auth.birthDate)"
       ></v-text-field>
       <v-text-field
         variant="outlined"
         label="Вес"
+        append-inner-icon="mdi-pencil"
         type="number"
         v-model.number="localUser.weight"
       ></v-text-field>
       <v-text-field
         variant="outlined"
         label="Рост"
+        append-inner-icon="mdi-pencil"
         type="number"
         v-model.number="localUser.height"
       ></v-text-field>
@@ -36,14 +39,14 @@
           @click="isChangePasswordDialog = true"
           class="mr-5"
           color="primary"
+          size="small"
           >Сменить пароль</v-btn
         >
-        <v-btn class="mr-5" color="primary">Востановить пароль</v-btn>
         <v-btn
           :loading="isUpdateLoading"
-          class="mr-5"
           color="primary"
           @click="update"
+          size="small"
           >Изменить</v-btn
         >
       </div>
@@ -59,8 +62,10 @@ import api from "@/api";
 import UpdateClientDto from "@/types/dto/clients/UpdateClientDto";
 import Client from "@/types/Client";
 import ChangePassword from "@/components/changePassword.vue";
+import useFormaters from "@/hooks/useFormaters";
 
 const store = useStore();
+const { formatDate } = useFormaters();
 
 const isUpdateLoading = ref(false);
 const localUser = ref<Client>({});

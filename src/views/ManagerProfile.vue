@@ -15,17 +15,19 @@
       <v-text-field
         variant="outlined"
         label="ФИО"
+        append-inner-icon="mdi-pencil"
         v-model="localUser.auth.fio"
       ></v-text-field>
       <v-text-field
         variant="outlined"
         label="Дата рождения"
         readonly
-        v-model="localUser.age"
+        :model-value="formatDate(localUser.auth.birthDate)"
       ></v-text-field>
       <v-textarea
         variant="outlined"
         label="О себе"
+        append-inner-icon="mdi-pencil"
         v-model="localUser.description"
       ></v-textarea>
       <div class="buttons d-flex justify-end">
@@ -57,8 +59,10 @@ import Manager from "@/types/Manager";
 import api from "@/api";
 import UpdateManagerDto from "@/types/dto/managers/UpdateManagerDto";
 import ChangePassword from "@/components/changePassword.vue";
+import useFormaters from "@/hooks/useFormaters";
 
 const store = useStore();
+const { formatDate } = useFormaters();
 
 const isUserLoading = ref(false);
 const isUpdateLoading = ref(false);
