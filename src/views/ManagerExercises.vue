@@ -1,6 +1,7 @@
 <template>
-  <div class="d-flex justify-end">
-    <add-btn :loading="isExerciseAddLoading">
+  <div class="d-flex justify-space-between align-start">
+    <exercise-date-select :exercises="exercises" v-model="selectedDate" />
+    <add-btn class="mt-2" :loading="isExerciseAddLoading">
       <v-dialog v-model="addExerciseDialog" activator="parent" width="auto">
         <v-card class="px-15 py-10">
           <v-card-title>Новое занятие:</v-card-title>
@@ -56,12 +57,15 @@
     </add-btn>
   </div>
   <v-card :loading="isExerciseLoading" variant="plain">
-    <exercise-card
-      v-for="exercise in exercises"
-      :key="exercise.id"
-      :exercise="exercise"
-      :client="getClient(exercise.client.id)"
-    />
+    <template v-if="filtredExercises.length">
+      <exercise-card
+        v-for="exercise in filtredExercises"
+        :key="exercise.id"
+        :exercise="exercise"
+        :client="getClient(exercise.client.id)"
+      />
+    </template>
+    <no-exercise-message v-else :date="selectedDate" />
   </v-card>
 </template>
 
@@ -75,15 +79,19 @@ import { Exercise } from "@/types/Exercise";
 import ExerciseInfo from "@/types/ExerciseInfo";
 import useValidators from "@/hooks/useValidators";
 import AddBtn from "@/components/ui/addBtn.vue";
+import ExerciseDateSelect from "@/components/exerciseDateSelect.vue";
+import useFormaters from "@/hooks/useFormaters";
+import NoExerciseMessage from "@/components/noExerciseMessage.vue";
 
 const store = useStore();
 
 const { requiredRule } = useValidators();
+const { formatDate } = useFormaters();
+
+const selectedDate = ref<string>("");
 
 const exerciseForm = ref<any | null>(null);
-
 const addExerciseDialog = ref(false);
-
 const addExerciseDto = ref<AddExerciseDto>({
   clientId: "",
   date: new Date(Date.now()),
@@ -127,6 +135,16 @@ const refreshExercises = () => {
 const exercises = computed<Exercise[]>(
   () => store.getters["exercises/exercises"]
 );
+
+const filtredExercises = computed<Exercise[]>(() => {
+  if (!selectedDate.value) {
+    return exercises.value;
+  }
+
+  return exercises.value.filter(
+    (e) => formatDate(e.date) === selectedDate.value
+  );
+});
 const clients = computed<Client[]>(() => store.getters["clients/clients"]);
 const exercisesInfo = computed<ExerciseInfo[]>(
   () => store.getters["exerciseInfo/exercisesInfos"]

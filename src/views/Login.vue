@@ -1,6 +1,6 @@
 <template>
   <v-form style="margin-top: 20vh" ref="loginForm">
-    <v-card class="ma-auto" variant="plain" max-width="600px">
+    <v-card class="ma-auto pa-4" variant="plain" max-width="600px">
       <v-card-title class="text-center text-h4 mb-5 ma-auto">Вход</v-card-title>
       <v-text-field
         class="my-5"
