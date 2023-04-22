@@ -5,7 +5,6 @@
     :rail="rail"
     permanent
     @click="rail = false"
-    absolute
   >
     <v-list-item
       prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"

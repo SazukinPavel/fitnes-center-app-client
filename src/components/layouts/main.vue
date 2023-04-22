@@ -1,18 +1,18 @@
 <template>
-  <v-main>
-    <right-menu/>
-    <v-layout>
-      <v-row>
-        <v-container class="mt-5">
-          <slot></slot>
-        </v-container>
-      </v-row>
-    </v-layout>
-    <snackbar />
-  </v-main>
+  <right-menu v-if="isLogedIn" />
+  <main style="margin-left: 60px">
+    <slot></slot>
+  </main>
+  <snackbar />
 </template>
 
 <script lang="ts" setup>
 import snackbar from "../snackbar.vue";
-import rightMenu from "./menu/Menu.vue";
+import RightMenu from "./menu.vue";
+import { useStore } from "vuex";
+import { computed } from "vue";
+
+const store = useStore();
+
+const isLogedIn = computed(() => store.getters["auth/isLogedIn"]);
 </script>
