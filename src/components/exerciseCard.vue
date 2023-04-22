@@ -21,6 +21,7 @@
       />
     </v-card-actions>
   </v-card>
+  <v-divider />
 </template>
 
 <script setup lang="ts">

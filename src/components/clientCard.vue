@@ -69,6 +69,7 @@
       </v-expansion-panel>
     </v-expansion-panels>
   </v-card>
+  <v-divider />
 </template>
 <script setup lang="ts">
 import Client from "@/types/Client";

@@ -10,7 +10,7 @@
       >
     </v-card-actions>
     <v-card-title>{{ props.exerciseInfo.name }}</v-card-title>
-    <v-expansion-panels>
+    <v-expansion-panels v-if="props.exerciseInfo?.description">
       <v-expansion-panel title="Описание">
         <v-expansion-panel-text>
           {{ props.exerciseInfo.description }}
@@ -18,6 +18,7 @@
       </v-expansion-panel>
     </v-expansion-panels>
   </v-card>
+  <v-divider />
 </template>
 
 <script setup lang="ts">

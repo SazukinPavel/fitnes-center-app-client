@@ -17,7 +17,7 @@
     <v-expansion-panels>
       <v-expansion-panel title="Больше информации">
         <v-expansion-panel-text>
-          <v-card variant="plain">
+          <v-card variant="text">
             <v-card-title
               >Дата рождения:
               {{ formatDate(props.manager.auth.birthDate) }}</v-card-title
@@ -31,6 +31,7 @@
       </v-expansion-panel>
     </v-expansion-panels>
   </v-card>
+  <v-divider />
 </template>
 <script setup lang="ts">
 import { PropType, defineProps, ref } from "vue";
