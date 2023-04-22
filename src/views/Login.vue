@@ -10,7 +10,7 @@
         label="Логин:"
         v-model="loginDto.login"
       />
-      <v-text-field
+      <password-input
         class="my-5"
         label="Пароль:"
         color="primary"
@@ -29,6 +29,7 @@
 import { ref } from "vue";
 import LoginDto from "@/types/dto/auth/LoginDto";
 import { useStore } from "vuex";
+import PasswordInput from "@/components/ui/passwordInput.vue";
 
 const loginForm = ref<any | null>(null);
 
