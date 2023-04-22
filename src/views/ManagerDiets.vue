@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-0 pa-0" variant="plain" :loading="isDietsLoading">
+  <v-card class="ma-0 pa-0" variant="text" :loading="isDietsLoading">
     <v-card-actions>
       <search v-model="searchParam" />
     </v-card-actions>

@@ -1,6 +1,6 @@
 <template>
   <v-card
-    variant="flat"
+    variant="text"
     :loading="isUserLoading || !localUser.auth?.login"
     class="d-flex jsutify-start"
   >

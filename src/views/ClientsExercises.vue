@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-0 pa-0" variant="plain" :loading="isExercisesLoading">
+  <v-card class="ma-0 pa-0" variant="text" :loading="isExercisesLoading">
     <v-card-actions>
       <exercise-date-select v-model="selectedDate" :exercises="exercises" />
     </v-card-actions>

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-0 pa-0" variant="plain" :loading="isDietsLoading">
+  <v-card class="ma-0 pa-0" variant="text" :loading="isDietsLoading">
     <div class="d-flex justify-end align-center">
       <search class="ml-5" v-model="searchParam" />
       <add-btn :loading="isDietsAddLoading">

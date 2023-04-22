@@ -1,5 +1,5 @@
 <template>
-  <v-card variant="flat" class="d-flex jsutify-start">
+  <v-card variant="text" class="d-flex jsutify-start">
     <v-container v-if="localUser.auth?.login" class="profile">
       <v-text-field
         class="readonly"

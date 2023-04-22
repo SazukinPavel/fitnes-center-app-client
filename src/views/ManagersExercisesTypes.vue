@@ -1,5 +1,5 @@
 <template>
-  <v-card :loading="isExerciseLoading" variant="plain">
+  <v-card :loading="isExerciseLoading" variant="text">
     <v-card-actions>
       <search v-model="searchParam" />
     </v-card-actions>

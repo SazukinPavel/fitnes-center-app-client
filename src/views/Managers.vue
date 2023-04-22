@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-0 pa-0" variant="plain" :loading="isManagerLoading">
+  <v-card class="ma-0 pa-0" variant="text" :loading="isManagerLoading">
     <div class="d-flex justify-space-between align-center">
       <search class="ml-5" v-model="searchParam" />
       <add-btn :loading="isManagerAddLoading">
