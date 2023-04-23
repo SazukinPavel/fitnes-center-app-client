@@ -21,20 +21,16 @@
               label="Фио"
               v-model="addClientDto.fio"
             />
-            <v-text-field
+            <password-input
               class="my-2"
               :rules="[requiredRule]"
-              variant="outlined"
               label="Пароль"
               v-model="addClientDto.password"
             />
-            <v-text-field
-              class="my-2"
-              variant="outlined"
-              color="primary"
-              type="date"
-              label="Возвраст"
-              v-model="addClientDto.birthDate"
+            <date-picker
+              type="BirthDate"
+              placeholder="Дата рождения"
+              v-model:value="addClientDto.birthDate"
             />
             <v-text-field
               class="my-2"
@@ -74,7 +70,7 @@
       </v-dialog>
     </add-btn>
   </div>
-  <v-card :loading="isClientsLoading" variant="plain">
+  <v-card :loading="isClientsLoading" variant="text">
     <client-card
       v-for="client in filtredClients"
       :key="client.id"
@@ -92,6 +88,8 @@ import useValidators from "@/hooks/useValidators";
 import Search from "@/components/search.vue";
 import Client from "@/types/Client";
 import AddBtn from "@/components/ui/addBtn.vue";
+import PasswordInput from "@/components/ui/passwordInput.vue";
+import DatePicker from "@/components/ui/datePicker.vue";
 
 const { requiredRule } = useValidators();
 
@@ -99,7 +97,8 @@ const store = useStore();
 
 const clientForm = ref<any | null>(null);
 const addClientDialog = ref(false);
-
+const isClientsLoading = ref(false);
+const isClientAddLoading = ref(false);
 const searchParam = ref("");
 
 const addClientDto = ref<AddClientDto>({
@@ -115,10 +114,10 @@ const addClient = async () => {
   if (!(await clientForm.value?.validate())) {
     return;
   }
+  isClientAddLoading.value = true;
 
   try {
     await store.dispatch("clients/add", addClientDto.value);
-  } finally {
     addClientDto.value = {
       password: "",
       birthDate: new Date(),
@@ -128,18 +127,33 @@ const addClient = async () => {
       weight: "",
     };
     addClientDialog.value = false;
+    store.commit("snackbar/showSnackbarSuccess", {
+      message: "Пользователь успешно добавлен",
+    });
+  } catch (e: any) {
+    store.commit("snackbar/showSnackbarError", {
+      message:
+        e?.response?.data?.message || "Произошла ошибка при создание клиента",
+    });
+  } finally {
+    isClientAddLoading.value = false;
   }
 };
 
-onMounted(() => {
-  store.dispatch("clients/fetch");
-  store.dispatch("diets/fetch");
+onMounted(async () => {
+  isClientsLoading.value = true;
+  try {
+    await store.dispatch("clients/fetch");
+    await store.dispatch("diets/fetch");
+  } catch {
+    store.commit("snackbar/showSnackbarError", {
+      message: "Произошла ошибка при получение клиентов",
+    });
+  } finally {
+    isClientsLoading.value = false;
+  }
 });
 
-const isClientAddLoading = computed(
-  () => store.getters["clients/isAddLoading"]
-);
-const isClientsLoading = computed(() => store.getters["clients/isLoading"]);
 const clients = computed<Client[]>(() => store.getters["clients/clients"]);
 const filtredClients = computed<Client[]>(() => {
   if (!searchParam.value) {
@@ -151,5 +165,4 @@ const filtredClients = computed<Client[]>(() => {
       c.auth?.login.toLowerCase().startsWith(searchParam.value.toLowerCase())
   );
 });
-// const diets = computed(() => store.getters["diets/diets"]);
 </script>

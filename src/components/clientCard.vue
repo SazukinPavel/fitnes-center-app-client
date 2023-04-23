@@ -45,6 +45,7 @@
                   variant="outlined"
                   class="mx-5"
                   color="primary"
+                  :loading="isSetDietLoading"
                   @click="setDiet"
                   >Добавить</v-btn
                 >
@@ -57,7 +58,7 @@
     <v-expansion-panels>
       <v-expansion-panel title="Больше информации">
         <v-expansion-panel-text>
-          <v-card variant="plain">
+          <v-card variant="text">
             <v-card-title>Вес: {{ props.client?.weight }}</v-card-title>
             <v-card-title>Рост: {{ props.client?.height }}</v-card-title>
             <v-card-title
@@ -79,6 +80,7 @@ import SetDietDto from "@/types/dto/clients/SetDietDto";
 import api from "@/api";
 import useValidators from "@/hooks/useValidators";
 import useFormaters from "@/hooks/useFormaters";
+import Diet from "@/types/Diet";
 
 const store = useStore();
 
@@ -91,6 +93,7 @@ const { formatDate } = useFormaters();
 
 const isDeleteLoading = ref(false);
 const setDietDialog = ref(false);
+const isSetDietLoading = ref(false);
 const dietForm = ref<any | null>(null);
 
 const setDietDto = ref<SetDietDto>({
@@ -106,7 +109,7 @@ const deleteClient = async () => {
       message: `Клиент ${props.client?.auth?.fio} успешно удалён`,
     });
   } catch {
-    store.commit("snackbar/showSnackbarSuccess", {
+    store.commit("snackbar/showSnackbarError", {
       message: `Произошла ошибка при удалении клиента ${props.client?.auth?.fio}`,
     });
   } finally {
@@ -118,22 +121,33 @@ const setDiet = async () => {
   if (!(await dietForm.value?.validate()).valid) {
     return;
   }
+  isSetDietLoading.value = true;
 
   try {
     await api.clients.setDiet({
       ...setDietDto.value,
       clientId: props.client?.id || "",
     });
-  } finally {
+
+    store.commit("clients/setClientDiet", {
+      id: props.client?.id,
+      diet: diets.value.find((d) => d.id === setDietDto.value.dietId),
+    });
     setDietDto.value = {
       dietId: "",
       clientId: "",
     };
     setDietDialog.value = false;
+  } catch {
+    store.commit("snackbar/showSnackbarError", {
+      message: `Произошла ошибка при установке диеты клиенту ${props.client?.auth?.fio}`,
+    });
+  } finally {
+    isSetDietLoading.value = false;
   }
 };
 
-const diets = computed(() => store.getters["diets/diets"]);
+const diets = computed<Diet[]>(() => store.getters["diets/diets"]);
 </script>
 
 <style scoped></style>

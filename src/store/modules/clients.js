@@ -4,9 +4,6 @@ export default {
   namespaced: true,
   state: {
     isFetched: false,
-    isLoading: false,
-    isAddLoading: false,
-    isDeleteLoading: false,
     clients: [],
   },
   mutations: {
@@ -22,14 +19,13 @@ export default {
     setIsFetched(state, val) {
       state.isFetched = val;
     },
-    setIsLoading(state, val) {
-      state.isLoading = val;
-    },
-    setIsAddLoading(state, val) {
-      state.isAddLoading = val;
-    },
-    setIsDeleteLoading(state, val) {
-      state.isDeleteLoading = val;
+    setClientDiet(state, { id, diet }) {
+      state.clients = state.clients.map((c) => {
+        if (c.id === id) {
+          c.diet = diet;
+        }
+        return c;
+      });
     },
   },
   actions: {
@@ -38,66 +34,27 @@ export default {
         return;
       }
 
-      commit("setIsLoading", true);
-      try {
-        const clients = await api.clients.list();
+      const clients = await api.clients.list();
 
-        commit("setClients", clients.data);
-        commit("setIsFetched", true);
-      } finally {
-        commit("setIsLoading", false);
-      }
+      commit("setClients", clients.data);
+      commit("setIsFetched", true);
     },
     refresh({ dispatch, commit }) {
       commit("setIsFetched", false);
       dispatch("fetch");
     },
     async add({ commit }, addClientDto) {
-      commit("setIsAddLoading", true);
-      let client = addClientDto;
-      try {
-        const res = await api.clients.add(addClientDto);
-        client = res.data;
-      } finally {
-        commit("setIsAddLoading", false);
-        commit("pushClient", client);
-      }
-    },
-    async deleteClients({ commit }, clients) {
-      commit("setIsDeleteLoading", true);
-      try {
-        await Promise.all(
-          clients.forEach(async (id) => {
-            await api.clients.drop(id);
-            commit("deleteClient", id);
-          })
-        );
-      } finally {
-        commit("setIsDeleteLoading", false);
-      }
+      const res = await api.clients.add(addClientDto);
+      commit("pushClient", res.data);
     },
     async deleteClient({ commit }, id) {
-      commit("setIsDeleteLoading", true);
-      try {
-        await api.clients.drop(id);
-        commit("deleteClient", id);
-      } finally {
-        commit("setIsDeleteLoading", false);
-      }
+      await api.clients.drop(id);
+      commit("deleteClient", id);
     },
   },
   getters: {
     isFetched(state) {
       return state.isFetched;
-    },
-    isLoading(state) {
-      return state.isLoading;
-    },
-    isAddLoading(state) {
-      return state.isAddLoading;
-    },
-    isDeleteLoading(state) {
-      return state.isDeleteLoading;
     },
     clients(state) {
       return state.clients;
