@@ -2,10 +2,8 @@
   <v-snackbar :top="top" v-model="visibility" :timeout="timeout" :color="color">
     {{ message }}
 
-    <template v-slot:action="{ attrs }">
-      <v-btn :color="buttonColor" text v-bind="attrs" @click="hideSnackbar">
-        Close
-      </v-btn>
+    <template v-slot:actions>
+      <v-btn :color="buttonColor" text @click="hideSnackbar"> Закрыть </v-btn>
     </template>
   </v-snackbar>
 </template>
