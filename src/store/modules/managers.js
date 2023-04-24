@@ -4,9 +4,6 @@ export default {
   namespaced: true,
   state: {
     isFetched: false,
-    isLoading: false,
-    isAddLoading: false,
-    isDeleteLoading: false,
     managers: [],
   },
   mutations: {
@@ -22,15 +19,6 @@ export default {
     setIsFetched(state, val) {
       state.isFetched = val;
     },
-    setIsLoading(state, val) {
-      state.isLoading = val;
-    },
-    setIsAddLoading(state, val) {
-      state.isAddLoading = val;
-    },
-    setIsDeleteLoading(state, val) {
-      state.isDeleteLoading = val;
-    },
   },
   actions: {
     async fetch({ commit, state }) {
@@ -38,43 +26,18 @@ export default {
         return;
       }
 
-      commit("setIsLoading", true);
-      try {
-        const managers = await api.managers.list();
+      const managers = await api.managers.list();
 
-        commit("setManagers", managers.data);
-        commit("setIsFetched", true);
-      } finally {
-        commit("setIsLoading", false);
-      }
+      commit("setManagers", managers.data);
+      commit("setIsFetched", true);
     },
     refresh({ dispatch, commit }) {
       commit("setIsFetched", false);
       dispatch("fetch");
     },
     async add({ commit }, addManagerDto) {
-      commit("setIsAddLoading", true);
-      let manager = addManagerDto;
-      try {
-        const res = await api.managers.add(addManagerDto);
-        manager = res.data;
-      } finally {
-        commit("setIsAddLoading", false);
-        commit("pushManager", manager);
-      }
-    },
-    async deleteManagers({ commit }, managers) {
-      commit("setIsDeleteLoading", true);
-      try {
-        await Promise.all(
-          managers.forEach(async (id) => {
-            await api.managers.drop(id);
-            commit("deleteManager", id);
-          })
-        );
-      } finally {
-        commit("setIsDeleteLoading", false);
-      }
+      const res = await api.managers.add(addManagerDto);
+      commit("pushManager", res.data);
     },
     async delete({ commit }, id) {
       await api.managers.drop(id);
@@ -84,15 +47,6 @@ export default {
   getters: {
     isFetched(state) {
       return state.isFetched;
-    },
-    isLoading(state) {
-      return state.isLoading;
-    },
-    isAddLoading(state) {
-      return state.isAddLoading;
-    },
-    isDeleteLoading(state) {
-      return state.isDeleteLoading;
     },
     managers(state) {
       return state.managers;

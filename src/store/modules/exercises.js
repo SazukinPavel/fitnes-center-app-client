@@ -4,9 +4,6 @@ export default {
   namespaced: true,
   state: {
     isFetched: false,
-    isLoading: false,
-    isAddLoading: false,
-    isDeleteLoading: false,
     exercises: [],
   },
   mutations: {
@@ -21,15 +18,6 @@ export default {
     },
     setIsFetched(state, val) {
       state.isFetched = val;
-    },
-    setIsLoading(state, val) {
-      state.isLoading = val;
-    },
-    setIsAddLoading(state, val) {
-      state.isAddLoading = val;
-    },
-    setIsDeleteLoading(state, val) {
-      state.isDeleteLoading = val;
     },
     updateExerciseIsPayed(state, { id, isPayed }) {
       state.exercises = state.exercises.map((e) => {
@@ -46,30 +34,18 @@ export default {
         return;
       }
 
-      commit("setIsLoading", true);
-      try {
-        const exercises = await api.exercises.list();
+      const exercises = await api.exercises.list();
 
-        commit("setExercises", exercises.data);
-        commit("setIsFetched", true);
-      } finally {
-        commit("setIsLoading", false);
-      }
+      commit("setExercises", exercises.data);
+      commit("setIsFetched", true);
     },
     refresh({ dispatch, commit }) {
       commit("setIsFetched", false);
       dispatch("fetch");
     },
     async add({ commit }, addExerciseDto) {
-      commit("setIsAddLoading", true);
-      let exercise = addExerciseDto;
-      try {
-        const res = await api.exercises.add(addExerciseDto);
-        exercise = res.data;
-      } finally {
-        commit("setIsAddLoading", false);
-        commit("pushExercise", exercise);
-      }
+      const res = await api.exercises.add(addExerciseDto);
+      commit("pushExercise", res.data);
     },
     async deleteExercise({ commit }, id) {
       await api.exercises.drop(id);
@@ -83,15 +59,6 @@ export default {
   getters: {
     isFetched(state) {
       return state.isFetched;
-    },
-    isLoading(state) {
-      return state.isLoading;
-    },
-    isAddLoading(state) {
-      return state.isAddLoading;
-    },
-    isDeleteLoading(state) {
-      return state.isDeleteLoading;
     },
     exercises(state) {
       return state.exercises;
