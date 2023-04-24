@@ -1,4 +1,4 @@
-import Client from "@/types/Client";
+import Client from "@/types/entitys/Client";
 
 export default interface Diet {
   id: string;

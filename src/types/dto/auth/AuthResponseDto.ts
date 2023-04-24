@@ -1,4 +1,4 @@
-import { User } from "../../User";
+import { User } from "../../entitys/User";
 
 export default interface AuthResponseDto {
   token: string;

@@ -1,4 +1,4 @@
-import { Exercise } from "@/types/Exercise";
+import { Exercise } from "@/types/entitys/Exercise";
 
 export default interface ExerciseInfo {
   id: string;

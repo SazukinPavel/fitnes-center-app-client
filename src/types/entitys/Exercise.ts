@@ -1,6 +1,6 @@
-import Client from "@/types/Client";
-import Manager from "@/types/Manager";
-import ExerciseInfo from "@/types/ExerciseInfo";
+import Client from "@/types/entitys/Client";
+import Manager from "@/types/entitys/Manager";
+import ExerciseInfo from "@/types/entitys/ExerciseInfo";
 
 export interface Exercise {
   id: string;
