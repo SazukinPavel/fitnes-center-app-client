@@ -3,7 +3,8 @@
     v-model="modelValue"
     @change="emit('update:modelValue', $event)"
     persistent
-    width="60%"
+    max-width="800"
+    width="90%"
   >
     <v-form ref="changePassForm">
       <v-card class="pa-5">
@@ -11,34 +12,16 @@
           <v-row justify="center">
             <v-card-title class="text-center">Смена пароля</v-card-title>
           </v-row>
-          <v-row>
-            <v-col cols="4">
-              <v-card-title>Старый пароль</v-card-title>
-            </v-col>
-            <v-col cols="8">
-              <password-input v-model="oldPassword" :rules="oldPasswordRules" />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="4">
-              <v-card-title>Новый пароль</v-card-title>
-            </v-col>
-            <v-col cols="8">
-              <password-input v-model="newPassword" :rules="newPasswordRules" />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="4">
-              <v-card-title>Повторите новый пароль</v-card-title>
-            </v-col>
-            <v-col cols="8">
-              <password-input
-                v-model="newPasswordRepeat"
-                :rules="newPasswordRepeatRules"
-              />
-            </v-col>
-          </v-row>
-          <v-row justify="end">
+          <v-card-title class="text-wrap">Старый пароль</v-card-title>
+          <password-input v-model="oldPassword" :rules="oldPasswordRules" />
+          <v-card-title class="text-wrap">Новый пароль</v-card-title>
+          <password-input v-model="newPassword" :rules="newPasswordRules" />
+          <v-card-title class="text-wrap">Повторите новый пароль</v-card-title>
+          <password-input
+            v-model="newPasswordRepeat"
+            :rules="newPasswordRepeatRules"
+          />
+          <v-row justify="end" class="mt-4">
             <v-btn
               @click="emit('update:modelValue', false)"
               class="mx-3"
@@ -88,7 +71,7 @@ const newPasswordRepeatRules = ref([
 ]);
 
 const change = async () => {
-  if (!(await changePassForm.value?.validate())) {
+  if (!(await changePassForm.value?.validate()).valid) {
     return;
   }
 
@@ -101,10 +84,10 @@ const change = async () => {
     store.commit("snackbar/showSnackbarSuccess", {
       message: "Пароль успешно изменён.",
     });
-  } catch (e) {
-    console.log(e);
+    emit("update:modelValue", false);
+  } catch (e: any) {
     store.commit("snackbar/showSnackbarError", {
-      message: e.response.data.message,
+      message: e.response.data.message || "Произошла ощибка при смене пароля",
     });
   } finally {
     isPasswordChangeLoading.value = false;
