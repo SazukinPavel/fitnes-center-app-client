@@ -1,6 +1,6 @@
 <template>
   <right-menu v-if="isLogedIn" />
-  <main style="margin-left: 60px">
+  <main :class="isLogedIn && 'logedIn'">
     <slot></slot>
   </main>
   <snackbar />
@@ -16,3 +16,9 @@ const store = useStore();
 
 const isLogedIn = computed(() => store.getters["auth/isLogedIn"]);
 </script>
+
+<style scoped lang="scss">
+.logedIn {
+  margin-left: 60px;
+}
+</style>
