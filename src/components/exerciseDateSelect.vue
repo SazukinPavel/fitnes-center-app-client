@@ -1,23 +1,24 @@
 <template>
-  <v-row>
-    <v-col cols="8">
-      <v-autocomplete
-        :model-value="modelValue"
-        class="mx-2"
-        @update:model-value="emit('update:modelValue', $event)"
-        :items="dates"
-        filter-mode="some"
-      />
-    </v-col>
-    <v-col cols="4">
-      <v-select
-        v-model="dateType"
-        :items="dateTypeItems"
-        item-title="text"
-        item-value="value"
-        label="Прошедшие даты"
-      />
-    </v-col>
+  <v-row class="ml-3" style="max-width: 500px">
+    <v-autocomplete
+      label="Дата"
+      class="mr-3"
+      :model-value="modelValue"
+      style="max-width: 250px"
+      @update:model-value="emit('update:modelValue', $event)"
+      :items="dates"
+      filter-mode="some"
+      density="comfortable"
+    />
+    <v-select
+      style="max-width: 150px"
+      density="comfortable"
+      v-model="dateType"
+      :items="dateTypeItems"
+      item-title="text"
+      item-value="value"
+      label="Прошедшие даты"
+    />
   </v-row>
 </template>
 
