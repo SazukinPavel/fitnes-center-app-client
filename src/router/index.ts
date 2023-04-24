@@ -12,6 +12,11 @@ import ManagerProfile from "@/views/ManagerProfile.vue";
 import ClientProfile from "@/views/ClientProfile.vue";
 import ManagersExercisesTypes from "@/views/ManagersExercisesTypes.vue";
 import ManagerDiets from "@/views/ManagerDiets.vue";
+import AddClient from "@/views/AddClient.vue";
+import AddManager from "@/views/AddManager.vue";
+import AddExerciseInfo from "@/views/AddExerciseInfo.vue";
+import AddDiet from "@/views/AddDiet.vue";
+import AddExercise from "@/views/AddExercise.vue";
 
 const routes = [
   { path: "/login", name: "Login", component: Login },
@@ -22,9 +27,21 @@ const routes = [
     meta: { isAdminRoute: true },
   },
   {
-    path: "/admin/exercises",
-    name: "Exercise types",
+    path: "/admin/trainers/add",
+    name: "AddManager",
+    component: AddManager,
+    meta: { isAdminRoute: true },
+  },
+  {
+    path: "/admin/exercises-types",
+    name: "ExerciseTypes",
     component: ExerciseTypes,
+    meta: { isAdminRoute: true },
+  },
+  {
+    path: "/admin/exercises-types/add",
+    name: "AddExerciseType",
+    component: AddExerciseInfo,
     meta: { isAdminRoute: true },
   },
   {
@@ -34,25 +51,43 @@ const routes = [
     meta: { isAdminRoute: true },
   },
   {
-    path: "/manager/profile",
+    path: "/admin/diets/add",
+    name: "AddDiet",
+    component: AddDiet,
+    meta: { isAdminRoute: true },
+  },
+  {
+    path: "/trainers/profile",
     name: "ManagerProfile",
     component: ManagerProfile,
     meta: { isManagerRoute: true },
   },
   {
-    path: "/manager/clients",
+    path: "/trainers/clients",
     name: "ManagerClients",
     component: ManagerClients,
     meta: { isManagerRoute: true },
   },
   {
-    path: "/manager/exercises",
+    path: "/trainers/clients/add",
+    name: "AddClient",
+    component: AddClient,
+    meta: { isManagerRoute: true },
+  },
+  {
+    path: "/trainers/exercises",
     name: "ManagerExercises",
     component: ManagerExercises,
     meta: { isManagerRoute: true },
   },
   {
-    path: "/manager/exercise-infos",
+    path: "/trainers/exercises/add",
+    name: "AddExercise",
+    component: AddExercise,
+    meta: { isManagerRoute: true },
+  },
+  {
+    path: "/trainers/exercise-infos",
     name: "ManagersExercisesTypes",
     component: ManagersExercisesTypes,
     meta: { isManagerRoute: true },
