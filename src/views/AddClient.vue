@@ -1,5 +1,5 @@
 <template>
-  <v-card variant="text" class="px-5 py-5">
+  <v-card max-width="800" variant="text" class="px-5 py-5 ma-auto">
     <v-card-title class="text-center">Новый клиент</v-card-title>
     <v-form ref="clientForm">
       <v-text-field
@@ -41,7 +41,7 @@
       />
     </v-form>
 
-    <div class="d-flex justify-center">
+    <div class="d-flex justify-end">
       <v-btn :disabled="isClientAddLoading" @click="goBack">Назад</v-btn>
       <v-btn :loading="isClientAddLoading" class="mx-5" @click="addClient"
         >Добавить</v-btn

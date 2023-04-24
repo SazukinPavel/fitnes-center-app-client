@@ -1,5 +1,5 @@
 <template>
-  <v-card variant="text" class="px-5 py-5">
+  <v-card variant="text" class="px-5 py-5 ma-auto" max-width="800">
     <v-card-title class="text-wrap">Новый тип занятия</v-card-title>
     <v-form ref="exerciseTypeForm">
       <v-text-field
