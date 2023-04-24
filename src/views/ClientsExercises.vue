@@ -1,8 +1,8 @@
 <template>
   <v-card class="ma-0 pa-0" variant="text" :loading="isExercisesLoading">
-    <v-card-actions>
+    <div class="mt-10">
       <exercise-date-select v-model="selectedDate" :exercises="exercises" />
-    </v-card-actions>
+    </div>
     <div>
       <template v-if="filtredExercises.length">
         <client-exercise-card

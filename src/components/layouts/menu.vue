@@ -7,7 +7,7 @@
     @click="rail = false"
   >
     <v-list-item
-      prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
+      prepend-icon="mdi-account"
       :title="user?.auth?.login"
       nav
       active-color="primary"

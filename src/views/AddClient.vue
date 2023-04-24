@@ -14,7 +14,7 @@
         label="Фио"
         v-model="addClientDto.fio"
       />
-      <password-input
+      <v-text-field
         class="my-2"
         :rules="[requiredRule]"
         label="Пароль"
@@ -23,22 +23,12 @@
       <date-picker
         type="BirthDate"
         placeholder="Дата рождения"
+        :rules="[requiredRule]"
+        label="Дата рождения"
         v-model:value="addClientDto.birthDate"
       />
-      <v-text-field
-        class="my-2"
-        type="number"
-        label="Рост"
-        :rules="[heightRule]"
-        v-model.number="addClientDto.height"
-      />
-      <v-text-field
-        class="my-2"
-        :rules="[weightRule]"
-        type="number"
-        label="Вес"
-        v-model.number="addClientDto.weight"
-      />
+      <height-input class="my-2" v-model.number="addClientDto.height" />
+      <weight-input class="my-2" v-model.number="addClientDto.weight" />
     </v-form>
 
     <div class="d-flex justify-end">
@@ -51,7 +41,6 @@
 </template>
 
 <script setup lang="ts">
-import PasswordInput from "@/components/ui/passwordInput.vue";
 import DatePicker from "@/components/ui/datePicker.vue";
 import useValidators from "@/hooks/useValidators";
 import { ref } from "vue";
@@ -59,8 +48,10 @@ import { useStore } from "vuex";
 import AddClientDto from "@/types/dto/clients/AddClientDto";
 import useGoTo from "@/hooks/useGoTo";
 import useGoBack from "@/hooks/goBack";
+import HeightInput from "@/components/ui/HeightInput.vue";
+import WeightInput from "@/components/ui/WeightInput.vue";
 
-const { requiredRule, weightRule, heightRule } = useValidators();
+const { requiredRule } = useValidators();
 const store = useStore();
 const goTo = useGoTo();
 const goBack = useGoBack();
@@ -96,7 +87,6 @@ const addClient = async () => {
 function getDefaultDto(): AddClientDto {
   return {
     password: "",
-    birthDate: new Date(),
     fio: "",
     login: "",
   };

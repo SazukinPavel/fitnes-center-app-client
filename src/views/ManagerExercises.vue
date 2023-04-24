@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex justify-space-between align-start mt-5">
     <exercise-date-select :exercises="exercises" v-model="selectedDate" />
-    <add-btn class="mt-2" :to="{ name: 'AddExercise' }" />
+    <add-btn :to="{ name: 'AddExercise' }" />
   </div>
   <v-card :loading="isExerciseLoading" variant="text">
     <template v-if="filtredExercises.length">

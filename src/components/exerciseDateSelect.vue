@@ -4,14 +4,14 @@
       label="Дата"
       class="mr-3"
       :model-value="modelValue"
-      style="max-width: 250px"
+      style="max-width: 250px; min-width: 250px"
       @update:model-value="emit('update:modelValue', $event)"
       :items="dates"
       filter-mode="some"
       density="comfortable"
     />
     <v-select
-      style="max-width: 150px"
+      style="max-width: 150px; min-width: 150px"
       density="comfortable"
       v-model="dateType"
       :items="dateTypeItems"

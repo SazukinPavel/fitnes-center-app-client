@@ -8,5 +8,5 @@ export default interface AddClientDto {
 
   height?: number;
 
-  birthDate: Date;
+  birthDate?: Date;
 }

@@ -2,11 +2,11 @@
   <v-card class="px-5 py-5 ma-auto" max-width="800" variant="text">
     <v-card-title class="text-center">Новое занятие:</v-card-title>
     <v-form ref="exerciseForm">
-      <v-text-field
+      <date-picker
         class="my-2"
         :rules="[requiredRule]"
         label="Дата"
-        type="datetime-local"
+        type="Meeting"
         v-model="addExerciseDto.date"
       />
       <v-autocomplete
@@ -14,6 +14,7 @@
         label="Тип тренировки"
         item-value="id"
         item-title="name"
+        class="my-2"
         :items="exercisesInfo"
         v-model="addExerciseDto.exerciseId"
       />
@@ -23,6 +24,7 @@
         item-value="id"
         item-title="auth.fio"
         :items="clients"
+        class="my-2"
         v-model="addExerciseDto.clientId"
       />
     </v-form>
@@ -45,6 +47,7 @@ import ExerciseInfo from "@/types/entitys/ExerciseInfo";
 import Client from "@/types/entitys/Client";
 import useGoTo from "@/hooks/useGoTo";
 import useGoBack from "@/hooks/goBack";
+import DatePicker from "@/components/ui/datePicker.vue";
 
 const { requiredRule } = useValidators();
 const store = useStore();

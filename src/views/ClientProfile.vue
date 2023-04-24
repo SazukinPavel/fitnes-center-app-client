@@ -3,37 +3,29 @@
     <v-container v-if="localUser.auth?.login" class="profile">
       <v-text-field
         class="readonly"
-        variant="outlined"
         label="Логин"
         readonly
         v-model="localUser.auth.login"
       ></v-text-field>
       <v-text-field
-        variant="outlined"
         label="ФИО"
+        :rules="[requiredRule]"
         append-inner-icon="mdi-pencil"
         v-model="localUser.auth.fio"
       ></v-text-field>
       <v-text-field
-        variant="outlined"
         label="Дата рождения"
         readonly
         :model-value="formatDate(localUser.auth.birthDate)"
       ></v-text-field>
-      <v-text-field
-        variant="outlined"
-        label="Вес"
+      <height-input
         append-inner-icon="mdi-pencil"
-        type="number"
         v-model.number="localUser.weight"
-      ></v-text-field>
-      <v-text-field
-        variant="outlined"
-        label="Рост"
+      ></height-input>
+      <weight-input
         append-inner-icon="mdi-pencil"
-        type="number"
         v-model.number="localUser.height"
-      ></v-text-field>
+      ></weight-input>
       <div class="buttons d-flex justify-end">
         <v-btn
           @click="isChangePasswordDialog = true"
@@ -63,9 +55,13 @@ import UpdateClientDto from "@/types/dto/clients/UpdateClientDto";
 import Client from "@/types/entitys/Client";
 import ChangePassword from "@/components/changePassword.vue";
 import useFormaters from "@/hooks/useFormaters";
+import useValidators from "@/hooks/useValidators";
+import WeightInput from "@/components/ui/WeightInput.vue";
+import HeightInput from "@/components/ui/HeightInput.vue";
 
 const store = useStore();
 const { formatDate } = useFormaters();
+const { requiredRule } = useValidators();
 
 const isUpdateLoading = ref(false);
 const localUser = ref<Client>({});

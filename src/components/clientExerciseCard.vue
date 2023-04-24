@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-4">
+  <v-card>
     <v-card-title>{{ props.exercise.exerciseInfo?.name }}</v-card-title>
     <v-card-title
       >Дата: {{ formatDateTime(props.exercise?.date) }}</v-card-title

@@ -4,6 +4,7 @@
     :model-value="props.value"
     @input="emit('update:value', $event.target.value)"
     :min="minDate"
+    :label="label"
     :max="maxDate"
     :rules="rules"
   ></v-text-field>
@@ -18,6 +19,7 @@ const props = defineProps({
   value: { type: Date, default: null },
   placeholder: { type: String, default: "" },
   rules: { type: Array, default: () => [] },
+  label: { type: String },
 });
 const emit = defineEmits(["update:value"]);
 
