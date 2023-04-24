@@ -12,18 +12,22 @@
         ><v-icon size="small">mdi-delete</v-icon></v-btn
       >
     </v-card-actions>
-    <v-card-title>Логин: {{ props.manager.auth.fio }}</v-card-title>
-    <v-card-title>ФИО: {{ props.manager.auth.login }}</v-card-title>
+    <v-card-title class="text-wrap"
+      >Логин: {{ props.manager.auth.fio }}</v-card-title
+    >
+    <v-card-title class="text-wrap"
+      >ФИО: {{ props.manager.auth.login }}</v-card-title
+    >
     <v-expansion-panels>
       <v-expansion-panel title="Больше информации">
         <v-expansion-panel-text>
           <v-card variant="text">
-            <v-card-title
+            <v-card-title class="text-wrap"
               >Дата рождения:
               {{ formatDate(props.manager.auth.birthDate) }}</v-card-title
             >
-            <v-card-title>Описание:</v-card-title>
-            <v-card-text>
+            <v-card-title class="text-wrap">Описание:</v-card-title>
+            <v-card-text class="text-wrap">
               {{ props.manager.description }}
             </v-card-text>
           </v-card>
@@ -37,7 +41,7 @@
 import { PropType, defineProps, ref } from "vue";
 import { useStore } from "vuex";
 import useFormaters from "@/hooks/useFormaters";
-import Manager from "@/types/Manager";
+import Manager from "@/types/entitys/Manager";
 
 const store = useStore();
 

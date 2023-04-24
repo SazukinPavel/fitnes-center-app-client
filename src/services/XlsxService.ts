@@ -1,6 +1,6 @@
 import { utils, WorkBook, write } from "xlsx";
 import { saveAs } from "file-saver";
-import { Exercise } from "@/types/Exercise";
+import { Exercise } from "@/types/entitys/Exercise";
 class XlsxService {
   private static s2ab(s: any) {
     const buf = new ArrayBuffer(s.length);

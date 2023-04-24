@@ -1,8 +1,15 @@
 <template>
   <v-card>
     <v-card-actions v-if="props.delete" class="d-flex justify-end">
-      <v-btn size="small" icon @click="deleteDiet" :loading="isDeleteLoading"
-        ><v-icon>mdi-delete</v-icon></v-btn
+      <v-btn
+        color="primary"
+        variant="outlined"
+        size="x-small"
+        append-icon="mdi-basket"
+        @click="deleteDiet"
+        :loading="isDeleteLoading"
+        icon
+        ><v-icon size="small">mdi-delete</v-icon></v-btn
       >
     </v-card-actions>
     <v-card-title>{{ props.diet.name }}</v-card-title>
@@ -20,7 +27,7 @@
 <script setup lang="ts">
 import { useStore } from "vuex";
 import { defineProps, PropType, ref } from "vue";
-import Diet from "@/types/Diet";
+import Diet from "@/types/entitys/Diet";
 
 const store = useStore();
 

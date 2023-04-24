@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { useStore } from "vuex";
 import { computed, onMounted, onUnmounted } from "vue";
-import Client from "@/types/Client";
+import Client from "@/types/entitys/Client";
 
 const store = useStore();
 

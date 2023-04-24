@@ -18,9 +18,9 @@
 
 <script setup lang="ts">
 import { defineProps, PropType } from "vue";
-import { Exercise } from "@/types/Exercise";
+import { Exercise } from "@/types/entitys/Exercise";
 import useFormmaters from "@/hooks/useFormaters";
-import Manager from "@/types/Manager";
+import Manager from "@/types/entitys/Manager";
 
 const props = defineProps({
   exercise: { type: Object as PropType<Exercise>, required: true },

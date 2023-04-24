@@ -1,7 +1,7 @@
-import BaseApiModule from "@/types/BaseApiModule";
+import BaseApiModule from "@/types/utils/BaseApiModule";
 import Api from "@/api/api";
 import UpdateManagerDto from "@/types/dto/managers/UpdateManagerDto";
-import Manager from "@/types/Manager";
+import Manager from "@/types/entitys/Manager";
 import AddManagerDto from "@/types/dto/managers/AddManagerDto";
 
 export default class ManagersModule extends BaseApiModule {

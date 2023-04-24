@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import { computed, defineEmits, defineProps, onMounted, ref } from "vue";
 import { PropType } from "vue";
-import { Exercise } from "@/types/Exercise";
+import { Exercise } from "@/types/entitys/Exercise";
 import useFormaters from "@/hooks/useFormaters";
 import moment from "moment";
 

@@ -52,7 +52,7 @@
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
-import MenuItem from "@/types/MenuItem";
+import MenuItem from "@/types/utils/MenuItem";
 import useGoTo from "@/hooks/useGoTo";
 
 const store = useStore();
@@ -96,9 +96,9 @@ const items = computed<MenuItem[]>(() => {
         routeName: "Managers",
       },
       {
-        title: "Занятия",
+        title: "Типы занятий",
         icon: "mdi-dumbbell",
-        routeName: "Exercise types",
+        routeName: "ExerciseTypes",
       },
       { title: "Диеты", icon: "mdi-food-fork-drink", routeName: "Diets" },
     ];

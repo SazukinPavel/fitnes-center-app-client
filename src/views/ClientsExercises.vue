@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { Exercise } from "@/types/Exercise";
+import { Exercise } from "@/types/entitys/Exercise";
 import { useStore } from "vuex";
 import { computed, onMounted, ref } from "vue";
 import ClientExerciseCard from "@/components/clientExerciseCard.vue";

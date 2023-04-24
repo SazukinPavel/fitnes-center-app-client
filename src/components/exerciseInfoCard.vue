@@ -2,11 +2,14 @@
   <v-card>
     <v-card-actions v-if="props.delete" class="d-flex justify-end">
       <v-btn
-        size="small"
-        icon
+        color="primary"
+        variant="outlined"
+        size="x-small"
+        append-icon="mdi-basket"
         @click="deleteExerciseInfo"
         :loading="isDeleteLoading"
-        ><v-icon>mdi-delete</v-icon></v-btn
+        icon
+        ><v-icon size="small">mdi-delete</v-icon></v-btn
       >
     </v-card-actions>
     <v-card-title>{{ props.exerciseInfo.name }}</v-card-title>
@@ -24,7 +27,7 @@
 <script setup lang="ts">
 import { useStore } from "vuex";
 import { defineProps, PropType, ref } from "vue";
-import ExerciseInfo from "@/types/ExerciseInfo";
+import ExerciseInfo from "@/types/entitys/ExerciseInfo";
 
 const store = useStore();
 

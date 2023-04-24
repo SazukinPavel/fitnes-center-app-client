@@ -4,9 +4,9 @@ export default interface AddClientDto {
   password: string;
   login: string;
 
-  weight: string;
+  weight?: string;
 
-  height: number;
+  height?: number;
 
   birthDate: Date;
 }

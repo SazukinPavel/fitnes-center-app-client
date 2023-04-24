@@ -1,14 +1,16 @@
 <template>
   <v-card :loading="isPayedLoading" class="ma-4">
-    <v-card-actions class="d-flex justify-end ma-0 pa-0">
+    <v-card-actions class="d-flex justify-end">
       <v-btn
-        :loading="isDeleteLoading"
         color="primary"
+        variant="outlined"
+        size="x-small"
+        append-icon="mdi-basket"
         @click="deleteExercise"
+        :loading="isDeleteLoading"
         icon
+        ><v-icon size="small">mdi-delete</v-icon></v-btn
       >
-        <v-icon>mdi-delete</v-icon>
-      </v-btn>
     </v-card-actions>
     <v-card-title>{{ props.exercise.exerciseInfo.name }}</v-card-title>
     <v-card-title>Дата: {{ formatDateTime(props.exercise.date) }}</v-card-title>
@@ -26,9 +28,9 @@
 
 <script setup lang="ts">
 import { defineProps, PropType, ref } from "vue";
-import { Exercise } from "@/types/Exercise";
+import { Exercise } from "@/types/entitys/Exercise";
 import { useStore } from "vuex";
-import Client from "@/types/Client";
+import Client from "@/types/entitys/Client";
 import useFormmaters from "@/hooks/useFormaters";
 
 const props = defineProps({

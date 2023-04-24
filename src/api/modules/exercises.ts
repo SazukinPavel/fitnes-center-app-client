@@ -1,6 +1,6 @@
-import BaseApiModule from "@/types/BaseApiModule";
+import BaseApiModule from "@/types/utils/BaseApiModule";
 import Api from "@/api/api";
-import ExerciseInfo from "@/types/ExerciseInfo";
+import ExerciseInfo from "@/types/entitys/ExerciseInfo";
 import AddExerciseDto from "@/types/dto/exercises/AddExerciseDto";
 import UpdateIsPayedDto from "@/types/dto/exercises/UpdateIsPayedDto";
 

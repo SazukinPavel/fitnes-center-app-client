@@ -2,47 +2,7 @@
   <v-card class="ma-0 pa-0" variant="text" :loading="isDietsLoading">
     <div class="d-flex justify-end align-center">
       <search class="ml-5" v-model="searchParam" />
-      <add-btn :loading="isDietsAddLoading">
-        <v-dialog v-model="addDietDialog" activator="parent" width="auto">
-          <v-card class="px-15 py-10">
-            <v-card-title>Новое питание:</v-card-title>
-            <v-form ref="dietForm">
-              <v-text-field
-                class="my-2"
-                :rules="[requiredRule]"
-                variant="outlined"
-                label="Имя"
-                color="primary"
-                v-model="addDietDto.name"
-              />
-              <v-textarea
-                class="my-2"
-                variant="outlined"
-                color="primary"
-                :rules="[requiredRule]"
-                label="Описание"
-                v-model="addDietDto.description"
-              />
-            </v-form>
-
-            <v-card-actions class="d-flex justify-center">
-              <v-btn
-                variant="outlined"
-                color="primary"
-                @click="addDietDialog = false"
-                >Закрыть</v-btn
-              >
-              <v-btn
-                variant="outlined"
-                class="mx-5"
-                color="primary"
-                @click="addDiet"
-                >Добавить</v-btn
-              >
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </add-btn>
+      <add-btn :to="{ name: 'AddDiet' }" />
     </div>
     <div>
       <diet-card
@@ -57,44 +17,28 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
-import Diet from "@/types/Diet";
-import AddDietDto from "@/types/dto/diets/AddDietDto";
+import Diet from "@/types/entitys/Diet";
 import { useStore } from "vuex";
-import useValidators from "@/hooks/useValidators";
 import DietCard from "@/components/dietCard.vue";
 import Search from "@/components/search.vue";
 import AddBtn from "@/components/ui/addBtn.vue";
 
 const store = useStore();
-const { requiredRule } = useValidators();
-
-const dietForm = ref<any | null>(null);
-const addDietDialog = ref(false);
-const addDietDto = ref<AddDietDto>({
-  name: "",
-  description: "",
-});
 
 const searchParam = ref("");
+const isDietsLoading = ref(false);
 
-const addDiet = async () => {
-  if (!(await dietForm.value?.validate()).valid) {
-    return;
-  }
-
+onMounted(async () => {
+  isDietsLoading.value = true;
   try {
-    await store.dispatch("diets/add", addDietDto.value);
+    await store.dispatch("diets/fetch");
+  } catch {
+    store.commit("snackbar/showSnackbarError", {
+      message: "Произошла ошибка при получение диет",
+    });
   } finally {
-    addDietDto.value = {
-      name: "",
-      description: "",
-    };
-    addDietDialog.value = false;
+    isDietsLoading.value = false;
   }
-};
-
-onMounted(() => {
-  store.dispatch("diets/fetch");
 });
 
 const diets = computed<Diet[]>(() => store.getters["diets/diets"]);
@@ -107,6 +51,4 @@ const filtredDiets = computed<Diet[]>(() => {
     d.name.toLowerCase().startsWith(searchParam.value.toLowerCase())
   );
 });
-const isDietsAddLoading = computed(() => store.getters["diets/isAddLoading"]);
-const isDietsLoading = computed(() => store.getters["diets/isLoading"]);
 </script>

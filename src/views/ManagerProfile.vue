@@ -55,7 +55,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
-import Manager from "@/types/Manager";
+import Manager from "@/types/entitys/Manager";
 import api from "@/api";
 import UpdateManagerDto from "@/types/dto/managers/UpdateManagerDto";
 import ChangePassword from "@/components/changePassword.vue";

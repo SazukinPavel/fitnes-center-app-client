@@ -59,9 +59,13 @@
       <v-expansion-panel title="Больше информации">
         <v-expansion-panel-text>
           <v-card variant="text">
-            <v-card-title>Вес: {{ props.client?.weight }}</v-card-title>
-            <v-card-title>Рост: {{ props.client?.height }}</v-card-title>
-            <v-card-title
+            <v-card-title class="text-wrap"
+              >Вес: {{ props.client?.weight }}</v-card-title
+            >
+            <v-card-title class="text-wrap"
+              >Рост: {{ props.client?.height }}</v-card-title
+            >
+            <v-card-title class="text-wrap"
               >Дата рождения:
               {{ formatDate(props.client.auth.birthDate) }}</v-card-title
             >
@@ -73,14 +77,14 @@
   <v-divider />
 </template>
 <script setup lang="ts">
-import Client from "@/types/Client";
+import Client from "@/types/entitys/Client";
 import { PropType, defineProps, ref, computed } from "vue";
 import { useStore } from "vuex";
 import SetDietDto from "@/types/dto/clients/SetDietDto";
 import api from "@/api";
 import useValidators from "@/hooks/useValidators";
 import useFormaters from "@/hooks/useFormaters";
-import Diet from "@/types/Diet";
+import Diet from "@/types/entitys/Diet";
 
 const store = useStore();
 

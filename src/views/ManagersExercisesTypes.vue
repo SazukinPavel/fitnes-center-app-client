@@ -15,7 +15,7 @@
 import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import ExerciseInfoCard from "@/components/exerciseInfoCard.vue";
-import ExerciseInfo from "@/types/ExerciseInfo";
+import ExerciseInfo from "@/types/entitys/ExerciseInfo";
 import Search from "@/components/search.vue";
 
 const store = useStore();

@@ -1,6 +1,6 @@
-import BaseApiModule from "@/types/BaseApiModule";
+import BaseApiModule from "@/types/utils/BaseApiModule";
 import Api from "@/api/api";
-import Diet from "@/types/Diet";
+import Diet from "@/types/entitys/Diet";
 import AddDietDto from "@/types/dto/diets/AddDietDto";
 import UpdateDietDto from "@/types/dto/diets/UpdateDietDto";
 

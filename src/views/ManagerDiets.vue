@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
-import Diet from "@/types/Diet";
+import Diet from "@/types/entitys/Diet";
 import { useStore } from "vuex";
 import DietCard from "@/components/dietCard.vue";
 import Search from "@/components/search.vue";

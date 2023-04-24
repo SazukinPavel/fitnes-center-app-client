@@ -60,7 +60,7 @@ import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import api from "@/api";
 import UpdateClientDto from "@/types/dto/clients/UpdateClientDto";
-import Client from "@/types/Client";
+import Client from "@/types/entitys/Client";
 import ChangePassword from "@/components/changePassword.vue";
 import useFormaters from "@/hooks/useFormaters";
 
