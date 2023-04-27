@@ -14,4 +14,5 @@ export interface Exercise {
   exerciseInfo: ExerciseInfo;
 
   isPayed: boolean;
+  duration: string;
 }

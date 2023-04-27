@@ -1,9 +1,11 @@
 export default interface AddExerciseDto {
-  description: string;
+  description?: string;
 
   date?: Date;
 
-  clientId: string;
+  clientId?: string;
 
-  exerciseId: string;
+  exerciseId?: string;
+
+  duration?: string;
 }

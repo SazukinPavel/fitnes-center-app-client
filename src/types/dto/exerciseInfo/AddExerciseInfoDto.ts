@@ -1,5 +1,7 @@
 export default interface AddExerciseInfoDto {
-  name: string;
+  name?: string;
 
-  description: string;
+  description?: string;
+
+  duration?: string;
 }

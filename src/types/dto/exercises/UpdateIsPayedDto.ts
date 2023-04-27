@@ -1,4 +1,5 @@
 export default interface UpdateIsPayedDto {
-  id: string;
-  isPayed: boolean;
+  id?: string;
+  isPayed?: boolean;
+  duration?: string;
 }

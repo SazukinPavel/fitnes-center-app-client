@@ -6,4 +6,5 @@ export default interface ExerciseInfo {
   description: string;
 
   name: string;
+  duration: string;
 }
