@@ -32,11 +32,19 @@ export default function useValidators() {
     return true;
   });
 
+  const durationRule = ref((val: string) => {
+    if (val && (+val < 0 || +val > 10000)) {
+      return "Неккоректная длительность занятия";
+    }
+    return true;
+  });
+
   return {
     requiredRule,
     passwordLengthRule,
     weightRule,
     heightRule,
     telephoneRule,
+    durationRule,
   };
 }
