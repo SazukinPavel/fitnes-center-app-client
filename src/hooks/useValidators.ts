@@ -22,5 +22,21 @@ export default function useValidators() {
     return true;
   });
 
-  return { requiredRule, passwordLengthRule, weightRule, heightRule };
+  const telephoneRule = ref((val: string) => {
+    if (
+      val &&
+      !/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im.test(val)
+    ) {
+      return "Некоректный номер";
+    }
+    return true;
+  });
+
+  return {
+    requiredRule,
+    passwordLengthRule,
+    weightRule,
+    heightRule,
+    telephoneRule,
+  };
 }
