@@ -111,11 +111,15 @@ const items = computed<MenuItem[]>(() => {
       },
       {
         title: "Типы занятий",
-        icon: "mdi-dumbbell",
+        icon: "mdi-animation",
         routeName: "ManagersExercisesTypes",
       },
 
-      { title: "Диеты", icon: "mdi-dumbbell", routeName: "ManagerDiets" },
+      {
+        title: "Диеты",
+        icon: "mdi-food-fork-drink",
+        routeName: "ManagerDiets",
+      },
 
       { title: "Занятия", icon: "mdi-dumbbell", routeName: "ManagerExercises" },
     ];
