@@ -19,6 +19,14 @@ export default {
     setIsFetched(state, val) {
       state.isFetched = val;
     },
+    replaceExercise(state, exercise) {
+      state.exercises = state.exercises.map((e) => {
+        if (e.id === exercise.id) {
+          return exercise;
+        }
+        return e;
+      });
+    },
     updateExerciseIsPayed(state, { id, isPayed }) {
       state.exercises = state.exercises.map((e) => {
         if (id == e.id) {
