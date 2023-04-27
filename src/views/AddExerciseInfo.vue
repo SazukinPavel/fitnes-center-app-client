@@ -8,6 +8,7 @@
         label="Имя"
         v-model="addExerciseTypeDto.name"
       />
+      <duration-input v-model="addExerciseTypeDto.duration" />
       <v-textarea
         class="my-2"
         :rules="[requiredRule]"
@@ -32,6 +33,7 @@ import useValidators from "@/hooks/useValidators";
 import { useStore } from "vuex";
 import useGoTo from "@/hooks/useGoTo";
 import useGoBack from "@/hooks/goBack";
+import DurationInput from "@/components/ui/durationInput.vue";
 
 const { requiredRule } = useValidators();
 const goTo = useGoTo();

@@ -112,7 +112,7 @@ const routes = [
   },
   {
     path: "/client/trainer",
-    name: "ManagersPage",
+    name: "ManagerPage",
     component: ManagerPage,
     meta: { isClientRoute: true },
   },

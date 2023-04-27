@@ -13,10 +13,10 @@
       >
     </v-card-actions>
     <v-card-title class="text-wrap"
-      >Логин: {{ props.manager.auth.fio }}</v-card-title
+      >Логин: {{ props.manager.auth.login }}</v-card-title
     >
     <v-card-title class="text-wrap"
-      >ФИО: {{ props.manager.auth.login }}</v-card-title
+      >ФИО: {{ props.manager.auth.fio }}</v-card-title
     >
     <v-expansion-panels>
       <v-expansion-panel title="Больше информации">

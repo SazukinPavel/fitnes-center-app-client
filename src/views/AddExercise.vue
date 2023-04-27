@@ -16,8 +16,10 @@
         item-title="name"
         class="my-2"
         :items="exercisesInfo"
-        v-model="addExerciseDto.exerciseId"
+        return-object
+        v-model="exercise"
       />
+      <duration-input v-model="addExerciseDto.duration" />
       <v-autocomplete
         :rules="[requiredRule]"
         label="Клиент"
@@ -41,13 +43,14 @@
 <script setup lang="ts">
 import useValidators from "@/hooks/useValidators";
 import { useStore } from "vuex";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import AddExerciseDto from "@/types/dto/exercises/AddExerciseDto";
 import ExerciseInfo from "@/types/entitys/ExerciseInfo";
 import Client from "@/types/entitys/Client";
 import useGoTo from "@/hooks/useGoTo";
 import useGoBack from "@/hooks/goBack";
 import DatePicker from "@/components/ui/datePicker.vue";
+import DurationInput from "@/components/ui/durationInput.vue";
 
 const { requiredRule } = useValidators();
 const store = useStore();
@@ -57,6 +60,7 @@ const goBack = useGoBack();
 const exerciseForm = ref<any | null>(null);
 const isAddLoading = ref(false);
 const addExerciseDto = ref<AddExerciseDto>(getDefaultDto());
+const exercise = ref<ExerciseInfo | null>(null);
 
 const addExercise = async () => {
   if (!(await exerciseForm.value?.validate()).valid) {
@@ -66,7 +70,10 @@ const addExercise = async () => {
   isAddLoading.value = true;
 
   try {
-    await store.dispatch("exercises/add", addExerciseDto.value);
+    await store.dispatch("exercises/add", {
+      ...addExerciseDto.value,
+      exerciseId: exercise.value?.id,
+    });
 
     addExerciseDto.value = getDefaultDto();
 
@@ -88,6 +95,16 @@ const exercisesInfo = computed<ExerciseInfo[]>(
   () => store.getters["exerciseInfo/exercisesInfos"]
 );
 const clients = computed<Client[]>(() => store.getters["clients/clients"]);
+
+onMounted(() => {
+  store.dispatch("exerciseInfo/fetch");
+  store.dispatch("clients/fetch");
+});
+
+watch(exercise, (newVal) => {
+  console.log(newVal);
+  addExerciseDto.value.duration = newVal?.duration;
+});
 
 function getDefaultDto(): AddExerciseDto {
   return {

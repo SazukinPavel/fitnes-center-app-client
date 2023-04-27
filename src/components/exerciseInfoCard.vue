@@ -12,7 +12,10 @@
         ><v-icon size="small">mdi-delete</v-icon></v-btn
       >
     </v-card-actions>
-    <v-card-title>{{ props.exerciseInfo.name }}</v-card-title>
+    <v-card-title class="text-wrap">{{ props.exerciseInfo.name }}</v-card-title>
+    <v-card-title class="text-wrap"
+      >Длительность: {{ props.exerciseInfo.duration }} минут</v-card-title
+    >
     <v-expansion-panels v-if="props.exerciseInfo?.description">
       <v-expansion-panel title="Описание">
         <v-expansion-panel-text>

@@ -32,7 +32,7 @@ const vuetify = createVuetify({
     },
     VBtn: { color: "primary" },
     VTextField: { color: "primary", variant: "outlined" },
-    VTextarea: { color: "primary", variant: "outlined" },
+    VTextarea: { color: "primary", variant: "outlined", autoGrow: true },
     VAutocomplete: { color: "primary", variant: "outlined" },
     VSelect: { color: "primary", variant: "outlined" },
     VSwitch: { color: "primary", variant: "outlined" },

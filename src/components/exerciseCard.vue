@@ -12,9 +12,18 @@
         ><v-icon size="small">mdi-delete</v-icon></v-btn
       >
     </v-card-actions>
-    <v-card-title>{{ props.exercise.exerciseInfo.name }}</v-card-title>
-    <v-card-title>Дата: {{ formatDateTime(props.exercise.date) }}</v-card-title>
-    <v-card-title>Клиент: {{ props.client?.auth?.fio }}</v-card-title>
+    <v-card-title class="text-wrap">{{
+      props.exercise.exerciseInfo.name
+    }}</v-card-title>
+    <v-card-title class="text-wrap"
+      >Дата: {{ formatDateTime(props.exercise.date) }}</v-card-title
+    >
+    <v-card-title class="text-wrap"
+      >Клиент: {{ props.client?.auth?.fio }}</v-card-title
+    >
+    <v-card-title class="text-wrap"
+      >Длительность: {{ props.exercise.duration }} минут</v-card-title
+    >
     <v-card-actions>
       <v-switch
         :label="props.exercise?.isPayed ? 'Оплачено' : 'Не оплачено'"

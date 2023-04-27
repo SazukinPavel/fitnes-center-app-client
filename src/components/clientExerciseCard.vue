@@ -1,10 +1,17 @@
 <template>
   <v-card>
-    <v-card-title>{{ props.exercise.exerciseInfo?.name }}</v-card-title>
-    <v-card-title
+    <v-card-title class="text-wrap">{{
+      props.exercise.exerciseInfo?.name
+    }}</v-card-title>
+    <v-card-title class="text-wrap"
       >Дата: {{ formatDateTime(props.exercise?.date) }}</v-card-title
     >
-    <v-card-title>Тренер: {{ props.manager.auth?.fio }}</v-card-title>
+    <v-card-title class="text-wrap"
+      >Тренер: {{ props.manager.auth?.fio }}</v-card-title
+    >
+    <v-card-title class="text-wrap"
+      >Длительность: {{ props.manager.auth?.fio }} минут</v-card-title
+    >
     <v-expansion-panels v-if="props.exercise?.exerciseInfo?.description">
       <v-expansion-panel title="Описание">
         <v-expansion-panel-text>

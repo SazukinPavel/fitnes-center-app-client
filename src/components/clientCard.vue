@@ -12,16 +12,20 @@
         ><v-icon size="small">mdi-delete</v-icon></v-btn
       >
     </v-card-actions>
-    <v-card-title>Логин: {{ props.client.auth.fio }}</v-card-title>
-    <v-card-title>ФИО: {{ props.client.auth.login }}</v-card-title>
-    <v-card-title>
+    <v-card-title class="text-wrap"
+      >Логин: {{ props.client.auth.login }}</v-card-title
+    >
+    <v-card-title class="text-wrap"
+      >ФИО: {{ props.client.auth.fio }}</v-card-title
+    >
+    <v-card-title class="text-wrap">
       <div class="d-flex justify-space-between align-center">
         <span> Диета: {{ props.client.diet?.name || "-" }} </span>
         <v-btn variant="outlined" size="x-small" icon>
           <v-icon size="small">mdi-pencil</v-icon>
           <v-dialog activator="parent" width="auto" v-model="setDietDialog">
             <v-card class="pa-15">
-              <v-card-title>Установить диету</v-card-title>
+              <v-card-title class="text-wrap">Установить диету</v-card-title>
               <v-form ref="dietForm">
                 <v-select
                   variant="outlined"
