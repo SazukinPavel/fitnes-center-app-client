@@ -1,31 +1,27 @@
 <template>
-  <v-layout full-height>
-    <v-container>
-      <v-card class="ma-5 pa-5">
-        <v-card-title class="text-center">Тренер:</v-card-title>
-        <v-card-title>{{ client.owner.fio }}</v-card-title>
-        <v-card-title>Возраст:{{ client.owner.age }}</v-card-title>
-        <v-card-text>{{ client.owner.description }}</v-card-text>
-      </v-card>
-    </v-container>
-  </v-layout>
+  <v-card variant="text">
+    <v-card-title class="text-center">Тренер:</v-card-title>
+    <v-card-title class="text-wrap">{{ manager.owner.auth.fio }}</v-card-title>
+    <v-card-title class="text-wrap">Возраст: {{ managerAge }}</v-card-title>
+    <v-card-title class="text-wrap"
+      >Телефонный номер: {{ manager.owner.auth.telephone }}</v-card-title
+    >
+    <v-card-text>{{ manager.owner.description }}</v-card-text>
+  </v-card>
 </template>
 
 <script setup lang="ts">
 import { useStore } from "vuex";
-import { computed, onMounted, onUnmounted } from "vue";
+import { computed } from "vue";
 import Client from "@/types/entitys/Client";
+import moment from "moment";
 
 const store = useStore();
 
-const client = computed<Client>(() => store.getters["auth/user"]);
+const manager = computed<Client>(() => store.getters["auth/user"]);
 
-onMounted(() => {
-  store.commit("app/setIsBackButtonShow", true);
-});
-
-onUnmounted(() => {
-  store.commit("app/setIsBackButtonShow", false);
+const managerAge = computed(() => {
+  return moment().diff(manager.value?.owner?.auth?.birthDate, "years");
 });
 </script>
 
