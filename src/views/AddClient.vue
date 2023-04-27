@@ -27,6 +27,12 @@
         label="Дата рождения"
         v-model:value="addClientDto.birthDate"
       />
+      <v-text-field
+        class="my-2"
+        label="Номер телефона"
+        :rules="[telephoneRule]"
+        v-model="addClientDto.telephone"
+      />
       <height-input class="my-2" v-model.number="addClientDto.height" />
       <weight-input class="my-2" v-model.number="addClientDto.weight" />
     </v-form>
@@ -51,7 +57,7 @@ import useGoBack from "@/hooks/goBack";
 import HeightInput from "@/components/ui/HeightInput.vue";
 import WeightInput from "@/components/ui/WeightInput.vue";
 
-const { requiredRule } = useValidators();
+const { requiredRule, telephoneRule } = useValidators();
 const store = useStore();
 const goTo = useGoTo();
 const goBack = useGoBack();

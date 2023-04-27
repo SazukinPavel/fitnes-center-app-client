@@ -69,6 +69,10 @@
               >Дата рождения:
               {{ formatDate(props.client.auth.birthDate) }}</v-card-title
             >
+            <v-card-title class="text-wrap"
+              >Номер телефона:
+              {{ props.client.auth.telephone || "-" }}</v-card-title
+            >
           </v-card>
         </v-expansion-panel-text>
       </v-expansion-panel>

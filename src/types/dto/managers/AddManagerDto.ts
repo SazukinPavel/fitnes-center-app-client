@@ -8,4 +8,6 @@ export default interface AddManagerDto {
   birthDate?: Date;
 
   description: string;
+
+  telephone?: string;
 }

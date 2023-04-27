@@ -8,4 +8,6 @@ export default interface UpdateClientDto {
   height?: number;
 
   authId?: string;
+
+  telephone?: string;
 }

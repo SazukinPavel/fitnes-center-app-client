@@ -6,4 +6,6 @@ export default interface UpdateManagerDto {
   description?: string;
 
   authId?: string;
+
+  telephone?: string;
 }

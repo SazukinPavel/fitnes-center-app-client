@@ -7,4 +7,5 @@ export default interface Auth {
   login: string;
   password: string;
   birthDate: Date;
+  telephone: string;
 }

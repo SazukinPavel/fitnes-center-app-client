@@ -18,6 +18,12 @@
         readonly
         :model-value="formatDate(localUser.auth.birthDate)"
       ></v-text-field>
+      <v-text-field
+        class="my-2"
+        label="Номер телефона"
+        :rules="[telephoneRule]"
+        v-model="localUser.auth.telephone"
+      />
       <height-input
         append-inner-icon="mdi-pencil"
         v-model.number="localUser.weight"
@@ -61,7 +67,7 @@ import HeightInput from "@/components/ui/HeightInput.vue";
 
 const store = useStore();
 const { formatDate } = useFormaters();
-const { requiredRule } = useValidators();
+const { requiredRule, telephoneRule } = useValidators();
 
 const isUpdateLoading = ref(false);
 const localUser = ref<Client>({});
@@ -77,6 +83,7 @@ const update = async () => {
     height: +(localUser.value.height || 0),
     weight: +(localUser.value.weight || 0),
     authId: localUser.value.auth?.id.toString(),
+    telephone: localUser.value.auth?.telephone.toString(),
   };
 
   try {

@@ -9,4 +9,6 @@ export default interface AddClientDto {
   height?: number;
 
   birthDate?: Date;
+
+  telephone?: string;
 }
