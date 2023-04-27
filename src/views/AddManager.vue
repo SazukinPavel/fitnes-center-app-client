@@ -14,11 +14,6 @@
         label="Фио"
         v-model="addManagerDto.fio"
       />
-      <v-textarea
-        class="my-2"
-        label="Описание"
-        v-model="addManagerDto.description"
-      />
       <date-picker
         class="my-2"
         type="BirthDate"
@@ -31,6 +26,17 @@
         :rules="[requiredRule]"
         label="Пароль"
         v-model="addManagerDto.password"
+      />
+      <v-text-field
+        class="my-2"
+        label="Номер телефона"
+        :rules="[requiredRule, telephoneRule]"
+        v-model="addManagerDto.telephone"
+      />
+      <v-textarea
+        class="my-2"
+        label="Описание"
+        v-model="addManagerDto.description"
       />
     </v-form>
 
@@ -52,7 +58,7 @@ import DatePicker from "@/components/ui/datePicker.vue";
 import useGoBack from "@/hooks/goBack";
 import useGoTo from "@/hooks/useGoTo";
 
-const { requiredRule } = useValidators();
+const { requiredRule, telephoneRule } = useValidators();
 const store = useStore();
 const goBack = useGoBack();
 const goTo = useGoTo();

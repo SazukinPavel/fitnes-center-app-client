@@ -26,6 +26,9 @@
               >Дата рождения:
               {{ formatDate(props.manager.auth.birthDate) }}</v-card-title
             >
+            <v-card-title class="text-wrap"
+              >Номер телефона: {{ props.manager.auth.telephone }}</v-card-title
+            >
             <v-card-title class="text-wrap">Описание:</v-card-title>
             <v-card-text class="text-wrap">
               {{ props.manager.description }}

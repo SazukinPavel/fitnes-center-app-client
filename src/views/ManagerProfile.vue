@@ -24,6 +24,12 @@
         readonly
         :model-value="formatDate(localUser.auth.birthDate)"
       ></v-text-field>
+      <v-text-field
+        class="my-2"
+        label="Номер телефона"
+        :rules="[requiredRule, telephoneRule]"
+        v-model="localUser.auth.telephone"
+      />
       <v-textarea
         variant="outlined"
         label="О себе"
@@ -60,8 +66,10 @@ import api from "@/api";
 import UpdateManagerDto from "@/types/dto/managers/UpdateManagerDto";
 import ChangePassword from "@/components/changePassword.vue";
 import useFormaters from "@/hooks/useFormaters";
+import useValidators from "@/hooks/useValidators";
 
 const store = useStore();
+const { requiredRule, telephoneRule } = useValidators();
 const { formatDate } = useFormaters();
 
 const isUserLoading = ref(false);
@@ -78,6 +86,7 @@ const update = async () => {
     description: localUser.value.description,
     id: localUser.value.id,
     authId: localUser.value.auth?.id.toString(),
+    telephone: localUser.value.auth?.telephone.toString(),
   };
 
   try {
