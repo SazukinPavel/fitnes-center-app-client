@@ -3,6 +3,8 @@ import Api from "@/api/api";
 import ExerciseInfo from "@/types/entitys/ExerciseInfo";
 import AddExerciseDto from "@/types/dto/exercises/AddExerciseDto";
 import UpdateIsPayedDto from "@/types/dto/exercises/UpdateIsPayedDto";
+import AddCancellationDto from "@/types/dto/exercises/AddCancellationDto";
+import Cancellation from "@/types/entitys/Cancellation";
 
 export default class ExercisesModule extends BaseApiModule {
   constructor(api: Api) {
@@ -22,5 +24,9 @@ export default class ExercisesModule extends BaseApiModule {
 
   updateIsPayed(dto: UpdateIsPayedDto) {
     return this.patch("is-payed", dto);
+  }
+
+  cancel(dto: AddCancellationDto) {
+    return this.patch<AddCancellationDto, Cancellation>("cancel", dto);
   }
 }
