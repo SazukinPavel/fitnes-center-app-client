@@ -5,7 +5,7 @@
       <v-text-field
         class="my-5"
         color="primary"
-        :rules="requiredRule"
+        :rules="[requiredRule]"
         variant="outlined"
         label="Логин:"
         v-model="loginDto.login"
@@ -14,7 +14,7 @@
         class="my-5"
         label="Пароль:"
         color="primary"
-        :rules="requiredRule"
+        :rules="[requiredRule]"
         variant="outlined"
         v-model="loginDto.password"
       />
@@ -30,12 +30,13 @@ import { ref } from "vue";
 import LoginDto from "@/types/dto/auth/LoginDto";
 import { useStore } from "vuex";
 import PasswordInput from "@/components/ui/passwordInput.vue";
+import useValidators from "@/hooks/useValidators";
 
 const loginForm = ref<any | null>(null);
 
 const store = useStore();
+const { requiredRule } = useValidators();
 
-const requiredRule = [(val: string) => !!val || "Поле обязательно!"];
 const loginDto = ref<LoginDto>({ login: "", password: "" });
 
 const login = async () => {
