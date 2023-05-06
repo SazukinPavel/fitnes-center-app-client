@@ -19,7 +19,13 @@
         v-model="loginDto.password"
       />
       <div class="d-flex justify-end">
-        <v-btn color="primary" @click="login">Войти</v-btn>
+        <v-btn
+          variant="text"
+          class="text-h6 mx-3"
+          :to="{ name: 'ForgetPassword' }"
+          >Забыли пароль?</v-btn
+        >
+        <v-btn class="mx-3" color="primary" @click="login">Войти</v-btn>
       </div>
     </v-card>
   </v-form>

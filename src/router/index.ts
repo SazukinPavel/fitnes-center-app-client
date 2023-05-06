@@ -17,6 +17,7 @@ import AddManager from "@/views/AddManager.vue";
 import AddExerciseInfo from "@/views/AddExerciseInfo.vue";
 import AddDiet from "@/views/AddDiet.vue";
 import AddExercise from "@/views/AddExercise.vue";
+import ForgetPassword from "@/views/ForgetPassword.vue";
 
 const routes = [
   { path: "/login", name: "Login", component: Login },
@@ -121,6 +122,11 @@ const routes = [
     name: "DietPage",
     component: DietPage,
     meta: { isClientRoute: true },
+  },
+  {
+    path: "/forget-password",
+    name: "ForgetPassword",
+    component: ForgetPassword,
   },
 ];
 
