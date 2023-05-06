@@ -50,7 +50,7 @@ const setupRouter = () => {
     router.replace({ name: "ClientExercises" });
   }
   router.beforeEach((to: any, from: any, next: any) => {
-    if (!isLogedIn.value && to.path !== "/login") {
+    if (!isLogedIn.value && !Object.keys(to.meta)) {
       redirectToLogin();
     } else if (
       (role.value === "admin" &&
