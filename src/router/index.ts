@@ -132,6 +132,7 @@ const routes = [
   {
     path: "/new-password",
     name: "NewPassword",
+    meta: { noRedirect: true },
     component: NewPassword,
   },
 ];

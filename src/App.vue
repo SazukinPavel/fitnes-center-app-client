@@ -32,28 +32,28 @@ onMounted(async () => {
 });
 
 const setupRouter = () => {
-  if (
-    route.matched.some((el: any) => !el.meta.isAdminRoute) &&
-    role.value === "admin"
-  ) {
-    router.replace({ name: "Managers" });
-  } else if (
-    route.matched.some((el: any) => !el.meta.isManagerRoute) &&
-    role.value === "manager"
-  ) {
-    router.replace({ name: "ManagerClients" });
-  } else if (
-    isLogedIn.value &&
-    role.value === "client" &&
-    route.matched.some((el: any) => !el.meta.isClientRoute)
-  ) {
-    router.replace({ name: "ClientExercises" });
+  if (!route.meta.noRedirect) {
+    if (
+      route.matched.some((el: any) => !el.meta.isAdminRoute) &&
+      role.value === "admin"
+    ) {
+      router.replace({ name: "Managers" });
+    } else if (
+      route.matched.some((el: any) => !el.meta.isManagerRoute) &&
+      role.value === "manager"
+    ) {
+      router.replace({ name: "ManagerClients" });
+    } else if (
+      isLogedIn.value &&
+      role.value === "client" &&
+      route.matched.some((el: any) => !el.meta.isClientRoute)
+    ) {
+      router.replace({ name: "ClientExercises" });
+    }
   }
+
   router.beforeEach((to: any, from: any, next: any) => {
-    console.log(to, from);
-    console.log(!isLogedIn.value && !Object.keys(to.meta));
     if (!isLogedIn.value && !Object.keys(to.meta)) {
-      console.log("redirect");
       redirectToLogin();
     } else if (
       (role.value === "admin" &&
@@ -65,7 +65,6 @@ const setupRouter = () => {
     ) {
       next(from);
     } else {
-      console.log("go", to);
       next();
     }
   });
@@ -80,9 +79,7 @@ const authorize = async () => {
   await store.dispatch("auth/init");
 };
 const redirectToLogin = () => {
-  console.log("try redirect");
   if (route.name !== "Login" && Object.keys(route.meta).length) {
-    console.log("redirect");
     router.replace({ name: "Login" });
   }
 };
@@ -111,7 +108,6 @@ watch(
   () => role.value,
   () => {
     if (!isAuthorizeLoading.value && Object.keys(route.meta)) {
-      console.log("redirect");
       router.push({ name: redirectRouteName.value });
     }
   }
