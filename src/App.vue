@@ -50,7 +50,10 @@ const setupRouter = () => {
     router.replace({ name: "ClientExercises" });
   }
   router.beforeEach((to: any, from: any, next: any) => {
+    console.log(to, from);
+    console.log(!isLogedIn.value && !Object.keys(to.meta));
     if (!isLogedIn.value && !Object.keys(to.meta)) {
+      console.log("redirect");
       redirectToLogin();
     } else if (
       (role.value === "admin" &&
@@ -62,6 +65,7 @@ const setupRouter = () => {
     ) {
       next(from);
     } else {
+      console.log("go", to);
       next();
     }
   });
@@ -76,7 +80,9 @@ const authorize = async () => {
   await store.dispatch("auth/init");
 };
 const redirectToLogin = () => {
-  if (route.name !== "Login") {
+  console.log("try redirect");
+  if (route.name !== "Login" && Object.keys(route.meta).length) {
+    console.log("redirect");
     router.replace({ name: "Login" });
   }
 };
@@ -104,7 +110,8 @@ const redirectRouteName = computed<string>(() => {
 watch(
   () => role.value,
   () => {
-    if (!isAuthorizeLoading.value) {
+    if (!isAuthorizeLoading.value && Object.keys(route.meta)) {
+      console.log("redirect");
       router.push({ name: redirectRouteName.value });
     }
   }
