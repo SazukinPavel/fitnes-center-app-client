@@ -10,7 +10,7 @@
         :rules="[requiredRule]"
         variant="outlined"
         label="Логин:"
-        v-model="recreatePasswordDto.login"
+        v-model="forgetPasswordDto.login"
       />
       <div class="d-flex justify-end">
         <v-btn class="mx-3" @click="goBack">Назад</v-btn>
@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import RecreatePasswordDto from "@/types/dto/auth/RecreatePasswordDto";
+import ForgetPasswordDto from "@/types/dto/auth/ForgetPasswordDto";
 import useValidators from "@/hooks/useValidators";
 import useGoBack from "@/hooks/goBack";
 import { useStore } from "vuex";
@@ -38,7 +38,7 @@ const { requiredRule } = useValidators();
 const goBack = useGoBack();
 const store = useStore();
 
-const recreatePasswordDto = ref<RecreatePasswordDto>({ login: "" });
+const forgetPasswordDto = ref<ForgetPasswordDto>({ login: "" });
 const forgetPasswordForm = ref<any | null>(null);
 const isLoading = ref(false);
 const recreatePassword = async () => {
@@ -48,7 +48,7 @@ const recreatePassword = async () => {
 
   isLoading.value = true;
   try {
-    await api.auth.recreatePassword(recreatePasswordDto.value);
+    await api.auth.forgetPassword(forgetPasswordDto.value);
     store.commit("snackbar/showSnackbarSuccess", {
       message:
         "Вам на почту пришло письмо, с ссылкой на страницу сброса пароля. ",

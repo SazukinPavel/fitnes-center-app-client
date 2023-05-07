@@ -2,8 +2,8 @@ import BaseApiModule from "@/types/utils/BaseApiModule";
 import LoginDto from "@/types/dto/auth/LoginDto";
 import AuthResponseDto from "@/types/dto/auth/AuthResponseDto";
 import Api from "@/api/api";
-import ChangePasswordDto from "@/types/dto/auth/ChangePassword.dto";
-import RecreatePasswordDto from "@/types/dto/auth/RecreatePasswordDto";
+import ChangePasswordDto from "@/types/dto/auth/ChangePasswordDto";
+import ForgetPasswordDto from "@/types/dto/auth/ForgetPasswordDto";
 
 export default class AuthModule extends BaseApiModule {
   constructor(api: Api) {
@@ -22,7 +22,7 @@ export default class AuthModule extends BaseApiModule {
     return this.post("change-pass", dto);
   }
 
-  recreatePassword(dto: RecreatePasswordDto) {
+  forgetPassword(dto: ForgetPasswordDto) {
     return this.post("forget", dto);
   }
 }
