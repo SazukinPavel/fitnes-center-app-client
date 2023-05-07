@@ -4,6 +4,7 @@ import AuthResponseDto from "@/types/dto/auth/AuthResponseDto";
 import Api from "@/api/api";
 import ChangePasswordDto from "@/types/dto/auth/ChangePasswordDto";
 import ForgetPasswordDto from "@/types/dto/auth/ForgetPasswordDto";
+import NewPasswordDto from "@/types/dto/auth/NewPasswordDto";
 
 export default class AuthModule extends BaseApiModule {
   constructor(api: Api) {
@@ -24,5 +25,13 @@ export default class AuthModule extends BaseApiModule {
 
   forgetPassword(dto: ForgetPasswordDto) {
     return this.post("forget", dto);
+  }
+
+  newPassword(dto: NewPasswordDto) {
+    return this.post("new-password", dto);
+  }
+
+  checkToken(token: string) {
+    return this.get("check-token/" + token);
   }
 }

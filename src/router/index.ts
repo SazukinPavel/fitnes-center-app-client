@@ -18,6 +18,7 @@ import AddExerciseInfo from "@/views/AddExerciseInfo.vue";
 import AddDiet from "@/views/AddDiet.vue";
 import AddExercise from "@/views/AddExercise.vue";
 import ForgetPassword from "@/views/ForgetPassword.vue";
+import NewPassword from "@/views/NewPassword.vue";
 
 const routes = [
   { path: "/login", name: "Login", component: Login },
@@ -127,6 +128,11 @@ const routes = [
     path: "/forget-password",
     name: "ForgetPassword",
     component: ForgetPassword,
+  },
+  {
+    path: "/new-password",
+    name: "NewPassword",
+    component: NewPassword,
   },
 ];
 
