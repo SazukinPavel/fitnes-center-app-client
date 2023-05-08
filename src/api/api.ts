@@ -5,6 +5,7 @@ import ManagersModule from "./modules/managers";
 import ExercisesModule from "./modules/exercises";
 import ExerciseInfoModule from "./modules/exerciseInfo";
 import ClientsModule from "./modules/clients";
+import AvatarsModule from "@/api/modules/avatars";
 
 export default class Api {
   public axios: AxiosInstance;
@@ -14,6 +15,7 @@ export default class Api {
   public exercises: ExercisesModule;
   public managers: ManagersModule;
   public clients: ClientsModule;
+  public avatars: AvatarsModule;
 
   constructor(baseURL: string) {
     this.axios = axios.create({ baseURL });
@@ -23,6 +25,7 @@ export default class Api {
     this.exercises = new ExercisesModule(this);
     this.diets = new DietsModule(this);
     this.exercisesInfo = new ExerciseInfoModule(this);
+    this.avatars = new AvatarsModule(this);
   }
 
   applyToken(token: string) {
