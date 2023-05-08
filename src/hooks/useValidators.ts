@@ -39,6 +39,13 @@ export default function useValidators() {
     return true;
   });
 
+  const emailRule = ref((val: string) => {
+    return (
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.toLowerCase()) ||
+      "Не валидный email"
+    );
+  });
+
   return {
     requiredRule,
     passwordLengthRule,
@@ -46,5 +53,6 @@ export default function useValidators() {
     heightRule,
     telephoneRule,
     durationRule,
+    emailRule,
   };
 }

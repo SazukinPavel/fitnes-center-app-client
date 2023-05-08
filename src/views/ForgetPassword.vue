@@ -7,10 +7,10 @@
       <v-text-field
         class="my-5"
         color="primary"
-        :rules="[requiredRule]"
+        :rules="[requiredRule, emailRule]"
         variant="outlined"
         label="Логин:"
-        v-model="forgetPasswordDto.login"
+        v-model.trim="forgetPasswordDto.login"
       />
       <div class="d-flex justify-end">
         <v-btn class="mx-3" @click="goBack">Назад</v-btn>
@@ -34,7 +34,7 @@ import useGoBack from "@/hooks/goBack";
 import { useStore } from "vuex";
 import api from "@/api";
 
-const { requiredRule } = useValidators();
+const { requiredRule, emailRule } = useValidators();
 const goBack = useGoBack();
 const store = useStore();
 
@@ -48,10 +48,13 @@ const recreatePassword = async () => {
 
   isLoading.value = true;
   try {
-    await api.auth.forgetPassword(forgetPasswordDto.value);
+    await api.auth.forgetPassword({
+      ...forgetPasswordDto.value,
+      login: forgetPasswordDto.value.login.toLowerCase(),
+    });
     store.commit("snackbar/showSnackbarSuccess", {
       message:
-        "Вам на почту пришло письмо, с ссылкой на страницу сброса пароля. ",
+        "В ближайшие 5 минут, вам на почту прийдёт письмо, с ссылкой на страницу сброса пароля. ",
     });
   } catch (e: any) {
     store.commit("snackbar/showSnackbarError", {

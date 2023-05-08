@@ -8,7 +8,7 @@
         :rules="[requiredRule]"
         variant="outlined"
         label="Логин:"
-        v-model="loginDto.login"
+        v-model.trim="loginDto.login"
       />
       <password-input
         class="my-5"

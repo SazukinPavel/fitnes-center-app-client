@@ -4,9 +4,9 @@
     <v-form ref="managerForm">
       <v-text-field
         class="my-2"
-        :rules="[requiredRule]"
+        :rules="[requiredRule, emailRule]"
         label="Логин"
-        v-model="addManagerDto.login"
+        v-model.trim="addManagerDto.login"
       />
       <v-text-field
         class="my-2"
@@ -58,7 +58,7 @@ import DatePicker from "@/components/ui/datePicker.vue";
 import useGoBack from "@/hooks/goBack";
 import useGoTo from "@/hooks/useGoTo";
 
-const { requiredRule, telephoneRule } = useValidators();
+const { requiredRule, telephoneRule, emailRule } = useValidators();
 const store = useStore();
 const goBack = useGoBack();
 const goTo = useGoTo();
@@ -74,7 +74,10 @@ const addManager = async () => {
   isAddLoading.value = true;
 
   try {
-    await store.dispatch("managers/add", addManagerDto.value);
+    await store.dispatch("managers/add", {
+      ...addManagerDto.value,
+      login: addManagerDto.value.login.toLowerCase(),
+    });
     addManagerDto.value = getDefaultDto();
     store.commit("snackbar/showSnackbarSuccess", {
       message: "Тренер успешно добавлен",

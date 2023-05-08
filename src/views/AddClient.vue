@@ -4,9 +4,9 @@
     <v-form ref="clientForm">
       <v-text-field
         class="my-2"
-        :rules="[requiredRule]"
+        :rules="[requiredRule, emailRule]"
         label="Логин"
-        v-model="addClientDto.login"
+        v-model.trim="addClientDto.login"
       />
       <v-text-field
         class="my-2"
@@ -57,7 +57,7 @@ import useGoBack from "@/hooks/goBack";
 import HeightInput from "@/components/ui/HeightInput.vue";
 import WeightInput from "@/components/ui/WeightInput.vue";
 
-const { requiredRule, telephoneRule } = useValidators();
+const { requiredRule, telephoneRule, emailRule } = useValidators();
 const store = useStore();
 const goTo = useGoTo();
 const goBack = useGoBack();
@@ -74,7 +74,10 @@ const addClient = async () => {
   isClientAddLoading.value = true;
 
   try {
-    await store.dispatch("clients/add", addClientDto.value);
+    await store.dispatch("clients/add", {
+      ...addClientDto.value,
+      login: addClientDto.value.login.toLowerCase(),
+    });
     addClientDto.value = getDefaultDto();
     store.commit("snackbar/showSnackbarSuccess", {
       message: "Пользователь успешно добавлен",
