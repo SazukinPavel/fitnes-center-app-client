@@ -135,6 +135,10 @@ const routes = [
     meta: { noRedirect: true },
     component: NewPassword,
   },
+  {
+    path: "/:pathMatch(.*)*",
+    redirect: "/login",
+  },
 ];
 
 const router = createRouter({
