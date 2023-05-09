@@ -29,7 +29,6 @@ const emit = defineEmits(["update:modelValue"]);
 const isShowed = ref(false);
 
 const change = (e: InputEvent) => {
-  console.log(rules.value);
   emit("update:modelValue", e.target.value);
 };
 // const rules = ref({

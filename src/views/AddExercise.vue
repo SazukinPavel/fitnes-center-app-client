@@ -102,7 +102,6 @@ onMounted(() => {
 });
 
 watch(exercise, (newVal) => {
-  console.log(newVal);
   addExerciseDto.value.duration = newVal?.duration;
 });
 
