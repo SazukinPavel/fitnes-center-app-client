@@ -5,6 +5,7 @@
     class="d-flex jsutify-start"
   >
     <v-container v-if="localUser.auth?.login" class="profile">
+      <profile-avatar :user="user" />
       <v-text-field
         class="readonly"
         variant="outlined"
@@ -67,6 +68,7 @@ import UpdateManagerDto from "@/types/dto/managers/UpdateManagerDto";
 import ChangePassword from "@/components/changePassword.vue";
 import useFormaters from "@/hooks/useFormaters";
 import useValidators from "@/hooks/useValidators";
+import ProfileAvatar from "@/components/profileAvatar.vue";
 
 const store = useStore();
 const { requiredRule, telephoneRule } = useValidators();

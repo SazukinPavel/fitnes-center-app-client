@@ -1,6 +1,7 @@
 <template>
   <v-card variant="text" class="d-flex jsutify-start">
     <v-container v-if="localUser.auth?.login" class="profile">
+      <profile-avatar :user="user" />
       <v-text-field
         class="readonly"
         label="Логин"
@@ -64,6 +65,7 @@ import useFormaters from "@/hooks/useFormaters";
 import useValidators from "@/hooks/useValidators";
 import WeightInput from "@/components/ui/WeightInput.vue";
 import HeightInput from "@/components/ui/HeightInput.vue";
+import ProfileAvatar from "@/components/profileAvatar.vue";
 
 const store = useStore();
 const { formatDate } = useFormaters();
