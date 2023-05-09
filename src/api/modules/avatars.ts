@@ -1,6 +1,7 @@
 import BaseApiModule from "@/types/utils/BaseApiModule";
 import Api from "@/api/api";
 import AddAvatarDto from "@/types/dto/avatars/AddAvatarDto";
+import Avatar from "@/types/entitys/Avatar";
 
 export default class AvatarsModule extends BaseApiModule {
   constructor(api: Api) {
@@ -12,7 +13,7 @@ export default class AvatarsModule extends BaseApiModule {
     bodyFormData.append("file", file, file.name);
     bodyFormData.append("owner", owner);
 
-    return this.post("", bodyFormData, {
+    return this.post<any, Avatar>("", bodyFormData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
   }
