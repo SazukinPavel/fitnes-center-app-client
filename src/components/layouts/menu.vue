@@ -7,7 +7,6 @@
     @click="rail = false"
   >
     <v-list-item
-      prepend-icon="mdi-account"
       :title="user?.auth?.login"
       nav
       active-color="primary"
@@ -20,6 +19,9 @@
           icon="mdi-chevron-left"
           @click.stop="rail = !rail"
         ></v-btn>
+      </template>
+      <template v-slot:prepend>
+        <v-avatar v-if="userAvatar" :image="userAvatar"></v-avatar>
       </template>
     </v-list-item>
 
@@ -54,6 +56,7 @@ import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import MenuItem from "@/types/utils/MenuItem";
 import useGoTo from "@/hooks/useGoTo";
+import AvatarsService from "@/services/AvatarsService";
 
 const store = useStore();
 const route = useRoute();
@@ -130,6 +133,10 @@ const items = computed<MenuItem[]>(() => {
       { icon: "mdi-food-fork-drink", routeName: "DietPage", title: "Диета" },
     ];
   }
+});
+
+const userAvatar = computed(() => {
+  return AvatarsService.getAvatarUrl(user.value);
 });
 </script>
 
