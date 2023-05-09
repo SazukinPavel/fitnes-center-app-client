@@ -1,6 +1,7 @@
 <template>
   <v-card>
-    <v-card-actions class="d-flex justify-end">
+    <v-card-actions class="d-flex justify-space-between">
+      <v-avatar v-if="managerAvatar" :image="managerAvatar" />
       <v-btn
         color="primary"
         variant="outlined"
@@ -45,6 +46,7 @@ import { PropType, defineProps, ref } from "vue";
 import { useStore } from "vuex";
 import useFormaters from "@/hooks/useFormaters";
 import Manager from "@/types/entitys/Manager";
+import useUserAvatar from "@/hooks/userAvatar";
 
 const store = useStore();
 
@@ -71,6 +73,8 @@ const deleteClient = async () => {
     isDeleteLoading.value = false;
   }
 };
+
+const managerAvatar = useUserAvatar(props.manager);
 </script>
 
 <style scoped></style>

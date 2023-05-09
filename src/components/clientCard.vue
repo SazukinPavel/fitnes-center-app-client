@@ -1,6 +1,7 @@
 <template>
   <v-card class="ma-4">
-    <v-card-actions class="d-flex justify-end">
+    <v-card-actions class="d-flex justify-space-between">
+      <v-avatar v-if="clientAvatar" :image="clientAvatar" />
       <v-btn
         color="primary"
         variant="outlined"
@@ -93,6 +94,7 @@ import api from "@/api";
 import useValidators from "@/hooks/useValidators";
 import useFormaters from "@/hooks/useFormaters";
 import Diet from "@/types/entitys/Diet";
+import useUserAvatar from "@/hooks/userAvatar";
 
 const store = useStore();
 
@@ -102,6 +104,7 @@ const props = defineProps({
 
 const { requiredRule } = useValidators();
 const { formatDate } = useFormaters();
+const clientAvatar = useUserAvatar(props.client);
 
 const isDeleteLoading = ref(false);
 const setDietDialog = ref(false);
