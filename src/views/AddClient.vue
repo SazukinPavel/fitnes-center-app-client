@@ -1,6 +1,6 @@
 <template>
   <v-card max-width="800" variant="text" class="px-5 py-5 ma-auto">
-    <v-card-title class="text-center">Новый клиент</v-card-title>
+    <v-card-title class="text-center text-wrap">Новый клиент</v-card-title>
     <v-form ref="clientForm">
       <v-text-field
         class="my-2"

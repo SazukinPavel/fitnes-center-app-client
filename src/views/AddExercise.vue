@@ -1,6 +1,6 @@
 <template>
   <v-card class="px-5 py-5 ma-auto" max-width="800" variant="text">
-    <v-card-title class="text-center">Новое занятие:</v-card-title>
+    <v-card-title class="text-center text-wrap">Новое занятие:</v-card-title>
     <v-form ref="exerciseForm">
       <date-picker
         class="my-2"

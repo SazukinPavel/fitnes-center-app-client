@@ -1,5 +1,5 @@
 <template>
-  <v-btn color="primary" icon size="small" class="mx-5" :to="props.to">
+  <v-btn color="primary" icon size="small" class="mx-3" :to="props.to">
     <v-icon>mdi-plus</v-icon>
     <slot></slot>
   </v-btn>

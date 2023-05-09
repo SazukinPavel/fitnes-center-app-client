@@ -1,6 +1,6 @@
 <template>
   <v-card variant="text">
-    <v-card-title class="text-center">Тренер:</v-card-title>
+    <v-card-title class="text-center text-wrap">Тренер:</v-card-title>
     <div class="d-flex justify-center align-center">
       <v-avatar v-if="avatarImage" :image="avatarImage" size="200"></v-avatar>
     </div>
