@@ -9,7 +9,7 @@
     />
     <div class="d-flex justify-end mt-5">
       <v-btn
-        :disabled="!avatarUrl || !!previewImage || isSaveLoading"
+        :disabled="!user.auth?.avatar?.id || !!previewImage || isSaveLoading"
         :loading="isDeleteLoading"
         icon
         class="mx-3"
@@ -100,7 +100,8 @@ const deleteAvatar = async () => {
       ...user?.value,
       auth: { ...user?.value?.auth, avatar: null },
     });
-  } catch {
+  } catch (e) {
+    console.log(e);
     store.commit("snackbar/showSnackbarError", {
       message: "Произошла ошибка при удалении аватара",
     });

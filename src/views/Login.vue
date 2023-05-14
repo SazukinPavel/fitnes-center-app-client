@@ -27,7 +27,9 @@
           :to="{ name: 'ForgetPassword' }"
           >Забыли пароль?</v-btn
         >
-        <v-btn class="mx-3" color="primary" @click="login">Войти</v-btn>
+        <v-btn class="mx-3" :loading="isLoading" color="primary" @click="login"
+          >Войти</v-btn
+        >
       </div>
     </v-card>
   </v-form>
@@ -46,6 +48,7 @@ const store = useStore();
 const { requiredRule } = useValidators();
 
 const loginDto = ref<LoginDto>({ login: "", password: "" });
+const isLoading = ref(false);
 
 const login = async () => {
   try {
@@ -53,8 +56,11 @@ const login = async () => {
       return;
     }
 
+    isLoading.value = true;
+
     await store.dispatch("auth/login", loginDto.value);
   } catch {
+    isLoading.value = false;
     store.commit("snackbar/showSnackbarError", {
       message: "Такого пользователя нет",
     });
