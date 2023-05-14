@@ -2,7 +2,7 @@
   <v-form style="margin-top: 20vh" ref="forgetPasswordForm">
     <v-card class="ma-auto pa-4" variant="text" max-width="600px">
       <v-card-title class="text-center text-wrap text-h6 mb-5 ma-auto"
-        >Введите ваш логин, что бы востановить пароль</v-card-title
+        >Введите ваш логин, что бы восстановить пароль</v-card-title
       >
       <v-text-field
         class="my-5"
