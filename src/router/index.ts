@@ -21,7 +21,12 @@ import ForgetPassword from "@/views/ForgetPassword.vue";
 import NewPassword from "@/views/NewPassword.vue";
 
 const routes = [
-  { path: "/login", name: "Login", component: Login },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+    meta: { pageTitle: "Авторизация" },
+  },
   {
     path: "/admin/trainers",
     name: "Managers",
