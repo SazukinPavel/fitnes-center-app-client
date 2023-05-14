@@ -1,9 +1,9 @@
 import { User } from "@/types/entitys/User";
 
 export default class AvatarsService {
-  private static serverPath = "http://localhost:4200";
-  private static baseSubPath = "base";
-  private static avatarsSubPath = "avatars";
+  private static serverPath = process.env.VUE_APP_API_URL;
+  private static baseSubPath = process.env.VUE_APP_IMAGE_BASE_SUB_PATH;
+  private static avatarsSubPath = process.env.VUE_APP_IMAGE_AVATARS_SUB_PATH;
 
   static getAvatarUrl(user: User | undefined) {
     if (user?.auth && user.auth?.avatar?.id) {
