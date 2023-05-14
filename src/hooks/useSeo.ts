@@ -1,6 +1,6 @@
 export default function useSeo() {
   const setTitle = (val: string) => {
-    document.title = val;
+    document.title = val || "fitness-center-app";
   };
 
   return {
