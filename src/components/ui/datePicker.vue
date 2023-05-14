@@ -7,6 +7,7 @@
     :label="label"
     :max="maxDate"
     :rules="rules"
+    @keypress.prevent
   ></v-text-field>
 </template>
 
