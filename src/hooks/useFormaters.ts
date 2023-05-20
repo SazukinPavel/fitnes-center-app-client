@@ -5,7 +5,7 @@ export default function useFormaters() {
     return moment(date).format("YYYY-MM-DD");
   };
   const formatDateTime = (datetime: any) => {
-    return moment(datetime).utc().format("YYYY-MM-DD HH:mm");
+    return moment(datetime).local().format("YYYY-MM-DD HH:mm");
   };
 
   return { formatDate, formatDateTime };
