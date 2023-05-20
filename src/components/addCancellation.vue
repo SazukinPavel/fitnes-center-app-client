@@ -10,7 +10,9 @@
       <v-card class="pa-5">
         <v-container>
           <v-row justify="center" class="mb-5">
-            <v-card-title class="text-center">Причина отмены</v-card-title>
+            <v-card-title class="text-center">{{
+              t("canceledReason")
+            }}</v-card-title>
           </v-row>
           <v-textarea v-model="reason" :rules="[requiredRule]" />
           <v-row justify="end" class="mt-4">
@@ -18,11 +20,11 @@
               @click="emit('update:modelValue', false)"
               class="mx-3"
               :disabled="isCancelLoading"
-              >Закрыть</v-btn
+              >{{ t("close") }}</v-btn
             >
-            <v-btn :loading="isCancelLoading" @click="add" class="mx-3"
-              >Добавить</v-btn
-            >
+            <v-btn :loading="isCancelLoading" @click="add" class="mx-3">{{
+              t("add")
+            }}</v-btn>
           </v-row>
         </v-container>
       </v-card>
@@ -35,6 +37,7 @@ import { toRefs, defineProps, defineEmits, ref, computed } from "vue";
 import useValidators from "@/hooks/useValidators";
 import { useStore } from "vuex";
 import api from "@/api";
+import { useI18n } from "vue-i18n";
 
 const props = defineProps(["modelValue", "exerciseId"]);
 const { modelValue, exerciseId } = toRefs(props);
@@ -42,6 +45,7 @@ const emit = defineEmits(["update:modelValue"]);
 
 const { requiredRule } = useValidators();
 const store = useStore();
+const { t } = useI18n();
 
 const reason = ref("");
 
@@ -63,12 +67,12 @@ const add = async () => {
     });
     store.commit("exercises/replaceExercise", res.data);
     store.commit("snackbar/showSnackbarSuccess", {
-      message: "Занятие успешно отменено",
+      message: t("success.cancelExercise"),
     });
     emit("update:modelValue", false);
   } catch (e: any) {
     store.commit("snackbar/showSnackbarError", {
-      message: e.response.data.message || "Произошла ощибка при отмене занятия",
+      message: t("errors.cancelExercise"),
     });
   } finally {
     isCancelLoading.value = false;

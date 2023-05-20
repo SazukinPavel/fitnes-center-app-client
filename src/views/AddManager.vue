@@ -5,46 +5,46 @@
       <v-text-field
         class="my-2"
         :rules="[requiredRule, emailRule]"
-        label="Логин"
+        :label="t('login')"
         v-model.trim="addManagerDto.login"
       />
       <v-text-field
         class="my-2"
         :rules="[requiredRule]"
-        label="Фио"
+        :label="t('fio')"
         v-model="addManagerDto.fio"
       />
       <date-picker
         class="my-2"
         type="BirthDate"
-        placeholder="Дата рождения"
+        :label="t('birthDate')"
         v-model="addManagerDto.birthDate"
         :rules="[requiredRule]"
       />
       <v-text-field
         class="my-2"
         :rules="[requiredRule]"
-        label="Пароль"
+        :label="t('password')"
         v-model="addManagerDto.password"
       />
       <v-text-field
         class="my-2"
-        label="Номер телефона"
+        :label="t('telephoneNumber')"
         :rules="[requiredRule, telephoneRule]"
         v-model="addManagerDto.telephone"
       />
       <v-textarea
         class="my-2"
-        label="Описание"
+        :label="t('description')"
         v-model="addManagerDto.description"
       />
     </v-form>
 
     <div class="d-flex justify-center">
-      <v-btn @click="goBack" :disabled="isAddLoading">Назад</v-btn>
-      <v-btn :loading="isAddLoading" class="mx-5" @click="addManager"
-        >Добавить</v-btn
-      >
+      <v-btn @click="goBack" :disabled="isAddLoading">{{ t("back") }}</v-btn>
+      <v-btn :loading="isAddLoading" class="mx-5" @click="addManager">{{
+        t("add")
+      }}</v-btn>
     </div>
   </v-card>
 </template>
@@ -57,10 +57,12 @@ import { useStore } from "vuex";
 import DatePicker from "@/components/ui/datePicker.vue";
 import useGoBack from "@/hooks/goBack";
 import useGoTo from "@/hooks/useGoTo";
+import { useI18n } from "vue-i18n";
 
 const { requiredRule, telephoneRule, emailRule } = useValidators();
 const store = useStore();
 const goBack = useGoBack();
+const { t } = useI18n();
 const goTo = useGoTo();
 
 const managerForm = ref<any | null>(null);
@@ -80,13 +82,12 @@ const addManager = async () => {
     });
     addManagerDto.value = getDefaultDto();
     store.commit("snackbar/showSnackbarSuccess", {
-      message: "Тренер успешно добавлен",
+      message: t("success.addManager"),
     });
     goTo({ name: "Managers" });
   } catch (e: any) {
     store.commit("snackbar/showSnackbarError", {
-      message:
-        e?.response?.data?.message || "Произошла ошибка при создание тренера",
+      message: e?.response?.data?.message || t("errors.addManager"),
     });
   } finally {
     isAddLoading.value = false;

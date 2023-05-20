@@ -1,12 +1,14 @@
 <template>
   <v-card variant="text" class="px-5 py-5 ma-auto" max-width="800">
-    <v-card-title class="text-center text-wrap">Новая диета</v-card-title>
+    <v-card-title class="text-center text-wrap">{{
+      t("newDiet")
+    }}</v-card-title>
     <v-form ref="dietForm">
       <v-text-field
         class="my-2"
         :rules="[requiredRule]"
         variant="outlined"
-        label="Имя"
+        :label="t('name')"
         color="primary"
         v-model="addDietDto.name"
       />
@@ -15,16 +17,16 @@
         variant="outlined"
         color="primary"
         :rules="[requiredRule]"
-        label="Описание"
+        :label="t('description')"
         v-model="addDietDto.description"
       />
     </v-form>
 
     <div class="d-flex justify-center">
-      <v-btn :disabled="isAddLoading" @click="goBack">Назад</v-btn>
-      <v-btn class="mx-5" :loading="isAddLoading" @click="addDiet"
-        >Добавить</v-btn
-      >
+      <v-btn :disabled="isAddLoading" @click="goBack">{{ t("back") }}</v-btn>
+      <v-btn class="mx-5" :loading="isAddLoading" @click="addDiet">{{
+        t("add")
+      }}</v-btn>
     </div>
   </v-card>
 </template>
@@ -36,10 +38,12 @@ import { useStore } from "vuex";
 import useValidators from "@/hooks/useValidators";
 import useGoTo from "@/hooks/useGoTo";
 import useGoBack from "@/hooks/goBack";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
 const { requiredRule } = useValidators();
 const goBack = useGoBack();
+const { t } = useI18n();
 const goTo = useGoTo();
 
 const dietForm = ref<any | null>(null);
@@ -58,13 +62,12 @@ const addDiet = async () => {
 
     addDietDto.value = getDefaultDto();
     store.commit("snackbar/showSnackbarSuccess", {
-      message: "Диета создана успешно",
+      message: t("success.addDiet"),
     });
     goTo({ name: "Diets" });
   } catch (e: any) {
     store.commit("snackbar/showSnackbarError", {
-      message:
-        e?.response?.data?.message || "Произошла ошибка при создание диеты",
+      message: e?.response?.data?.message || t("errors.addDiet"),
     });
   } finally {
     isAddLoading.value = false;

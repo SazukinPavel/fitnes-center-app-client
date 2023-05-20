@@ -1,7 +1,7 @@
 <template>
   <v-row class="ml-3" style="max-width: 500px">
     <v-autocomplete
-      label="Дата"
+      :label="t('date')"
       class="mr-3"
       :model-value="modelValue"
       style="max-width: 250px; min-width: 250px"
@@ -17,7 +17,7 @@
       :items="dateTypeItems"
       item-title="text"
       item-value="value"
-      label="Прошедшие даты"
+      :label="t('exDates')"
     />
   </v-row>
 </template>
@@ -28,6 +28,7 @@ import { PropType } from "vue";
 import { Exercise } from "@/types/entitys/Exercise";
 import useFormaters from "@/hooks/useFormaters";
 import moment from "moment";
+import { useI18n } from "vue-i18n";
 
 const props = defineProps({
   modelValue: { type: String, required: true },
@@ -35,13 +36,14 @@ const props = defineProps({
 });
 const emit = defineEmits(["update:modelValue"]);
 
-const dateTypeItems = ref([
-  { text: "Скрыть", value: true },
-  { text: "Показать", value: false },
+const dateTypeItems = computed(() => [
+  { text: t("dateTypeItems.hide"), value: true },
+  { text: t("dateTypeItems.show"), value: false },
 ]);
 const dateType = ref(true);
 
 const { formatDate } = useFormaters();
+const { t } = useI18n();
 
 const dates = computed<string[]>(() => {
   const set = new Set(

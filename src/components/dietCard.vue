@@ -14,7 +14,7 @@
     </v-card-actions>
     <v-card-title>{{ props.diet.name }}</v-card-title>
     <v-expansion-panels v-if="props.diet?.description">
-      <v-expansion-panel title="Описание">
+      <v-expansion-panel :title="t('description')">
         <v-expansion-panel-text>
           {{ props.diet.description }}
         </v-expansion-panel-text>
@@ -28,8 +28,10 @@
 import { useStore } from "vuex";
 import { defineProps, PropType, ref } from "vue";
 import Diet from "@/types/entitys/Diet";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
+const { t } = useI18n();
 
 const props = defineProps({
   diet: { type: Object as PropType<Diet>, required: true },
@@ -43,11 +45,11 @@ const deleteDiet = async () => {
   try {
     await store.dispatch("diets/deleteDiet", props.diet?.id);
     store.commit("snackbar/showSnackbarSuccess", {
-      message: `Диета ${props.diet?.name} успещно удалена`,
+      message: `${t("diet")} ${props.diet?.name} ${t("deleteSuccessShe")}`,
     });
   } catch {
     store.commit("snackbar/showSnackbarError", {
-      message: `Произошла ошибка при удалении диеты ${props.diet?.name}`,
+      message: `${t("errors.deleteDiet")} ${props.diet?.name}`,
     });
   } finally {
     isDeleteLoading.value = false;

@@ -8,6 +8,7 @@
 <script setup lang="ts">
 import { defineProps, PropType } from "vue";
 import { RouteLocation } from "vue-router";
+
 const props = defineProps({
   to: { type: Object as PropType<RouteLocation | undefined>, required: true },
 });

@@ -16,17 +16,20 @@
       props.exercise.exerciseInfo.name
     }}</v-card-title>
     <v-card-title class="text-wrap"
-      >Дата: {{ formatDateTime(props.exercise.date) }}</v-card-title
+      >{{ t("date") }}: {{ formatDateTime(props.exercise.date) }}</v-card-title
     >
     <v-card-title class="text-wrap"
-      >Клиент: {{ props.client?.auth?.fio }}</v-card-title
+      >{{ t("client") }}: {{ props.client?.auth?.fio }}</v-card-title
     >
     <v-card-title class="text-wrap"
-      >Длительность: {{ props.exercise.duration }} минут</v-card-title
+      >{{ t("duration") }}: {{ props.exercise.duration }}
+      {{ t("minuts") }}</v-card-title
     >
     <v-expansion-panels v-if="isCanceled">
       <v-expansion-panel
-        :title="`Отменено пользователем ${props.exercise?.cancellation.by}, причина:`"
+        :title="`${t('canceledUser')} ${props.exercise?.cancellation.by}, ${t(
+          'reason'
+        )}:`"
       >
         <v-expansion-panel-text>
           {{ props.exercise.cancellation.reason }}
@@ -35,7 +38,11 @@
     </v-expansion-panels>
     <v-card-actions v-else>
       <v-switch
-        :label="props.exercise?.isPayed ? 'Оплачено' : 'Не оплачено'"
+        :label="
+          props.exercise?.isPayed
+            ? t('paymentStatus.payed')
+            : t('paymentStatus.noPayed')
+        "
         :model-value="props.exercise?.isPayed"
         @update:modelValue="changeIsPayed"
       />
@@ -55,6 +62,7 @@ import { useStore } from "vuex";
 import Client from "@/types/entitys/Client";
 import useFormmaters from "@/hooks/useFormaters";
 import AddCancellation from "@/components/addCancellation.vue";
+import { useI18n } from "vue-i18n";
 
 const props = defineProps({
   exercise: { type: Object as PropType<Exercise>, required: true },
@@ -62,6 +70,7 @@ const props = defineProps({
 });
 
 const store = useStore();
+const { t } = useI18n();
 const { formatDateTime } = useFormmaters();
 
 const isDeleteLoading = ref(false);
@@ -73,11 +82,11 @@ const deleteExercise = async () => {
   try {
     await store.dispatch("exercises/deleteExercise", props.exercise?.id);
     store.commit("snackbar/showSnackbarSuccess", {
-      message: `Занятие успешно удалёно`,
+      message: t("success.deleteExercise"),
     });
   } catch {
     store.commit("snackbar/showSnackbarSuccess", {
-      message: `Произошла ошибка при удалении занятия`,
+      message: t("errors.deleteExercise"),
     });
   } finally {
     isDeleteLoading.value = false;
@@ -93,7 +102,7 @@ const changeIsPayed = async (val: boolean) => {
     });
   } catch {
     store.commit("snackbar/showSnackbarError", {
-      message: `Произошла ошибка при обновлениие занятия`,
+      message: t("errors.changeIsPayed"),
     });
   } finally {
     isPayedLoading.value = false;

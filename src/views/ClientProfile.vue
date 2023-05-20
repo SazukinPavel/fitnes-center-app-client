@@ -4,24 +4,24 @@
       <profile-avatar :user="user" />
       <v-text-field
         class="readonly"
-        label="Логин"
+        :label="t('login')"
         readonly
         v-model="localUser.auth.login"
       ></v-text-field>
       <v-text-field
-        label="ФИО"
+        :label="t('fio')"
         :rules="[requiredRule]"
         append-inner-icon="mdi-pencil"
         v-model="localUser.auth.fio"
       ></v-text-field>
       <v-text-field
-        label="Дата рождения"
+        :label="t('birthDate')"
         readonly
         :model-value="formatDate(localUser.auth.birthDate)"
       ></v-text-field>
       <v-text-field
         class="my-2"
-        label="Номер телефона"
+        :label="t('telephoneNumber')"
         :rules="[telephoneRule]"
         v-model="localUser.auth.telephone"
       />
@@ -39,14 +39,14 @@
           class="mr-5"
           color="primary"
           size="small"
-          >Сменить пароль</v-btn
+          >{{ t("changePass") }}</v-btn
         >
         <v-btn
           :loading="isUpdateLoading"
           color="primary"
           @click="update"
           size="small"
-          >Изменить</v-btn
+          >{{ t("edit") }}</v-btn
         >
       </div>
     </v-container>
@@ -66,8 +66,10 @@ import useValidators from "@/hooks/useValidators";
 import WeightInput from "@/components/ui/WeightInput.vue";
 import HeightInput from "@/components/ui/HeightInput.vue";
 import ProfileAvatar from "@/components/profileAvatar.vue";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
+const { t } = useI18n();
 const { formatDate } = useFormaters();
 const { requiredRule, telephoneRule } = useValidators();
 
@@ -91,11 +93,11 @@ const update = async () => {
   try {
     await api.clients.update(dto);
     store.commit("snackbar/showSnackbarSuccess", {
-      message: "Пользователь успешно изменён",
+      message: t("success.saveClient"),
     });
   } catch {
     store.commit("snackbar/showSnackbarError", {
-      message: "Произошла ошибка при изменение пользователя",
+      message: t("errors.saveClient"),
     });
   } finally {
     isUpdateLoading.value = false;

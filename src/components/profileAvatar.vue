@@ -44,6 +44,7 @@ import api from "@/api";
 import AvatarsService from "@/services/AvatarsService";
 import { User } from "@/types/entitys/User";
 import { useStore } from "vuex";
+import { useI18n } from "vue-i18n";
 
 const props = defineProps({
   user: { required: true, type: Object as PropType<User> },
@@ -51,6 +52,7 @@ const props = defineProps({
 const { user } = toRefs(props);
 
 const store = useStore();
+const { t } = useI18n();
 
 const uploadAvatar = ref<any | null>(null);
 const newAvatar = ref<any>(null);
@@ -74,7 +76,7 @@ const saveAvatar = async () => {
     });
   } catch {
     store.commit("snackbar/showSnackbarError", {
-      message: "Произошла ошибка при сохранение нового аватара",
+      message: t("errors.saveAvatar"),
     });
   } finally {
     resetPreview();
@@ -103,7 +105,7 @@ const deleteAvatar = async () => {
   } catch (e) {
     console.log(e);
     store.commit("snackbar/showSnackbarError", {
-      message: "Произошла ошибка при удалении аватара",
+      message: t("errors.deleteAvatar"),
     });
   } finally {
     isDeleteLoading.value = false;

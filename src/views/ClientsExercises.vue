@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-0 pa-0" variant="text" :loading="isExercisesLoading">
+  <v-card class="ma-0 pa-0" variant="text" :loading="isLoading">
     <div class="mt-10">
       <exercise-date-select v-model="selectedDate" :exercises="exercises" />
     </div>
@@ -25,14 +25,26 @@ import ClientExerciseCard from "@/components/clientExerciseCard.vue";
 import ExerciseDateSelect from "@/components/exerciseDateSelect.vue";
 import useFormaters from "@/hooks/useFormaters";
 import NoExerciseMessage from "@/components/noExerciseMessage.vue";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
+const { t } = useI18n();
 const { formatDate } = useFormaters();
 
 const selectedDate = ref("");
+const isLoading = ref(false);
 
-onMounted(() => {
-  store.dispatch("exercises/fetch");
+onMounted(async () => {
+  try {
+    isLoading.value = true;
+    await store.dispatch("exercises/fetch");
+  } catch {
+    store.commit("snackbar/showSnackbarError", {
+      message: t("errors.fetchClientsExercises"),
+    });
+  } finally {
+    isLoading.value = false;
+  }
 });
 
 const exercises = computed<Exercise[]>(
@@ -46,9 +58,6 @@ const filtredExercises = computed<Exercise[]>(() => {
     (e) => formatDate(e.date) === selectedDate.value
   );
 });
-const isExercisesLoading = computed<boolean>(
-  () => store.getters["exercises/isLoading"]
-);
 </script>
 
 <style scoped></style>

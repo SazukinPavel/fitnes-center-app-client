@@ -43,7 +43,7 @@
         active-color="primary"
         @click="logout"
         prepend-icon="mdi-logout"
-        title="Выйти"
+        :title="t('menu.quite')"
         value="logout"
       />
     </v-list>
@@ -57,10 +57,12 @@ import { useRoute } from "vue-router";
 import MenuItem from "@/types/utils/MenuItem";
 import useGoTo from "@/hooks/useGoTo";
 import AvatarsService from "@/services/AvatarsService";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
 const route = useRoute();
 const goTo = useGoTo();
+const { t } = useI18n();
 
 const drawer = ref(true);
 const rail = ref(true);
@@ -94,43 +96,62 @@ const items = computed<MenuItem[]>(() => {
   if (role.value == "admin") {
     return [
       {
-        title: "Тренера",
+        title: t("menu.trainers"),
         icon: "mdi-account-group-outline",
         routeName: "Managers",
       },
       {
-        title: "Типы занятий",
+        title: t("menu.exerciseTypes"),
         icon: "mdi-dumbbell",
         routeName: "ExerciseTypes",
       },
-      { title: "Диеты", icon: "mdi-food-fork-drink", routeName: "Diets" },
+      {
+        title: t("menu.diets"),
+        icon: "mdi-food-fork-drink",
+        routeName: "Diets",
+      },
     ];
   } else if (role.value == "manager") {
     return [
       {
-        title: "Клиенты",
+        title: t("menu.clients"),
         icon: "mdi-account-group-outline",
         routeName: "ManagerClients",
       },
       {
-        title: "Типы занятий",
+        title: t("menu.exerciseTypes"),
         icon: "mdi-animation",
         routeName: "ManagersExercisesTypes",
       },
-
       {
-        title: "Диеты",
+        title: t("menu.diets"),
         icon: "mdi-food-fork-drink",
         routeName: "ManagerDiets",
       },
 
-      { title: "Занятия", icon: "mdi-dumbbell", routeName: "ManagerExercises" },
+      {
+        title: t("menu.exercises"),
+        icon: "mdi-dumbbell",
+        routeName: "ManagerExercises",
+      },
     ];
   } else {
     return [
-      { icon: "mdi-dumbbell", routeName: "ClientExercises", title: "Занятия" },
-      { icon: "mdi-kabaddi", routeName: "ManagerPage", title: "Тренер" },
-      { icon: "mdi-food-fork-drink", routeName: "DietPage", title: "Диета" },
+      {
+        icon: "mdi-dumbbell",
+        routeName: "ClientExercises",
+        title: t("menu.exercises"),
+      },
+      {
+        icon: "mdi-kabaddi",
+        routeName: "ManagerPage",
+        title: t("menu.trainer"),
+      },
+      {
+        icon: "mdi-food-fork-drink",
+        routeName: "DietPage",
+        title: t("menu.diet"),
+      },
     ];
   }
 });

@@ -21,8 +21,10 @@ import Manager from "@/types/entitys/Manager";
 import ManagerCard from "@/components/managerCard.vue";
 import Search from "@/components/search.vue";
 import AddBtn from "@/components/ui/addBtn.vue";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
+const { t } = useI18n();
 
 const searchParam = ref("");
 const isManagerLoading = ref(false);
@@ -33,7 +35,7 @@ onMounted(async () => {
     await store.dispatch("managers/fetch");
   } catch {
     store.commit("snackbar/showSnackbarError", {
-      message: "Произошла ошибка при получение менеджеров",
+      message: t("errors.fetchManagers"),
     });
   } finally {
     isManagerLoading.value = false;

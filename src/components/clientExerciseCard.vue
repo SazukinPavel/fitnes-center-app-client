@@ -9,17 +9,20 @@
       props.exercise.exerciseInfo?.name
     }}</v-card-title>
     <v-card-title class="text-wrap"
-      >Дата: {{ formatDateTime(props.exercise?.date) }}</v-card-title
+      >{{ t("date") }}: {{ formatDateTime(props.exercise?.date) }}</v-card-title
     >
     <v-card-title class="text-wrap"
-      >Тренер: {{ props.manager.auth?.fio }}</v-card-title
+      >{{ t("trainer") }}: {{ props.manager.auth?.fio }}</v-card-title
     >
     <v-card-title class="text-wrap"
-      >Длительность: {{ props.exercise.duration }} минут</v-card-title
+      >{{ t("duration") }}: {{ props.exercise.duration }}
+      {{ t("minuts") }}</v-card-title
     >
     <v-expansion-panels v-if="isCanceled">
       <v-expansion-panel
-        :title="`Отменено пользователем ${props.exercise?.cancellation.by}, причина:`"
+        :title="`${t('canceledUser')} ${props.exercise?.cancellation.by}, ${t(
+          'reason'
+        )}:`"
       >
         <v-expansion-panel-text>
           {{ props.exercise.cancellation.reason }}
@@ -27,7 +30,7 @@
       </v-expansion-panel>
     </v-expansion-panels>
     <v-expansion-panels v-else-if="props.exercise?.exerciseInfo?.description">
-      <v-expansion-panel title="Описание">
+      <v-expansion-panel :title="t('description')">
         <v-expansion-panel-text>
           {{ props.exercise.exerciseInfo?.description }}
         </v-expansion-panel-text>
@@ -44,6 +47,7 @@ import { Exercise } from "@/types/entitys/Exercise";
 import useFormmaters from "@/hooks/useFormaters";
 import Manager from "@/types/entitys/Manager";
 import AddCancellation from "@/components/addCancellation.vue";
+import { useI18n } from "vue-i18n";
 
 const props = defineProps({
   exercise: { type: Object as PropType<Exercise>, required: true },
@@ -51,6 +55,7 @@ const props = defineProps({
 });
 
 const { formatDateTime } = useFormmaters();
+const { t } = useI18n();
 
 const cancelDialog = ref(false);
 

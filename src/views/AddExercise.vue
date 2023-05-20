@@ -1,17 +1,19 @@
 <template>
   <v-card class="px-5 py-5 ma-auto" max-width="800" variant="text">
-    <v-card-title class="text-center text-wrap">Новое занятие:</v-card-title>
+    <v-card-title class="text-center text-wrap"
+      >{{ t("newExercise") }}:</v-card-title
+    >
     <v-form ref="exerciseForm">
       <date-picker
         class="my-2"
         :rules="[requiredRule]"
-        label="Дата"
+        :label="t('date')"
         type="Meeting"
         v-model="addExerciseDto.date"
       />
       <v-autocomplete
         :rules="[requiredRule]"
-        label="Тип тренировки"
+        :label="t('exerciseType')"
         item-value="id"
         item-title="name"
         class="my-2"
@@ -22,7 +24,7 @@
       <duration-input v-model="addExerciseDto.duration" />
       <v-autocomplete
         :rules="[requiredRule]"
-        label="Клиент"
+        :label="t('client')"
         item-value="id"
         item-title="auth.fio"
         :items="clients"
@@ -32,10 +34,10 @@
     </v-form>
 
     <div class="d-flex justify-center">
-      <v-btn @click="goBack" :disabled="isAddLoading">Назад</v-btn>
-      <v-btn class="mx-5" @click="addExercise" :loading="isAddLoading"
-        >Добавить</v-btn
-      >
+      <v-btn @click="goBack" :disabled="isAddLoading">{{ t("back") }}</v-btn>
+      <v-btn class="mx-5" @click="addExercise" :loading="isAddLoading">{{
+        t("add")
+      }}</v-btn>
     </div>
   </v-card>
 </template>
@@ -51,11 +53,13 @@ import useGoTo from "@/hooks/useGoTo";
 import useGoBack from "@/hooks/goBack";
 import DatePicker from "@/components/ui/datePicker.vue";
 import DurationInput from "@/components/ui/durationInput.vue";
+import { useI18n } from "vue-i18n";
 
 const { requiredRule } = useValidators();
 const store = useStore();
 const goTo = useGoTo();
 const goBack = useGoBack();
+const { t } = useI18n();
 
 const exerciseForm = ref<any | null>(null);
 const isAddLoading = ref(false);
@@ -78,13 +82,12 @@ const addExercise = async () => {
     addExerciseDto.value = getDefaultDto();
 
     store.commit("snackbar/showSnackbarSuccess", {
-      message: "Занятие создано успешно",
+      message: t("success.addExercise"),
     });
     goTo({ name: "ManagerExercises" });
   } catch (e: any) {
     store.commit("snackbar/showSnackbarError", {
-      message:
-        e?.response?.data?.message || "Произошла ошибка при создание занятия",
+      message: e?.response?.data?.message || t("errors.addExercise"),
     });
   } finally {
     isAddLoading.value = false;

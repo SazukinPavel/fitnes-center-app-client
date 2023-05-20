@@ -26,23 +26,27 @@ import ExerciseDateSelect from "@/components/exerciseDateSelect.vue";
 import useFormaters from "@/hooks/useFormaters";
 import NoExerciseMessage from "@/components/noExerciseMessage.vue";
 import Client from "@/types/entitys/Client";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
+const { t } = useI18n();
 
 const { formatDate } = useFormaters();
 
 const selectedDate = ref<string>("");
 const isExerciseLoading = ref(false);
 
-onMounted(() => {
+onMounted(async () => {
   isExerciseLoading.value = true;
   try {
-    store.dispatch("exercises/fetch");
-    store.dispatch("clients/fetch");
-    store.dispatch("exerciseInfo/fetch");
+    await Promise.all([
+      store.dispatch("exercises/fetch"),
+      store.dispatch("clients/fetch"),
+      store.dispatch("exerciseInfo/fetch"),
+    ]);
   } catch {
     store.commit("snackbar/showSnackbarError", {
-      message: "Произошла ошибка при получение занятий",
+      message: t("errors.fetchManagersExercises"),
     });
   } finally {
     isExerciseLoading.value = false;

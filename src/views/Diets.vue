@@ -22,8 +22,10 @@ import { useStore } from "vuex";
 import DietCard from "@/components/dietCard.vue";
 import Search from "@/components/search.vue";
 import AddBtn from "@/components/ui/addBtn.vue";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
+const { t } = useI18n();
 
 const searchParam = ref("");
 const isDietsLoading = ref(false);
@@ -34,7 +36,7 @@ onMounted(async () => {
     await store.dispatch("diets/fetch");
   } catch {
     store.commit("snackbar/showSnackbarError", {
-      message: "Произошла ошибка при получение диет",
+      message: t("errors.fetchDiets"),
     });
   } finally {
     isDietsLoading.value = false;

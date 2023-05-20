@@ -1,5 +1,5 @@
 <template>
-  <v-card :loading="isExerciseLoading" variant="text">
+  <v-card :loading="isLoading" variant="text">
     <v-card-actions>
       <search v-model="searchParam" />
     </v-card-actions>
@@ -17,12 +17,24 @@ import { useStore } from "vuex";
 import ExerciseInfoCard from "@/components/exerciseInfoCard.vue";
 import ExerciseInfo from "@/types/entitys/ExerciseInfo";
 import Search from "@/components/search.vue";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
+const { t } = useI18n();
 const searchParam = ref("");
+const isLoading = ref(false);
 
-onMounted(() => {
-  store.dispatch("exerciseInfo/fetch");
+onMounted(async () => {
+  try {
+    isLoading.value = true;
+    await store.dispatch("exerciseInfo/fetch");
+  } catch {
+    store.commit("snackbar/showSnackbarError", {
+      message: t("errors.fetchExerciseTypes"),
+    });
+  } finally {
+    isLoading.value = false;
+  }
 });
 
 const exercisesInfos = computed<ExerciseInfo[]>(
@@ -37,8 +49,6 @@ const filtredExercisesInfo = computed(() => {
     e.name.toLowerCase().startsWith(searchParam.value.toLowerCase())
   );
 });
-
-const isExerciseLoading = computed(() => store.getters["clients/isLoading"]);
 </script>
 
 <style scoped></style>

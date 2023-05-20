@@ -9,31 +9,31 @@
       <v-text-field
         class="readonly"
         variant="outlined"
-        label="Логин"
+        :label="t('login')"
         readonly
         v-model="localUser.auth.login"
       ></v-text-field>
       <v-text-field
         variant="outlined"
-        label="ФИО"
+        :label="t('fio')"
         append-inner-icon="mdi-pencil"
         v-model="localUser.auth.fio"
       ></v-text-field>
       <v-text-field
         variant="outlined"
-        label="Дата рождения"
+        :label="t('birthDate')"
         readonly
         :model-value="formatDate(localUser.auth.birthDate)"
       ></v-text-field>
       <v-text-field
         class="my-2"
-        label="Номер телефона"
+        :label="t('telephoneNumber')"
         :rules="[requiredRule, telephoneRule]"
         v-model="localUser.auth.telephone"
       />
       <v-textarea
         variant="outlined"
-        label="О себе"
+        :label="t('О себе')"
         append-inner-icon="mdi-pencil"
         v-model="localUser.description"
       ></v-textarea>
@@ -43,7 +43,7 @@
           class="mr-5"
           color="primary"
           @click="changePassDialog = true"
-          >Сменить пароль</v-btn
+          >{{ t("changePass") }}</v-btn
         >
         <v-btn
           size="small"
@@ -51,7 +51,7 @@
           class="mr-5"
           color="primary"
           @click="update"
-          >Изменить</v-btn
+          >{{ t("edit") }}</v-btn
         >
       </div>
     </v-container>
@@ -69,8 +69,10 @@ import ChangePassword from "@/components/changePassword.vue";
 import useFormaters from "@/hooks/useFormaters";
 import useValidators from "@/hooks/useValidators";
 import ProfileAvatar from "@/components/profileAvatar.vue";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
+const { t } = useI18n();
 const { requiredRule, telephoneRule } = useValidators();
 const { formatDate } = useFormaters();
 
@@ -94,11 +96,11 @@ const update = async () => {
   try {
     await api.managers.update(dto);
     store.commit("snackbar/showSnackbarSuccess", {
-      message: "Пользователь успешно изменён",
+      message: t("success.saveManager"),
     });
   } catch {
     store.commit("snackbar/showSnackbarError", {
-      message: "Произошла ошибка при изменение пользователя",
+      message: t("errors.saveManager"),
     });
   } finally {
     isUpdateLoading.value = false;

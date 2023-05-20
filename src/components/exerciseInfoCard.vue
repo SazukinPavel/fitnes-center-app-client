@@ -14,10 +14,11 @@
     </v-card-actions>
     <v-card-title class="text-wrap">{{ props.exerciseInfo.name }}</v-card-title>
     <v-card-title class="text-wrap"
-      >Длительность: {{ props.exerciseInfo.duration }} минут</v-card-title
+      >{{ t("duration") }}: {{ props.exerciseInfo.duration }}
+      {{ t("minuts") }}</v-card-title
     >
     <v-expansion-panels v-if="props.exerciseInfo?.description">
-      <v-expansion-panel title="Описание">
+      <v-expansion-panel :title="t('description')">
         <v-expansion-panel-text>
           {{ props.exerciseInfo.description }}
         </v-expansion-panel-text>
@@ -31,8 +32,10 @@
 import { useStore } from "vuex";
 import { defineProps, PropType, ref } from "vue";
 import ExerciseInfo from "@/types/entitys/ExerciseInfo";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
+const { t } = useI18n();
 
 const props = defineProps({
   exerciseInfo: { type: Object as PropType<ExerciseInfo>, required: true },
@@ -46,11 +49,13 @@ const deleteExerciseInfo = async () => {
   try {
     await store.dispatch("exerciseInfo/delete", props.exerciseInfo?.id);
     store.commit("snackbar/showSnackbarSuccess", {
-      message: `Тип занятия ${props.exerciseInfo?.name} успешно удалён`,
+      message: `${t("exerciseType")} ${props.exerciseInfo?.name} ${t(
+        "deleteSuccessHe"
+      )}`,
     });
   } catch {
     store.commit("snackbar/showSnackbarError", {
-      message: `Произошла ошибка при удаление ${props.exerciseInfo?.name}`,
+      message: `${t("deleteExerciseType")} ${props.exerciseInfo?.name}`,
     });
   } finally {
     isDeleteLoading.value = false;

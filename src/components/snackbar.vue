@@ -3,7 +3,9 @@
     {{ message }}
 
     <template v-slot:actions>
-      <v-btn :color="buttonColor" text @click="hideSnackbar"> Закрыть </v-btn>
+      <v-btn :color="buttonColor" text @click="hideSnackbar">
+        {{ $t("close") }}
+      </v-btn>
     </template>
   </v-snackbar>
 </template>

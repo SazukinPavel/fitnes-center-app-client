@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-0 pa-0" variant="text" :loading="isExerciseTypeLoading">
+  <v-card class="ma-0 pa-0" variant="text" :loading="isLoading">
     <div class="d-flex justify-end align-center">
       <search class="ml-5" v-model="searchParam" />
       <add-btn :to="{ name: 'AddExerciseType' }" />
@@ -22,21 +22,24 @@ import { useStore } from "vuex";
 import ExerciseInfoCard from "@/components/exerciseInfoCard.vue";
 import Search from "@/components/search.vue";
 import AddBtn from "@/components/ui/addBtn.vue";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
+const { t } = useI18n();
 
 const searchParam = ref("");
-const isExerciseTypeLoading = ref(false);
+const isLoading = ref(false);
 
 onMounted(async () => {
   try {
+    isLoading.value = true;
     await store.dispatch("exerciseInfo/fetch");
   } catch {
     store.commit("snackbar/showSnackbarError", {
-      message: "Произошла ошибка при получение типов занятий",
+      message: t("errors.fetchExerciseTypes"),
     });
   } finally {
-    isExerciseTypeLoading.value = false;
+    isLoading.value = false;
   }
 });
 

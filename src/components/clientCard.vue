@@ -14,25 +14,25 @@
       >
     </v-card-actions>
     <v-card-title class="text-wrap"
-      >Логин: {{ props.client.auth.login }}</v-card-title
+      >{{ t("login") }}: {{ props.client.auth.login }}</v-card-title
     >
     <v-card-title class="text-wrap"
-      >ФИО: {{ props.client.auth.fio }}</v-card-title
+      >{{ t("fio") }}: {{ props.client.auth.fio }}</v-card-title
     >
     <v-card-title class="text-wrap">
       <div class="d-flex justify-space-between align-center">
-        <span> Диета: {{ props.client.diet?.name || "-" }} </span>
+        <span> {{ t("diet") }}: {{ props.client.diet?.name || "-" }} </span>
         <v-btn variant="outlined" size="x-small" icon>
           <v-icon size="small">mdi-pencil</v-icon>
           <v-dialog activator="parent" width="auto" v-model="setDietDialog">
             <v-card class="pa-15">
-              <v-card-title class="text-wrap">Установить диету</v-card-title>
+              <v-card-title class="text-wrap">{{ t("setDiet") }}</v-card-title>
               <v-form ref="dietForm">
                 <v-select
                   variant="outlined"
                   color="primary"
                   :rules="[requiredRule]"
-                  label="Диета"
+                  :label="t('diet')"
                   item-value="id"
                   item-title="name"
                   :items="diets"
@@ -44,7 +44,7 @@
                   variant="outlined"
                   color="primary"
                   @click="setDietDialog = false"
-                  >Закрыть</v-btn
+                  >{{ t("close") }}</v-btn
                 >
                 <v-btn
                   variant="outlined"
@@ -52,7 +52,7 @@
                   color="primary"
                   :loading="isSetDietLoading"
                   @click="setDiet"
-                  >Добавить</v-btn
+                  >{{ t("add") }}</v-btn
                 >
               </v-card-actions>
             </v-card>
@@ -61,21 +61,21 @@
       </div>
     </v-card-title>
     <v-expansion-panels>
-      <v-expansion-panel title="Больше информации">
+      <v-expansion-panel :title="t('moreInfo')">
         <v-expansion-panel-text>
           <v-card variant="text">
             <v-card-title class="text-wrap"
-              >Вес: {{ props.client?.weight }}</v-card-title
+              >{{ t("weight") }}: {{ props.client?.weight }}</v-card-title
             >
             <v-card-title class="text-wrap"
-              >Рост: {{ props.client?.height }}</v-card-title
+              >{{ t("height") }}: {{ props.client?.height }}</v-card-title
             >
             <v-card-title class="text-wrap"
-              >Дата рождения:
+              >{{ t("birthDate") }}:
               {{ formatDate(props.client.auth.birthDate) }}</v-card-title
             >
             <v-card-title class="text-wrap"
-              >Номер телефона:
+              >{{ t("telephoneNumber") }}:
               {{ props.client.auth.telephone || "-" }}</v-card-title
             >
           </v-card>
@@ -95,8 +95,10 @@ import useValidators from "@/hooks/useValidators";
 import useFormaters from "@/hooks/useFormaters";
 import Diet from "@/types/entitys/Diet";
 import useUserAvatar from "@/hooks/userAvatar";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
+const { t } = useI18n();
 
 const props = defineProps({
   client: { type: Object as PropType<Client>, required: true },
@@ -121,11 +123,13 @@ const deleteClient = async () => {
   try {
     await store.dispatch("clients/deleteClient", props.client?.id);
     store.commit("snackbar/showSnackbarSuccess", {
-      message: `Клиент ${props.client?.auth?.fio} успешно удалён`,
+      message: `${t("client")} ${props.client?.auth?.fio} ${t(
+        "deleteSuccessHe"
+      )}`,
     });
   } catch {
     store.commit("snackbar/showSnackbarError", {
-      message: `Произошла ошибка при удалении клиента ${props.client?.auth?.fio}`,
+      message: `${t("errors.deleteClient")} ${props.client?.auth?.fio}`,
     });
   } finally {
     isDeleteLoading.value = false;
@@ -155,7 +159,7 @@ const setDiet = async () => {
     setDietDialog.value = false;
   } catch {
     store.commit("snackbar/showSnackbarError", {
-      message: `Произошла ошибка при установке диеты клиенту ${props.client?.auth?.fio}`,
+      message: `${t("errors.setDiet")} ${props.client?.auth?.fio}`,
     });
   } finally {
     isSetDietLoading.value = false;

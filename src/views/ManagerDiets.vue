@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-0 pa-0" variant="text" :loading="isDietsLoading">
+  <v-card class="ma-0 pa-0" variant="text" :loading="isLoading">
     <v-card-actions>
       <search v-model="searchParam" />
     </v-card-actions>
@@ -13,12 +13,24 @@ import Diet from "@/types/entitys/Diet";
 import { useStore } from "vuex";
 import DietCard from "@/components/dietCard.vue";
 import Search from "@/components/search.vue";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
+const { t } = useI18n();
 const searchParam = ref("");
+const isLoading = ref(false);
 
-onMounted(() => {
-  store.dispatch("diets/fetch");
+onMounted(async () => {
+  try {
+    isLoading.value = true;
+    await store.dispatch("diets/fetch");
+  } catch {
+    store.commit("snackbar/showSnackbarError", {
+      message: t("errors.fetchDiets"),
+    });
+  } finally {
+    isLoading.value = false;
+  }
 });
 
 const diets = computed<Diet[]>(() => store.getters["diets/diets"]);
@@ -30,5 +42,4 @@ const filtredDiets = computed<Diet[]>(() => {
     d.name.toLowerCase().startsWith(searchParam.value.toLocaleLowerCase())
   );
 });
-const isDietsLoading = computed(() => store.getters["diets/isLoading"]);
 </script>

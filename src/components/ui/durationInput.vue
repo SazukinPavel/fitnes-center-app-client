@@ -2,8 +2,8 @@
   <number-input
     :rules="[requiredRule, durationRule]"
     :value="props.value"
-    suffix="минут"
-    label="Длительность тренировки"
+    :suffix="t('minuts')"
+    :label="t('exerciseDuration')"
     @update:value="emit('update:value', $event)"
   />
 </template>
@@ -12,8 +12,10 @@
 import NumberInput from "@/components/ui/NumberInput.vue";
 import useValidators from "@/hooks/useValidators";
 import { defineEmits, defineProps } from "vue";
+import { useI18n } from "vue-i18n";
 
 const { durationRule, requiredRule } = useValidators();
+const { t } = useI18n();
 
 const props = defineProps({
   value: { type: Date, default: null },

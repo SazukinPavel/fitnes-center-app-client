@@ -14,23 +14,26 @@
       >
     </v-card-actions>
     <v-card-title class="text-wrap"
-      >Логин: {{ props.manager.auth.login }}</v-card-title
+      >{{ t("login") }}: {{ props.manager.auth.login }}</v-card-title
     >
     <v-card-title class="text-wrap"
-      >ФИО: {{ props.manager.auth.fio }}</v-card-title
+      >{{ t("fio") }}: {{ props.manager.auth.fio }}</v-card-title
     >
     <v-expansion-panels>
-      <v-expansion-panel title="Больше информации">
+      <v-expansion-panel :title="t('moreInfo')">
         <v-expansion-panel-text>
           <v-card variant="text">
             <v-card-title class="text-wrap"
-              >Дата рождения:
+              >{{ t("birthDate") }}:
               {{ formatDate(props.manager.auth.birthDate) }}</v-card-title
             >
             <v-card-title class="text-wrap"
-              >Номер телефона: {{ props.manager.auth.telephone }}</v-card-title
+              >{{ t("telephoneNumber") }}:
+              {{ props.manager.auth.telephone }}</v-card-title
             >
-            <v-card-title class="text-wrap">Описание:</v-card-title>
+            <v-card-title class="text-wrap"
+              >{{ t("description") }}:</v-card-title
+            >
             <v-card-text class="text-wrap">
               {{ props.manager.description }}
             </v-card-text>
@@ -47,8 +50,10 @@ import { useStore } from "vuex";
 import useFormaters from "@/hooks/useFormaters";
 import Manager from "@/types/entitys/Manager";
 import useUserAvatar from "@/hooks/userAvatar";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
+const { t } = useI18n();
 
 const props = defineProps({
   manager: { type: Object as PropType<Manager>, required: true },
@@ -63,11 +68,13 @@ const deleteClient = async () => {
   try {
     await store.dispatch("managers/delete", props.manager?.id);
     store.commit("snackbar/showSnackbarSuccess", {
-      message: `Тренер ${props.manager?.auth?.fio} успешно удалён`,
+      message: `${t("trainer")} ${props.manager?.auth?.fio} ${t(
+        "deleteSuccessHe"
+      )}`,
     });
   } catch {
     store.commit("snackbar/showSnackbarSuccess", {
-      message: `Произошла ошибка при удалении тренера ${props.manager?.auth?.fio}`,
+      message: `${t("deleteTrainer")}${props.manager?.auth?.fio}`,
     });
   } finally {
     isDeleteLoading.value = false;

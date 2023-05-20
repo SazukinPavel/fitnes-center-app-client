@@ -10,13 +10,17 @@
       <v-card class="pa-5">
         <v-container>
           <v-row justify="center">
-            <v-card-title class="text-center">Смена пароля</v-card-title>
+            <v-card-title class="text-center">{{
+              t("changePass")
+            }}</v-card-title>
           </v-row>
-          <v-card-title class="text-wrap">Старый пароль</v-card-title>
+          <v-card-title class="text-wrap">{{ t("oldPass") }}</v-card-title>
           <password-input v-model="oldPassword" :rules="oldPasswordRules" />
-          <v-card-title class="text-wrap">Новый пароль</v-card-title>
+          <v-card-title class="text-wrap">{{ t("newPass") }}</v-card-title>
           <password-input v-model="newPassword" :rules="newPasswordRules" />
-          <v-card-title class="text-wrap">Повторите новый пароль</v-card-title>
+          <v-card-title class="text-wrap">{{
+            t("repeatNewPass")
+          }}</v-card-title>
           <password-input
             v-model="newPasswordRepeat"
             :rules="newPasswordRepeatRules"
@@ -26,13 +30,13 @@
               @click="emit('update:modelValue', false)"
               class="mx-3"
               :disabled="isPasswordChangeLoading"
-              >Закрыть</v-btn
+              >{{ t("close") }}</v-btn
             >
             <v-btn
               :loading="isPasswordChangeLoading"
               @click="change"
               class="mx-3"
-              >Изменить</v-btn
+              >{{ t("edit") }}</v-btn
             >
           </v-row>
         </v-container>
@@ -42,17 +46,19 @@
 </template>
 
 <script setup lang="ts">
-import { toRefs, defineProps, defineEmits, ref } from "vue";
+import { toRefs, defineProps, defineEmits, ref, computed } from "vue";
 import PasswordInput from "@/components/ui/passwordInput.vue";
 import useValidators from "@/hooks/useValidators";
 import { useStore } from "vuex";
 import api from "@/api";
+import { useI18n } from "vue-i18n";
 
 const { requiredRule, passwordLengthRule } = useValidators();
 const props = defineProps(["modelValue"]);
 const emit = defineEmits(["update:modelValue"]);
 
 const store = useStore();
+const { t } = useI18n();
 
 const oldPassword = ref("");
 const newPasswordRepeat = ref("");
@@ -66,8 +72,8 @@ const { modelValue } = toRefs(props);
 
 const newPasswordRules = ref([requiredRule.value, passwordLengthRule.value]);
 const oldPasswordRules = ref([requiredRule.value]);
-const newPasswordRepeatRules = ref([
-  (val: string) => val === newPassword.value || "Пароли должны совпадать.",
+const newPasswordRepeatRules = computed(() => [
+  (val: string) => val === newPassword.value || t("passwordRule"),
 ]);
 
 const change = async () => {
@@ -82,12 +88,12 @@ const change = async () => {
       oldPassword: oldPassword.value,
     });
     store.commit("snackbar/showSnackbarSuccess", {
-      message: "Пароль успешно изменён.",
+      message: t("success.changePass"),
     });
     emit("update:modelValue", false);
   } catch (e: any) {
     store.commit("snackbar/showSnackbarError", {
-      message: e.response.data.message || "Произошла ощибка при смене пароля",
+      message: e.response.data.message || t("errors.changePass"),
     });
   } finally {
     isPasswordChangeLoading.value = false;

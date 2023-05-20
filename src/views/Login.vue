@@ -1,20 +1,20 @@
 <template>
   <v-form style="margin-top: 20vh" ref="loginForm">
     <v-card class="ma-auto pa-4" variant="text" max-width="600px">
-      <v-card-title class="text-center text-h4 mb-5 ma-auto text-wrap"
-        >Вход</v-card-title
-      >
+      <v-card-title class="text-center text-h4 mb-5 ma-auto text-wrap">{{
+        t("open")
+      }}</v-card-title>
       <v-text-field
         class="my-5"
         color="primary"
         :rules="[requiredRule]"
         variant="outlined"
-        label="Логин:"
+        :label="`${t('login')}:`"
         v-model.trim="loginDto.login"
       />
       <password-input
         class="my-5"
-        label="Пароль:"
+        :label="`${t('password')}:`"
         color="primary"
         :rules="[requiredRule]"
         variant="outlined"
@@ -25,10 +25,14 @@
           variant="text"
           class="text-h6 mx-3"
           :to="{ name: 'ForgetPassword' }"
-          >Забыли пароль?</v-btn
+          >{{ t("forgetPass") }}</v-btn
         >
-        <v-btn class="mx-3" :loading="isLoading" color="primary" @click="login"
-          >Войти</v-btn
+        <v-btn
+          class="mx-3"
+          :loading="isLoading"
+          color="primary"
+          @click="login"
+          >{{ t("enter") }}</v-btn
         >
       </div>
     </v-card>
@@ -41,10 +45,12 @@ import LoginDto from "@/types/dto/auth/LoginDto";
 import { useStore } from "vuex";
 import PasswordInput from "@/components/ui/passwordInput.vue";
 import useValidators from "@/hooks/useValidators";
+import { useI18n } from "vue-i18n";
 
 const loginForm = ref<any | null>(null);
 
 const store = useStore();
+const { t } = useI18n();
 const { requiredRule } = useValidators();
 
 const loginDto = ref<LoginDto>({ login: "", password: "" });
@@ -62,7 +68,7 @@ const login = async () => {
   } catch {
     isLoading.value = false;
     store.commit("snackbar/showSnackbarError", {
-      message: "Такого пользователя нет",
+      message: t("errors.login"),
     });
   }
 };
