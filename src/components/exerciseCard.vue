@@ -1,5 +1,11 @@
 <template>
-  <v-card :loading="isPayedLoading" class="ma-4">
+  <v-card
+    :loading="isPayedLoading"
+    :variant="isCanceled ? 'outlined' : 'flat'"
+    :color="isCanceled ? 'red' : ''"
+    border
+    class="ma-4"
+  >
     <v-card-actions class="d-flex justify-end">
       <v-btn
         color="primary"
