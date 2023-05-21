@@ -1,5 +1,9 @@
 <template>
-  <v-card>
+  <v-card
+    :variant="isCanceled ? 'outlined' : 'flat'"
+    :color="isCanceled ? 'red' : ''"
+    class="ma-4"
+  >
     <v-card-actions class="d-flex justify-end" v-if="!isCanceled">
       <v-btn @click="cancelDialog = true" icon
         ><v-icon>mdi-cancel</v-icon></v-btn
