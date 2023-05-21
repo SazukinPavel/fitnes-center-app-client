@@ -22,6 +22,8 @@ const { setTitle } = useSeo();
 const isAuthorizeLoading = ref(true);
 
 onMounted(async () => {
+  setTitle(route.meta.pageTitle as string);
+
   try {
     await authorize();
   } catch {
