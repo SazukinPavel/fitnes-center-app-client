@@ -1,53 +1,55 @@
 <template>
-  <v-navigation-drawer
-    v-if="isLogedIn"
-    v-model="drawer"
-    :rail="rail"
-    permanent
-    @click="rail = false"
-  >
-    <v-list-item
-      :title="user?.auth?.login"
-      nav
-      active-color="primary"
-      :active="isProfilePage"
-      @click="goTo({ name: profilePageName })"
+  <div ref="menu">
+    <v-navigation-drawer
+      v-if="isLogedIn"
+      v-model="drawer"
+      :rail="rail"
+      permanent
+      @click="rail = false"
     >
-      <template v-slot:append>
-        <v-btn
-          variant="text"
-          icon="mdi-chevron-left"
-          @click.stop="rail = !rail"
-        ></v-btn>
-      </template>
-      <template v-slot:prepend>
-        <v-avatar v-if="userAvatar" :image="userAvatar"></v-avatar>
-      </template>
-    </v-list-item>
-
-    <v-divider></v-divider>
-
-    <v-list variant="flat" density="compact" nav>
       <v-list-item
-        v-for="item in items"
-        :key="item.routeName"
-        :prepend-icon="item.icon"
-        :title="item.title"
-        :active="isActiveMenuItem(item)"
-        :value="item.routeName"
-        @click="goTo({ name: item.routeName })"
+        :title="user?.auth?.login"
+        nav
         active-color="primary"
-      />
-      <v-list-item
-        v-once
-        active-color="primary"
-        @click="logout"
-        prepend-icon="mdi-logout"
-        :title="t('menu.quite')"
-        value="logout"
-      />
-    </v-list>
-  </v-navigation-drawer>
+        :active="isProfilePage"
+        @click="goTo({ name: profilePageName })"
+      >
+        <template v-slot:append>
+          <v-btn
+            variant="text"
+            icon="mdi-chevron-left"
+            @click.stop="rail = !rail"
+          ></v-btn>
+        </template>
+        <template v-slot:prepend>
+          <v-avatar v-if="userAvatar" :image="userAvatar"></v-avatar>
+        </template>
+      </v-list-item>
+
+      <v-divider></v-divider>
+
+      <v-list variant="flat" density="compact" nav>
+        <v-list-item
+          v-for="item in items"
+          :key="item.routeName"
+          :prepend-icon="item.icon"
+          :title="item.title"
+          :active="isActiveMenuItem(item)"
+          :value="item.routeName"
+          @click="goTo({ name: item.routeName })"
+          active-color="primary"
+        />
+        <v-list-item
+          v-once
+          active-color="primary"
+          @click="logout"
+          prepend-icon="mdi-logout"
+          :title="t('menu.quite')"
+          value="logout"
+        />
+      </v-list>
+    </v-navigation-drawer>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -58,14 +60,16 @@ import MenuItem from "@/types/utils/MenuItem";
 import useGoTo from "@/hooks/useGoTo";
 import AvatarsService from "@/services/AvatarsService";
 import { useI18n } from "vue-i18n";
+import { onClickOutside } from "@vueuse/core";
 
 const store = useStore();
 const route = useRoute();
-const goTo = useGoTo();
+const goToPage = useGoTo();
 const { t } = useI18n();
 
 const drawer = ref(true);
 const rail = ref(true);
+const menu = ref<any>(null);
 
 const user = computed(() => store.getters["auth/user"]);
 const role = computed(() => store.getters["auth/role"]);
@@ -159,6 +163,18 @@ const items = computed<MenuItem[]>(() => {
 const userAvatar = computed(() => {
   return AvatarsService.getAvatarUrl(user.value);
 });
+const closeMenu = () => {
+  rail.value = true;
+};
+
+const goTo = (params: any) => {
+  if (!rail.value) {
+    goToPage(params);
+  } else {
+    rail.value = false;
+  }
+};
+onClickOutside(menu, closeMenu);
 </script>
 
 <style scoped></style>
