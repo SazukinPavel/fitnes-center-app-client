@@ -9,7 +9,7 @@
     />
     <div class="d-flex justify-end mt-5">
       <v-btn
-        :disabled="!user.auth?.avatar?.id || !!previewImage || isSaveLoading"
+        :disabled="!user?.auth?.avatar?.id || !!previewImage || isSaveLoading"
         :loading="isDeleteLoading"
         icon
         class="mx-3"
