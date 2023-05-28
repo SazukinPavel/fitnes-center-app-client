@@ -21,9 +21,9 @@
         v-model="addManagerDto.birthDate"
         :rules="[requiredRule]"
       />
-      <v-text-field
+      <password-input
         class="my-2"
-        :rules="[requiredRule]"
+        :rules="[requiredRule, passwordLengthRule]"
         :label="t('password')"
         v-model="addManagerDto.password"
       />
@@ -58,8 +58,10 @@ import DatePicker from "@/components/ui/datePicker.vue";
 import useGoBack from "@/hooks/goBack";
 import useGoTo from "@/hooks/useGoTo";
 import { useI18n } from "vue-i18n";
+import PasswordInput from "@/components/ui/passwordInput.vue";
 
-const { requiredRule, telephoneRule, emailRule } = useValidators();
+const { requiredRule, telephoneRule, emailRule, passwordLengthRule } =
+  useValidators();
 const store = useStore();
 const goBack = useGoBack();
 const { t } = useI18n();

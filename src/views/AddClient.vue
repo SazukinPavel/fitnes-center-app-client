@@ -16,9 +16,9 @@
         :label="t('fio')"
         v-model="addClientDto.fio"
       />
-      <v-text-field
+      <password-input
         class="my-2"
-        :rules="[requiredRule]"
+        :rules="[requiredRule, passwordLengthRule]"
         :label="t('password')"
         v-model="addClientDto.password"
       />
@@ -61,8 +61,10 @@ import useGoBack from "@/hooks/goBack";
 import HeightInput from "@/components/ui/HeightInput.vue";
 import WeightInput from "@/components/ui/WeightInput.vue";
 import { useI18n } from "vue-i18n";
+import PasswordInput from "@/components/ui/passwordInput.vue";
 
-const { requiredRule, telephoneRule, emailRule } = useValidators();
+const { requiredRule, telephoneRule, emailRule, passwordLengthRule } =
+  useValidators();
 const store = useStore();
 const goTo = useGoTo();
 const { t } = useI18n();
