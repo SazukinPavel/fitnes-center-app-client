@@ -36,6 +36,7 @@
       <v-textarea
         class="my-2"
         :label="t('description')"
+        :rules="[requiredRule]"
         v-model="addManagerDto.description"
       />
     </v-form>
