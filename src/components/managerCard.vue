@@ -73,8 +73,8 @@ const deleteClient = async () => {
       )}`,
     });
   } catch {
-    store.commit("snackbar/showSnackbarSuccess", {
-      message: `${t("deleteTrainer")}${props.manager?.auth?.fio}`,
+    store.commit("snackbar/showSnackbarError", {
+      message: `${t("errors.deleteTrainer")} ${props.manager?.auth?.fio}`,
     });
   } finally {
     isDeleteLoading.value = false;
