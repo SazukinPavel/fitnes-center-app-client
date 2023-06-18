@@ -10,14 +10,14 @@ export default function useValidators() {
   );
 
   const weightRule = ref((weight: number) => {
-    if (!weight || !+weight || weight < 0 || weight > 500) {
+    if (!weight || !+weight || weight < 15 || weight > 500) {
       return t("rules.badWeight");
     }
     return true;
   });
 
   const heightRule = ref((height: number) => {
-    if (!height || !+height || height < 0 || height > 300) {
+    if (!height || !+height || height < 50 || height > 300) {
       return t("rules.badHeight");
     }
     return true;
