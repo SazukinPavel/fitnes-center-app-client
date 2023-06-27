@@ -27,11 +27,11 @@
       />
       <height-input
         append-inner-icon="mdi-pencil"
-        v-model.number="localUser.weight"
+        v-model.number="localUser.height"
       ></height-input>
       <weight-input
         append-inner-icon="mdi-pencil"
-        v-model.number="localUser.height"
+        v-model.number="localUser.weight"
       ></weight-input>
       <div class="buttons d-flex justify-end">
         <v-btn
