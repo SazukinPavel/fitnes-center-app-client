@@ -28,12 +28,8 @@ export default {
       });
     },
     updateExerciseIsPayed(state, { id, isPayed }) {
-      state.exercises = state.exercises.map((e) => {
-        if (id == e.id) {
-          e.isPayed = isPayed;
-        }
-        return e;
-      });
+      const index=state.exercises.findIndex((e) => id == e.id)
+      state.exercises[index].isPayed=isPayed
     },
   },
   actions: {
